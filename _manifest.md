@@ -1,0 +1,16 @@
+# Learning Atlas Manifest
+
+## Bad Title Cleanup
+
+- Updated: 2026-05-11 13:03:06
+- Paths fixed: 10
+- `AI PM Knowledge System/Job Search and Interviews/01 二、哪些公司在招AI PM.md` -> `AI PM Knowledge System/Job Search and Interviews/01 AI PM Job Search Landscape.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/09_job_search_and_interviews/00_ai_pm_job_search_landscape.md`)
+- `AI PM Knowledge System/Job Search and Interviews/02 二、如何突出AI经验 即使没有直接经验.md` -> `AI PM Knowledge System/Job Search and Interviews/02 How to Write an AI PM Resume.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/09_job_search_and_interviews/01_how_to_write_an_ai_pm_resume.md`)
+- `AI PM Knowledge System/Job Search and Interviews/03 T1. 请解释RAG是什么 它解决了什么问题?.md` -> `AI PM Knowledge System/Job Search and Interviews/03 Common Interview Questions and Sample Answers.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/09_job_search_and_interviews/02_common_interview_questions_and_sample_answers.md`)
+- `AI PM Knowledge System/Job Search and Interviews/04 二、AI PM作品集应该包含什么.md` -> `AI PM Knowledge System/Job Search and Interviews/04 How to Build a Portfolio.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/09_job_search_and_interviews/03_how_to_build_a_portfolio.md`)
+- `AI PM Knowledge System/Job Search and Interviews/05 二、国际主要AI公司的PM风格.md` -> `AI PM Knowledge System/Job Search and Interviews/05 How AI PM Roles Differ Across Companies.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/09_job_search_and_interviews/04_how_ai_pm_roles_differ_across_companies.md`)
+- `AI PM Knowledge System/Navigation and Learning Method/01 二、三种推荐学习路线.md` -> `AI PM Knowledge System/Navigation and Learning Method/01 How to Use This Library.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/00_navigation_and_learning_method/00_how_to_use_this_library.md`)
+- `AI PM Knowledge System/Navigation and Learning Method/02 二、零基础到底意味着什么.md` -> `AI PM Knowledge System/Navigation and Learning Method/02 Notes for Absolute Beginners.md` (source `Learning Studio/Vaults/AI_PM_Knowledge_System/00_navigation_and_learning_method/01_notes_for_absolute_beginners.md`)
+- `Career Learning Archive/Cost AICatch/04 这份文档是干什么的.md` -> `Career Learning Archive/Cost AICatch/04 AICatch Cost Revenue Model and Subscription Design Study Edition.md` (source `Learning Studio/Vaults/Career_Learning_Archive/work_and_study/cost_aicatch/04_aicatch_cost_revenue_model_and_subscription_design_study_edition.md`)
+- `Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/05 场景设定.md` -> `Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/05 The Full Request to Database Path of an API.md` (source `Learning Studio/Vaults/Vibe_Coding_Knowledge_Vault/06_backend_foundations_http_api_auth_and_services/04_the_full_request_to_database_path_of_an_api.md`)
+- `Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/04 场景设定.md` -> `Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/04 Page State Flow and Component Collaboration Examples.md` (source `Learning Studio/Vaults/Vibe_Coding_Knowledge_Vault/05_frontend_engineering_react_next_and_api_integration/03_page_state_flow_and_component_collaboration_examples.md`)
