@@ -1,5 +1,3 @@
-# Lifecycle and CRM Systems | 生命周期与关系运营系统
-
 > 零基础先记住这一句：生命周期运营不是多发消息，而是在对的时刻把用户带回对的动作和对的上下文。
 > English takeaway: Lifecycle messaging works when it returns people to the right action and context.
 

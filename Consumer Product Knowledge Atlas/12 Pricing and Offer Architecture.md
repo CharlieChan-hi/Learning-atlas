@@ -1,5 +1,3 @@
-# Pricing and Offer Architecture | 定价与优惠方案结构
-
 > 零基础先记住这一句：定价不是财务附属动作，而是在定义用户愿意为哪一层关系、以什么节奏持续付费。
 > English takeaway: Pricing defines the relationship cadence users are willing to pay for over time.
 

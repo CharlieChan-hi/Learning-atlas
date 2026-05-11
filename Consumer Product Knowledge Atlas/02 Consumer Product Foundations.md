@@ -1,5 +1,3 @@
-# Consumer Product Foundations | C 端产品基础
-
 > 零基础先记住这一句：先别把 C 端产品经理理解成写需求的人，更准确的说法是，他在经营一条用户价值链。
 > English takeaway: A consumer PM manages user value as one connected system.
 

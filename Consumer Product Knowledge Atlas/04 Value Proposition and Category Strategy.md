@@ -1,5 +1,3 @@
-# Value Proposition and Category Strategy | 价值主张与品类策略
-
 > 零基础先记住这一句：用户记住一款消费级产品，通常不是因为它功能最多，而是因为它最先把某个价值讲明白了。
 > English takeaway: Users remember the clearest value promise before they remember the longest feature list.
 

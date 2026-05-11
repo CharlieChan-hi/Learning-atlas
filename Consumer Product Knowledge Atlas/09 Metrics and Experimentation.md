@@ -1,5 +1,3 @@
-# Metrics and Experimentation | 指标与实验
-
 > 零基础先记住这一句：指标是为了建立判断秩序，实验是为了减少盲改，两者都不该变成制造幻觉的工具。
 > English takeaway: Metrics create decision order, and experiments reduce blind changes.
 

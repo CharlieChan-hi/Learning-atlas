@@ -1,5 +1,3 @@
-# Onboarding Design Atlas | 引导设计
-
 > 零基础先记住这一句：引导不是欢迎仪式，而是帮助新用户尽快走到第一次明确感到价值成立的那一步。
 > English takeaway: Onboarding should move users to their first real value moment as quickly as possible.
 

@@ -1,5 +1,3 @@
-# Case Benchmarks and Teardowns | 案例拆解
-
 > 零基础先记住这一句：拆案例最重要的不是记住页面长什么样，而是看懂它解决了什么问题、为什么在这里成立。
 > English takeaway: A useful teardown explains the problem solved, not just the screen that appeared.
 

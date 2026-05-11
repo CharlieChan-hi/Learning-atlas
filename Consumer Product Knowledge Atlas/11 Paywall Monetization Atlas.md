@@ -1,5 +1,3 @@
-# Paywall Monetization Atlas | 支付墙与订阅变现
-
 > 零基础先记住这一句：支付墙不是价格展示页，而是用户在“价值、价格、时机、风险”之间做决定的界面。
 > English takeaway: A paywall is a decision screen where value, price, timing, and risk must make sense together.
 

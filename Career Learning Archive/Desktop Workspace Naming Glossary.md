@@ -1,5 +1,3 @@
-# Desktop Workspace Naming Glossary
-
 这份词表专门用来帮你看懂桌面工作区里常见的英文命名。
 
 重点不是死记翻译，而是看懂 4 件事：

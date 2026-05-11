@@ -1,5 +1,3 @@
-# Retention and Habit Systems | 留存与习惯系统
-
 > 零基础先记住这一句：留存不是用户愿不愿意回来这么简单，而是产品有没有在他的生活里占住一个稳定位置。
 > English takeaway: Retention starts when the product earns a stable place in the user's life.
 

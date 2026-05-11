@@ -1,5 +1,3 @@
-# Consumer Product Atlas | C 端产品经理知识总图
-
 > 零基础先记住这一句：C 端产品经理真正管理的，不是一个页面或一个功能，而是一整条从价值到收入的连续链路。
 > English takeaway: A consumer product manager works on a value chain, not a single screen.
 

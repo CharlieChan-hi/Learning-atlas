@@ -1,5 +1,3 @@
-# Category Benchmarks | 品类标杆
-
 > 零基础先记住这一句：看品类不是为了抄做法，而是先看清这个做法赖以成立的价值节奏和收费前提。
 > English takeaway: Study the category first, or you will copy tactics without the conditions that make them work.
 

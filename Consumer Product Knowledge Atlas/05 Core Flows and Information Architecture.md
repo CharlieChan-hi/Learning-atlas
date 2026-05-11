@@ -1,5 +1,3 @@
-# Core Flows and Information Architecture | 核心路径与信息架构
-
 > 零基础先记住这一句：用户打开一款消费级产品时，最想知道的不是你有多少页面，而是我现在先做哪一步。
 > English takeaway: If the next step is unclear, the structure is already too heavy.
 

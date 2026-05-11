@@ -1,5 +1,3 @@
-# Next AI Brief
-
 ## Purpose
 
 This document is a continuity brief for the next AI that may continue this self-exploration process.

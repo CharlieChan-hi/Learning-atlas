@@ -1,5 +1,3 @@
-# Growth and Distribution | 增长与分发
-
 > 零基础先记住这一句：增长不是单纯买流量，它首先是一条从入口承诺到产品承接能不能对上的链路。
 > English takeaway: Growth works when the entry promise matches the product experience that follows.
 

@@ -1,5 +1,3 @@
-# 竞品分析：AICatch 首页 Banner 运营与内容逻辑
-
 ## 基本信息
 - 竞品名称：AICatch
 - 分析场景：首页 Banner、快捷入口、标签筛选、Trending 模板区

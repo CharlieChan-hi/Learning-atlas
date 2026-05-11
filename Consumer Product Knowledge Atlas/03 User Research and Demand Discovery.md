@@ -1,5 +1,3 @@
-# User Research and Demand Discovery | 用户研究与需求发现
-
 > 零基础先记住这一句：用户研究不是帮团队证明自己本来就对，而是尽快发现自己到底错在哪。
 > English takeaway: User research is for finding what we misunderstood, not for defending old ideas.
 
