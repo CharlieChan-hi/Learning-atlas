@@ -1,0 +1,558 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Learning Atlas",
+  "description": "A personal learning atlas for AI product management, product thinking, coding, health, career, and workflows.",
+  "colors": {
+    "primary": "#2563EB"
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "AI PM Knowledge System",
+        "pages": [
+          "AI PM Knowledge System/AI 产品经理术语表",
+          "AI PM Knowledge System/Claude CLI 工作流主提示词 V2 面向零基础转型 AI 产品经理",
+          {
+            "group": "AI PM Core Skills",
+            "pages": [
+              "AI PM Knowledge System/AI PM Core Skills/01 一句话说清最大区别",
+              "AI PM Knowledge System/AI PM Core Skills/02 为什么需要额外的问题",
+              "AI PM Knowledge System/AI PM Core Skills/03 典型问题 用户预期管理",
+              "AI PM Knowledge System/AI PM Core Skills/04 幻觉 Hallucination",
+              "AI PM Knowledge System/AI PM Core Skills/05 第一节 什么是不可能三角",
+              "AI PM Knowledge System/AI PM Core Skills/06 第一节 思维转变 从测试到评测"
+            ]
+          },
+          {
+            "group": "AI Timeline",
+            "pages": [
+              "AI PM Knowledge System/AI Timeline/01 Why AI Breakout Starts from 2022",
+              "AI PM Knowledge System/AI Timeline/02 2022 What Chatgpt Set Off",
+              "AI PM Knowledge System/AI Timeline/03 2023 from Llms to Tools and Products",
+              "AI PM Knowledge System/AI Timeline/04 关键事件时间线 01 AI Timeline",
+              "AI PM Knowledge System/AI Timeline/05 关键事件时间线 01 AI Timeline 2",
+              "AI PM Knowledge System/AI Timeline/06 年度概览 截至 2026 年 3 月",
+              "AI PM Knowledge System/AI Timeline/07 五年一句话",
+              "AI PM Knowledge System/AI Timeline/AI 领域关键事件时间线 2024 2026 研究笔记"
+            ]
+          },
+          {
+            "group": "AI Tools for Productivity",
+            "pages": [
+              "AI PM Knowledge System/AI Tools for Productivity/01 AI工具六大分类",
+              "AI PM Knowledge System/AI Tools for Productivity/02 使用AI写文档前必读",
+              "AI PM Knowledge System/AI Tools for Productivity/03 使用AI做调研前必读",
+              "AI PM Knowledge System/AI Tools for Productivity/04 使用AI辅助沟通的原则"
+            ]
+          },
+          {
+            "group": "Backlog and Iteration",
+            "pages": [
+              "AI PM Knowledge System/Backlog and Iteration/一、深度技术模块",
+              "AI PM Knowledge System/Backlog and Iteration/模块01 · AI基础认知"
+            ]
+          },
+          {
+            "group": "Cases and Breakdowns",
+            "pages": [
+              "AI PM Knowledge System/Cases and Breakdowns/01 Why Chatgpt Became a Breakout Product",
+              "AI PM Knowledge System/Cases and Breakdowns/02 The Product Logic of Claude Style Tools",
+              "AI PM Knowledge System/Cases and Breakdowns/03 传统搜索 VS AI 搜索 到底区别在哪",
+              "AI PM Knowledge System/Cases and Breakdowns/04 现象 惊艳的 Demo 惨淡的留存",
+              "AI PM Knowledge System/Cases and Breakdowns/05 为什么产品经理需要会拆解 AI 产品",
+              "AI PM Knowledge System/Cases and Breakdowns/06 中国 AI 产品的整体格局"
+            ]
+          },
+          {
+            "group": "Computing and AI Foundations",
+            "pages": [
+              "AI PM Knowledge System/Computing and AI Foundations/01 什么是程序 Program",
+              "AI PM Knowledge System/Computing and AI Foundations/02 PM 需要了解的计算机知识全景图",
+              "AI PM Knowledge System/Computing and AI Foundations/03 什么是模型 Model"
+            ]
+          },
+          {
+            "group": "From LLM to Agent",
+            "pages": [
+              "AI PM Knowledge System/From LLM to Agent/01 What Llms Changed",
+              "AI PM Knowledge System/From LLM to Agent/02 What Function Calling and Tool Use Are",
+              "AI PM Knowledge System/From LLM to Agent/03 Workflows vs Agents",
+              "AI PM Knowledge System/From LLM to Agent/04 Why Agents Are Hot and Often Overhyped",
+              "AI PM Knowledge System/From LLM to Agent/05 What MCP Is and What Problem It Solves",
+              "AI PM Knowledge System/From LLM to Agent/06 What Skills Are and Why They Emerged",
+              "AI PM Knowledge System/From LLM to Agent/07 三款代表产品速览"
+            ]
+          },
+          {
+            "group": "Hands on Practice",
+            "pages": [
+              "AI PM Knowledge System/Hands on Practice/01 需要准备什么工具",
+              "AI PM Knowledge System/Hands on Practice/02 什么是Prompt",
+              "AI PM Knowledge System/Hands on Practice/03 为什么产品经理要懂API调用",
+              "AI PM Knowledge System/Hands on Practice/04 三种消息角色",
+              "AI PM Knowledge System/Hands on Practice/05 用生活比喻理解RAG",
+              "AI PM Knowledge System/Hands on Practice/06 什么是Agent 智能体",
+              "AI PM Knowledge System/Hands on Practice/07 为什么评测如此重要"
+            ]
+          },
+          {
+            "group": "High Quality Sources",
+            "pages": [
+              "AI PM Knowledge System/High Quality Sources/01 筛选标准 Selection Criteria",
+              "AI PM Knowledge System/High Quality Sources/02 为什么需要关注这些源",
+              "AI PM Knowledge System/High Quality Sources/03 为什么需要「信息节食」"
+            ]
+          },
+          {
+            "group": "Job Search and Interviews",
+            "pages": [
+              "AI PM Knowledge System/Job Search and Interviews/01 AI PM Job Search Landscape",
+              "AI PM Knowledge System/Job Search and Interviews/02 How to Write an AI PM Resume",
+              "AI PM Knowledge System/Job Search and Interviews/03 Common Interview Questions and Sample Answers",
+              "AI PM Knowledge System/Job Search and Interviews/04 How to Build a Portfolio",
+              "AI PM Knowledge System/Job Search and Interviews/05 How AI PM Roles Differ Across Companies"
+            ]
+          },
+          {
+            "group": "Learning Plans",
+            "pages": [
+              "AI PM Knowledge System/Learning Plans/01 第1周 AI是什么 + 基础概念",
+              "AI PM Knowledge System/Learning Plans/02 入门基础 与入门计划相同",
+              "AI PM Knowledge System/Learning Plans/03 里程碑检查表"
+            ]
+          },
+          {
+            "group": "Navigation and Learning Method",
+            "pages": [
+              "AI PM Knowledge System/Navigation and Learning Method/01 How to Use This Library",
+              "AI PM Knowledge System/Navigation and Learning Method/02 Notes for Absolute Beginners",
+              "AI PM Knowledge System/Navigation and Learning Method/03 知识体系全景 四大层次"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Career Learning Archive",
+        "pages": [
+          "Career Learning Archive/2026 02 25 公司材料 年度开工致全员信",
+          "Career Learning Archive/2026 03 31 Mentor反馈 结论先行",
+          "Career Learning Archive/Desktop Workspace Naming Glossary",
+          "Career Learning Archive/Web2 与 Web3 产品、商业模式与产品经理的全景地图 2026",
+          "Career Learning Archive/产品经理五条产品原则学习版",
+          "Career Learning Archive/先说结论 这份教程到底在教什么",
+          "Career Learning Archive/沟通表达",
+          "Career Learning Archive/竞品分析 AICatch 首页 Banner 运营与内容逻辑",
+          {
+            "group": "Cost AICatch",
+            "pages": [
+              "Career Learning Archive/Cost AICatch/01 竞品成本分析执行说明",
+              "Career Learning Archive/Cost AICatch/02 竞品成本分析审查指令",
+              "Career Learning Archive/Cost AICatch/03 竞品成本分析审查报告",
+              "Career Learning Archive/Cost AICatch/04 AICatch Cost Revenue Model and Subscription Design Study Edition",
+              "Career Learning Archive/Cost AICatch/竞品 Credits 成本分析简版"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Consumer Product Knowledge Atlas",
+        "pages": [
+          "Consumer Product Knowledge Atlas/01 Consumer Product Atlas",
+          "Consumer Product Knowledge Atlas/02 Consumer Product Foundations",
+          "Consumer Product Knowledge Atlas/03 User Research and Demand Discovery",
+          "Consumer Product Knowledge Atlas/04 Value Proposition and Category Strategy",
+          "Consumer Product Knowledge Atlas/05 Core Flows and Information Architecture",
+          "Consumer Product Knowledge Atlas/06 Onboarding Design Atlas",
+          "Consumer Product Knowledge Atlas/07 Retention and Habit Systems",
+          "Consumer Product Knowledge Atlas/08 Lifecycle and CRM Systems",
+          "Consumer Product Knowledge Atlas/09 Metrics and Experimentation",
+          "Consumer Product Knowledge Atlas/10 Growth and Distribution",
+          "Consumer Product Knowledge Atlas/11 Paywall Monetization Atlas",
+          "Consumer Product Knowledge Atlas/12 Pricing and Offer Architecture",
+          "Consumer Product Knowledge Atlas/13 Category Benchmarks",
+          "Consumer Product Knowledge Atlas/14 Case Benchmarks and Teardowns",
+          "Consumer Product Knowledge Atlas/15 Glossary and Source Index"
+        ]
+      },
+      {
+        "group": "Git Project Workflow",
+        "pages": [
+          "Git Project Workflow/01 先从这里开始",
+          "Git Project Workflow/02 Git 到底是什么",
+          "Git Project Workflow/03 保存 Commit Push 不是一回事",
+          "Git Project Workflow/04 你的项目现在处在什么阶段",
+          "Git Project Workflow/05 每天先会这几个命令",
+          "Git Project Workflow/06 可视化工具和树状历史怎么看",
+          "Git Project Workflow/07 A 电脑和 B 电脑怎么同步",
+          "Git Project Workflow/08 回滚和救命指南",
+          "Git Project Workflow/09 分支 Fork PR 是什么",
+          "Git Project Workflow/10 Charliechanstudio 安全工作流",
+          "Git Project Workflow/11 30 天学习路线和练习",
+          "Git Project Workflow/12 推荐资料和速查清单"
+        ]
+      },
+      {
+        "group": "Inner Atlas",
+        "pages": [
+          "Inner Atlas/01 Current Portrait",
+          "Inner Atlas/02 Session Transcript",
+          "Inner Atlas/03 Next AI Brief",
+          "Inner Atlas/04 A Mirror Not a Map"
+        ]
+      },
+      {
+        "group": "Muscle Gain Playbook",
+        "pages": [
+          "Muscle Gain Playbook/一周买菜清单 + 蒸锅 炒饭版晚饭菜单",
+          "Muscle Gain Playbook/体重变化应对手册",
+          "Muscle Gain Playbook/增肌执行计划 Muscle Gain Playbook 2",
+          "Muscle Gain Playbook/增肌执行计划 Muscle Gain Playbook",
+          "Muscle Gain Playbook/增肌执行计划 前 8 周",
+          "Muscle Gain Playbook/外卖点单清单",
+          "Muscle Gain Playbook/天打卡表",
+          "Muscle Gain Playbook/工作流文件",
+          "Muscle Gain Playbook/晚间训练 60 分钟动作卡",
+          "Muscle Gain Playbook/记忆文档"
+        ]
+      },
+      {
+        "group": "Physiology",
+        "pages": [
+          "Physiology/生理学练习题",
+          {
+            "group": "Vitalis Physiology",
+            "pages": [
+              "Physiology/Vitalis Physiology/Vitalis 生理学 1 5 章预测卷",
+              "Physiology/Vitalis Physiology/Vitalis 课件习题与复习思考题"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Subscription Flow Knowledge System",
+        "pages": [
+          "Subscription Flow Knowledge System/01 这本小书的核心问题",
+          "Subscription Flow Knowledge System/02 用户为什么会买单",
+          "Subscription Flow Knowledge System/03 加载页的真实任务",
+          "Subscription Flow Knowledge System/04 引导页到底在做什么",
+          "Subscription Flow Knowledge System/05 订阅页真正压缩了什么",
+          "Subscription Flow Knowledge System/06 支付页和订阅页的区别",
+          "Subscription Flow Knowledge System/07 Category 1 Aigc Photo Video Avatar",
+          "Subscription Flow Knowledge System/08 为什么不能只看首购",
+          "Subscription Flow Knowledge System/09 Official Sources"
+        ]
+      },
+      {
+        "group": "Vibe Coding Knowledge Vault",
+        "pages": [
+          "Vibe Coding Knowledge Vault/全库结构",
+          {
+            "group": "4 Week 8 Week 12 Week Learning Paths",
+            "pages": [
+              "Vibe Coding Knowledge Vault/4 Week 8 Week 12 Week Learning Paths/01 4 周入门线",
+              "Vibe Coding Knowledge Vault/4 Week 8 Week 12 Week Learning Paths/02 每周重点 17 4 Week 8 Week 12 Week Learning Paths",
+              "Vibe Coding Knowledge Vault/4 Week 8 Week 12 Week Learning Paths/03 每周重点 17 4 Week 8 Week 12 Week Learning Paths 2",
+              "Vibe Coding Knowledge Vault/4 Week 8 Week 12 Week Learning Paths/04 后半程重点"
+            ]
+          },
+          {
+            "group": "AI Coding Tools Codex CLI Claude Code",
+            "pages": [
+              "Vibe Coding Knowledge Vault/AI Coding Tools Codex CLI Claude Code/01 先建立正确认知",
+              "Vibe Coding Knowledge Vault/AI Coding Tools Codex CLI Claude Code/02 什么叫结对工程师思维",
+              "Vibe Coding Knowledge Vault/AI Coding Tools Codex CLI Claude Code/03 MCP 对 AI Coding 的价值",
+              "Vibe Coding Knowledge Vault/AI Coding Tools Codex CLI Claude Code/04 并行协作适合什么场景"
+            ]
+          },
+          {
+            "group": "AI Foundations LLM RAG Agent MCP Eval",
+            "pages": [
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/01 LLM 在解决什么",
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/02 Prompt 不只是提问话术",
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/03 什么是 Eval",
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/04 什么叫结构化输出",
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/05 一条典型 RAG 链路",
+              "Vibe Coding Knowledge Vault/AI Foundations LLM RAG Agent MCP Eval/06 为什么 Agent 比单轮问答更需要失败设计"
+            ]
+          },
+          {
+            "group": "Backend Foundations HTTP API Auth and Services",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/01 后端最核心的四个职责",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/02 HTTP 在做什么",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/03 先分清两个概念",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/04 先把四个词拆开",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/05 The Full Request to Database Path of an API",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/06 什么是错误处理",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/07 联调时最常见的错位",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/08 接口验收先看哪四件事",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/09 为什么要异步处理",
+              "Vibe Coding Knowledge Vault/Backend Foundations HTTP API Auth and Services/10 什么是配额"
+            ]
+          },
+          {
+            "group": "Databases SQL NoSQL Cache and Data Modeling",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Databases SQL NoSQL Cache and Data Modeling/01 数据库在解决什么",
+              "Vibe Coding Knowledge Vault/Databases SQL NoSQL Cache and Data Modeling/02 为什么会有 NoSQL",
+              "Vibe Coding Knowledge Vault/Databases SQL NoSQL Cache and Data Modeling/03 什么叫数据建模",
+              "Vibe Coding Knowledge Vault/Databases SQL NoSQL Cache and Data Modeling/04 什么叫数据口径",
+              "Vibe Coding Knowledge Vault/Databases SQL NoSQL Cache and Data Modeling/05 什么叫历史兼容"
+            ]
+          },
+          {
+            "group": "Debugging Testing Code Quality and Review",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Debugging Testing Code Quality and Review/01 调试的基本节奏",
+              "Vibe Coding Knowledge Vault/Debugging Testing Code Quality and Review/02 测试在解决什么",
+              "Vibe Coding Knowledge Vault/Debugging Testing Code Quality and Review/03 Review 最值得看的四类问题"
+            ]
+          },
+          {
+            "group": "Deployment Ops Docker Ci Cd Monitoring and Rollback",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Deployment Ops Docker Ci Cd Monitoring and Rollback/01 上线通常包括什么",
+              "Vibe Coding Knowledge Vault/Deployment Ops Docker Ci Cd Monitoring and Rollback/02 Docker 在解决什么",
+              "Vibe Coding Knowledge Vault/Deployment Ops Docker Ci Cd Monitoring and Rollback/03 监控在解决什么",
+              "Vibe Coding Knowledge Vault/Deployment Ops Docker Ci Cd Monitoring and Rollback/04 为什么是 30 分钟"
+            ]
+          },
+          {
+            "group": "End to End Case from Prd to Launch",
+            "pages": [
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/01 本案例选择什么题目",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/02 Prd 里至少要说清楚什么",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/03 至少需要哪些结构",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/04 联调阶段最常见的问题",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/05 最适合让 AI 先参与的三个阶段",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/06 一个功能可以怎样拆给 AI",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/07 验收时先看什么",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/08 功能背景",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/09 创建任务接口样例",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/10 测试用例视角",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/11 需求变更最危险的地方",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/12 一个完整评审最少要覆盖什么",
+              "Vibe Coding Knowledge Vault/End to End Case from Prd to Launch/13 如果你想按阶段阅读"
+            ]
+          },
+          {
+            "group": "Frontend Engineering React Next and API Integration",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/01 什么叫前端工程化",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/02 什么是组件",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/03 什么是路由",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/04 Page State Flow and Component Collaboration Examples",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/05 需求进入前端前 先确认什么",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/06 为什么列表页是前端工程化高频难点",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/07 一个表单页到底包含哪些层",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/08 一个联调故障最常见的五层定位法",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/09 什么是权限态",
+              "Vibe Coding Knowledge Vault/Frontend Engineering React Next and API Integration/10 设计稿最少要拆成哪五层"
+            ]
+          },
+          {
+            "group": "Git GitHub and Collaboration Flow",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Git GitHub and Collaboration Flow/01 Git 最核心的三件事",
+              "Vibe Coding Knowledge Vault/Git GitHub and Collaboration Flow/02 一个典型流程",
+              "Vibe Coding Knowledge Vault/Git GitHub and Collaboration Flow/03 什么是冲突"
+            ]
+          },
+          {
+            "group": "Glossary Commands and Error Reference",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/01 高频术语",
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/02 高频终端命令",
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/03 高频状态码",
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/04 任务模板",
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/05 四类高频错误入口",
+              "Vibe Coding Knowledge Vault/Glossary Commands and Error Reference/06 一个最实用的联调提问模板"
+            ]
+          },
+          {
+            "group": "Navigation and Learning Method",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Navigation and Learning Method/01 先把目标想清楚",
+              "Vibe Coding Knowledge Vault/Navigation and Learning Method/02 PM 学技术的真正目标",
+              "Vibe Coding Knowledge Vault/Navigation and Learning Method/03 知识变能力 至少要经过四步",
+              "Vibe Coding Knowledge Vault/Navigation and Learning Method/04 如果你现在最卡的是我根本不敢碰技术",
+              "Vibe Coding Knowledge Vault/Navigation and Learning Method/05 场景一 我要写需求 但想写得更能落地"
+            ]
+          },
+          {
+            "group": "PM Technical Judgment",
+            "pages": [
+              "Vibe Coding Knowledge Vault/PM Technical Judgment/01 技术判断力包含什么",
+              "Vibe Coding Knowledge Vault/PM Technical Judgment/02 一个需求最少要拆哪些层",
+              "Vibe Coding Knowledge Vault/PM Technical Judgment/03 报错先看三件事"
+            ]
+          },
+          {
+            "group": "Python Foundations and Automation",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/01 为什么 Python 特别适合 PM",
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/02 变量",
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/03 为什么 Python 适合 PM",
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/04 Python 脚本什么时候会慢",
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/05 为什么很多脚本只能用一次",
+              "Vibe Coding Knowledge Vault/Python Foundations and Automation/06 典型适用场景"
+            ]
+          },
+          {
+            "group": "Security Permissions Keys Cost and Risk Control",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Security Permissions Keys Cost and Risk Control/01 为什么密钥和权限这么敏感",
+              "Vibe Coding Knowledge Vault/Security Permissions Keys Cost and Risk Control/02 常见风险类型",
+              "Vibe Coding Knowledge Vault/Security Permissions Keys Cost and Risk Control/03 你至少要一起看五件事"
+            ]
+          },
+          {
+            "group": "Terminal Shell Filesystem and Environment",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Terminal Shell Filesystem and Environment/01 先分清三个概念",
+              "Vibe Coding Knowledge Vault/Terminal Shell Filesystem and Environment/02 什么叫环境",
+              "Vibe Coding Knowledge Vault/Terminal Shell Filesystem and Environment/03 什么是 JSON",
+              "Vibe Coding Knowledge Vault/Terminal Shell Filesystem and Environment/04 高频排错顺序"
+            ]
+          },
+          {
+            "group": "Vibe Coding Landscape and Mindset Shift",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Vibe Coding Landscape and Mindset Shift/01 什么叫 Vibe Coding",
+              "Vibe Coding Knowledge Vault/Vibe Coding Landscape and Mindset Shift/02 三个最明显的变化",
+              "Vibe Coding Knowledge Vault/Vibe Coding Landscape and Mindset Shift/03 一个完整功能通常会经过哪些环节"
+            ]
+          },
+          {
+            "group": "Web Foundations HTML CSS JS TS",
+            "pages": [
+              "Vibe Coding Knowledge Vault/Web Foundations HTML CSS JS TS/01 最简单的 Web 闭环",
+              "Vibe Coding Knowledge Vault/Web Foundations HTML CSS JS TS/02 HTML 结构骨架",
+              "Vibe Coding Knowledge Vault/Web Foundations HTML CSS JS TS/03 浏览器不只是显示页面"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Visual Flow Study",
+        "pages": [
+          "Visual Flow Study/抓住用户的眼睛 视觉动线文章中英总结",
+          "Visual Flow Study/核心概念 视觉动线到底是什么"
+        ]
+      },
+      {
+        "group": "Website Learning Studio",
+        "pages": [
+          {
+            "group": "Charlie Project Map",
+            "pages": [
+              "Website Learning Studio/Charlie Project Map/01 Project Overview",
+              "Website Learning Studio/Charlie Project Map/02 Root Directory Tour",
+              "Website Learning Studio/Charlie Project Map/03 Apps Packages Content Docs",
+              "Website Learning Studio/Charlie Project Map/04 How Files Talk to Each Other",
+              "Website Learning Studio/Charlie Project Map/05 Real Project Clutter vs Ideal Structure"
+            ]
+          },
+          {
+            "group": "Code Foundations",
+            "pages": [
+              "Website Learning Studio/Code Foundations/01 Terminal and Files",
+              "Website Learning Studio/Code Foundations/02 Package JSON Scripts",
+              "Website Learning Studio/Code Foundations/03 Node PNPM TypeScript",
+              "Website Learning Studio/Code Foundations/04 Astro Basics",
+              "Website Learning Studio/Code Foundations/05 React Vite Demo Basics"
+            ]
+          },
+          {
+            "group": "Content and Copywriting",
+            "pages": [
+              "Website Learning Studio/Content and Copywriting/01 Personal Intro Writing",
+              "Website Learning Studio/Content and Copywriting/02 Project Storytelling",
+              "Website Learning Studio/Content and Copywriting/03 Bilingual Content Rules",
+              "Website Learning Studio/Content and Copywriting/04 Copywriting Checklist"
+            ]
+          },
+          {
+            "group": "Deployment and Operations",
+            "pages": [
+              "Website Learning Studio/Deployment and Operations/01 Git and GitHub Basics",
+              "Website Learning Studio/Deployment and Operations/02 Cloudflare Pages Basics",
+              "Website Learning Studio/Deployment and Operations/03 Domain DNS Build Output",
+              "Website Learning Studio/Deployment and Operations/04 Pre Launch Checklist"
+            ]
+          },
+          {
+            "group": "Design Foundations",
+            "pages": [
+              "Website Learning Studio/Design Foundations/01 Minimal Black White Style",
+              "Website Learning Studio/Design Foundations/02 Typography Spacing Layout",
+              "Website Learning Studio/Design Foundations/03 Visual Hierarchy",
+              "Website Learning Studio/Design Foundations/04 Accessibility Basics",
+              "Website Learning Studio/Design Foundations/05 Design Review Checklist"
+            ]
+          },
+          {
+            "group": "Orientation",
+            "pages": [
+              "Website Learning Studio/Orientation/01 How to Use This Library",
+              "Website Learning Studio/Orientation/02 先建立一张总地图",
+              "Website Learning Studio/Orientation/03 Learning Path 4 8 12 Weeks"
+            ]
+          },
+          {
+            "group": "Personal Site Strategy",
+            "pages": [
+              "Website Learning Studio/Personal Site Strategy/01 Self Intro First Strategy",
+              "Website Learning Studio/Personal Site Strategy/02 Homepage Information Hierarchy",
+              "Website Learning Studio/Personal Site Strategy/03 Projects Below the Fold",
+              "Website Learning Studio/Personal Site Strategy/04 Trust Credibility Reader Psychology"
+            ]
+          },
+          {
+            "group": "Practice Labs",
+            "pages": [
+              "Website Learning Studio/Practice Labs/01 How to Practice",
+              "Website Learning Studio/Practice Labs/02 Read a Project Folder",
+              "Website Learning Studio/Practice Labs/03 Trace One Page from Content to Screen",
+              "Website Learning Studio/Practice Labs/04 Design a Self Intro Section",
+              "Website Learning Studio/Practice Labs/05 Explain One Command in Plain Language"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "Website Learning Studio/Reference/Future Questions",
+              "Website Learning Studio/Reference/先按层级记 不要按字母记",
+              "Website Learning Studio/Reference/只读检查命令",
+              "Website Learning Studio/Reference/常见错误"
+            ]
+          },
+          {
+            "group": "Website Big Picture",
+            "pages": [
+              "Website Learning Studio/Website Big Picture/01 What Is a Website",
+              "Website Learning Studio/Website Big Picture/02 Browser Server Domain DNS",
+              "Website Learning Studio/Website Big Picture/03 HTML CSS JavaScript",
+              "Website Learning Studio/Website Big Picture/04 From Local Project to Live Site"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/CharlieChan-hi/Learning-atlas"
+      }
+    ]
+  },
+  "seo": {
+    "indexing": "navigable"
+  }
+}
