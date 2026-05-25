@@ -1,1 +1,35 @@
 .DS_Store
+
+# Heavy reference assets kept locally in the learning library.
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.rp
+*.rplib
+*.zip
+*.7z
+*.psd
+*.ai
+*.fig
+*.eps
+*.png
+*.jpg
+*.jpeg
+*.heic
+*.webp
+*.gif
+*.xmind
+*.vsd
+*.vsdx
+*.wps
+*.rtf
+*.ttf
+*.otf
+*.url
+
+# Local app/editor state.
+.obsidian/

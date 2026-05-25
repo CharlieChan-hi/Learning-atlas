@@ -1,0 +1,310 @@
+[
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Consumer Product Knowledge Atlas",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Consumer Product Atlas",
+    "kind": "dir",
+    "size": 149487,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/AI PM Knowledge System",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/02 AI PM/AI PM Knowledge System",
+    "kind": "dir",
+    "size": 689661,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Vibe Coding Knowledge Vault",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/03 Coding/Vibe Coding Knowledge Vault",
+    "kind": "dir",
+    "size": 356501,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Git Project Workflow",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/03 Coding/Git Project Workflow",
+    "kind": "dir",
+    "size": 36253,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Website Learning Studio",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/04 Website/Website Learning Studio",
+    "kind": "dir",
+    "size": 115457,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Career Learning Archive",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/05 Career/Career Learning Archive",
+    "kind": "dir",
+    "size": 146853,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Muscle Gain Playbook",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/08 Wellbeing/Muscle Gain Playbook",
+    "kind": "dir",
+    "size": 69872,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Physiology",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/08 Wellbeing/Physiology",
+    "kind": "dir",
+    "size": 62571,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Inner Atlas",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/09 Personal Atlas/Inner Atlas",
+    "kind": "dir",
+    "size": 94336,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Visual Flow Study",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Visual Flow Study",
+    "kind": "dir",
+    "size": 25664,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/Subscription Flow Knowledge System",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Subscription Flow Knowledge System",
+    "kind": "dir",
+    "size": 36395,
+    "note": "main atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/_manifest.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/merge_source_manifest_from_atlas.md",
+    "kind": "file",
+    "size": 3482,
+    "note": "existing atlas manifest"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Atlas/docs.json",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/docs.json",
+    "kind": "file",
+    "size": 31497,
+    "note": "Mintlify navigation config"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/产品经理架构学习资料库",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Product Architecture for PM",
+    "kind": "dir",
+    "size": 187288,
+    "note": "studio product learning system"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Cosumer-Product-knowledge-atlas",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Consumer Product Atlas - source-studio",
+    "kind": "dir",
+    "size": 176191,
+    "note": "older studio source, spelling preserved in manifest"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/subscription-flow-knowledge-system",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Subscription Flow Knowledge System - source-studio",
+    "kind": "dir",
+    "size": 37901,
+    "note": "older studio source"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/推送与提醒知识包",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Notification and Reminder Playbook",
+    "kind": "dir",
+    "size": 33749,
+    "note": "studio product learning system"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/用户动线学习",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Visual Flow Study - source-studio",
+    "kind": "dir",
+    "size": 901215,
+    "note": "studio visual flow source"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/thinkingdata_event_mapping.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Event Tracking/thinkingdata_event_mapping.md",
+    "kind": "file",
+    "size": 2549,
+    "note": "event tracking note"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/pm_event_tracking_learning_guide.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Event Tracking/pm_event_tracking_learning_guide.md",
+    "kind": "file",
+    "size": 21197,
+    "note": "event tracking guide"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/AuraThemes埋点方案-数数_updated_v4.xlsx",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Event Tracking/AuraThemes埋点方案-数数_updated_v4.xlsx",
+    "kind": "file",
+    "size": 30849,
+    "note": "event tracking spreadsheet; preserve xlsx"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/HT01_APP上线资料学习说明_小白版.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/01 Product/Product Launch/HT01_APP上线资料学习说明_小白版.md",
+    "kind": "file",
+    "size": 21516,
+    "note": "launch guide"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Vaults/AI_PM_Knowledge_System",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Review Inbox/Older Vault Sources/AI_PM_Knowledge_System",
+    "kind": "dir",
+    "size": 749946,
+    "note": "older vault source; do not overwrite atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Vaults/Vibe_Coding_Knowledge_Vault",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Review Inbox/Older Vault Sources/Vibe_Coding_Knowledge_Vault",
+    "kind": "dir",
+    "size": 381092,
+    "note": "older vault source; do not overwrite atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Vaults/Career_Learning_Archive",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Review Inbox/Older Vault Sources/Career_Learning_Archive",
+    "kind": "dir",
+    "size": 109572460,
+    "note": "older vault source; do not overwrite atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Vaults/Inner_Atlas",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Review Inbox/Older Vault Sources/Inner_Atlas",
+    "kind": "dir",
+    "size": 126782,
+    "note": "older vault source; do not overwrite atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Website Learning Studio",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Review Inbox/Older Website Source/Website Learning Studio",
+    "kind": "dir",
+    "size": 128926,
+    "note": "older website source; do not overwrite atlas version"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Courses/English_Study",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/06 Courses/English Study",
+    "kind": "dir",
+    "size": 6718128940,
+    "note": "course material"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Courses/VS_Code_Guide",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/06 Courses/VS Code Guide",
+    "kind": "dir",
+    "size": 14606616,
+    "note": "course material"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Courses/Web_Foundations_Practice",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/06 Courses/Web Foundations Practice",
+    "kind": "dir",
+    "size": 874,
+    "note": "course material"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Git，从零到项目的实战",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/03 Coding/Git Project Workflow - source-studio",
+    "kind": "dir",
+    "size": 36253,
+    "note": "older/studio Git source"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Libraries/Product_Manager_Library",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/07 Reference Library/Product Manager Library",
+    "kind": "dir",
+    "size": 4892407421,
+    "note": "large reference library"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Libraries/Product_Manager_Interview_Kit",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/07 Reference Library/Product Manager Interview Kit",
+    "kind": "dir",
+    "size": 5294106,
+    "note": "interview reference library"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Libraries/Reading_Room",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/07 Reference Library/Reading Room",
+    "kind": "dir",
+    "size": 2117110235,
+    "note": "large reading library"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Libraries/Web3_Product_Research",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/07 Reference Library/Web3 Product Research",
+    "kind": "dir",
+    "size": 59368,
+    "note": "web3 research library"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Wellbeing/Muscle_Gain_Playbook",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/08 Wellbeing/Muscle Gain Playbook - source-studio",
+    "kind": "dir",
+    "size": 70244,
+    "note": "older/studio wellbeing source"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Assets",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_Assets/Studio Assets",
+    "kind": "dir",
+    "size": 297997,
+    "note": "visual assets"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Workspace Atlas",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/Workspace Atlas",
+    "kind": "dir",
+    "size": 386005,
+    "note": "workspace maps"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Product Lexicon",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/Product Lexicon",
+    "kind": "dir",
+    "size": 27712,
+    "note": "naming and terminology system"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/Desktop Naming Glossary.html",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/Desktop Naming Glossary.html",
+    "kind": "file",
+    "size": 1405,
+    "note": "system index"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/README_Directory.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/README_Directory_from_Learning_Studio.md",
+    "kind": "file",
+    "size": 2644,
+    "note": "previous studio directory readme"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/knowledge_base_workflow_general.md",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/knowledge_base_workflow_general.md",
+    "kind": "file",
+    "size": 14436,
+    "note": "system workflow note"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/project_structure_bilingual_editorial_v4.html",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/_System/project_structure_bilingual_editorial_v4.html",
+    "kind": "file",
+    "size": 14146,
+    "note": "system index"
+  },
+  {
+    "source": "/Users/qiqichen/Desktop/Learning Studio/WEF_Future_of_Jobs_Report_2025.pdf",
+    "target": "/Users/qiqichen/Desktop/Learning Atlas/05 Career/WEF_Future_of_Jobs_Report_2025.pdf",
+    "kind": "file",
+    "size": 18604420,
+    "note": "career report"
+  }
+]

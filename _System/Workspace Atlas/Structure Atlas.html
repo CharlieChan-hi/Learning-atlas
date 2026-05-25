@@ -1,0 +1,3174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Structure Atlas</title>
+    <style>
+      :root {
+        --paper: #fbfbfb;
+        --surface: #ffffff;
+        --surface-muted: #f6f6f6;
+        --ink: #111111;
+        --ink-soft: #2f2f2f;
+        --muted: #666666;
+        --faint: #969696;
+        --line: #e5e5e5;
+        --line-strong: #d4d4d4;
+        --line-dark: #bdbdbd;
+        --tag: #f3f3f3;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+
+      main {
+        width: min(980px, calc(100vw - 36px));
+        margin: 0 auto;
+        padding: 28px 0 80px;
+      }
+
+      h1, h2, h3, h4, p {
+        margin: 0;
+      }
+
+      h1, h2, h3, h4 {
+        margin: 0;
+        font-weight: 560;
+        letter-spacing: -0.02em;
+      }
+
+      .hero {
+        padding: 56px 0 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .hero h1 {
+        font-size: clamp(34px, 6vw, 58px);
+        line-height: 1.02;
+        font-weight: 620;
+      }
+
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 14px 0 12px;
+        margin-top: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 251, 251, 0.96);
+      }
+
+      .toolbar-shell {
+        display: grid;
+        gap: 12px;
+      }
+
+      .toolbar-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .toolbar-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .toolbar-link,
+      .toolbar-action,
+      .nav-row {
+        font-size: 13px;
+      }
+
+      .toolbar-link,
+      .toolbar-action {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          color 140ms ease,
+          transform 140ms ease,
+          background-color 140ms ease,
+          border-color 140ms ease;
+      }
+
+      .toolbar-icon-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+      }
+
+      .toolbar-icon-button svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+      }
+
+      .toolbar-link:hover,
+      .toolbar-action:hover {
+        color: var(--ink);
+      }
+
+      .toolbar-icon-button:hover,
+      .toolbar-icon-button:focus-visible {
+        color: var(--ink);
+        background: var(--surface);
+        border-color: var(--line);
+        transform: translateY(-1px);
+      }
+
+      .toolbar-icon-button:active {
+        transform: translateY(0) scale(0.96);
+      }
+
+      .nav-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .nav-pill {
+        padding: 0 0 2px;
+        border-bottom: 1px solid transparent;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        background: transparent;
+      }
+
+      .nav-pill:hover {
+        border-color: var(--line-dark);
+        color: var(--ink);
+      }
+
+      details[id] {
+        scroll-margin-top: 92px;
+      }
+
+      summary {
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary:focus-visible,
+      .toolbar-link:focus-visible,
+      .toolbar-action:focus-visible,
+      .nav-pill:focus-visible {
+        outline: 2px solid rgba(17, 17, 17, 0.14);
+        outline-offset: 4px;
+        border-radius: 10px;
+      }
+
+      .atlas-stack {
+        padding-top: 18px;
+      }
+
+      .atlas-section {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .atlas-summary,
+      .mapping-summary,
+      .mapping-segment-summary {
+        cursor: pointer;
+      }
+
+      .atlas-summary {
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 18px 0;
+        align-items: start;
+      }
+
+      .atlas-toggle {
+        width: 10px;
+        height: 10px;
+        margin-top: 7px;
+        border-right: 1.5px solid var(--ink);
+        border-bottom: 1.5px solid var(--ink);
+        opacity: 0.72;
+        transform: rotate(-45deg);
+        transition: transform 140ms ease;
+      }
+
+      .atlas-toggle-small {
+        width: 8px;
+        height: 8px;
+        margin-top: 6px;
+      }
+
+      details[open] > summary .atlas-toggle {
+        transform: rotate(45deg);
+      }
+
+      .atlas-summary-main,
+      .mapping-summary-main,
+      .mapping-segment-main {
+        display: grid;
+        gap: 6px;
+      }
+
+      .section-title {
+        font-size: 24px;
+        line-height: 1.18;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+      }
+
+      .content-title {
+        font-size: clamp(16px, 1.95vw, 19px);
+        line-height: 1.44;
+        font-weight: 470;
+        letter-spacing: -0.016em;
+        color: var(--ink-soft);
+      }
+
+      .content-title-english {
+        color: var(--faint);
+        font-size: 0.74em;
+        font-weight: 430;
+        letter-spacing: 0.01em;
+      }
+
+      .atlas-summary-kicker,
+      .mapping-kind {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .atlas-summary-title {
+        display: block;
+      }
+
+      .atlas-summary-copy,
+      .mapping-summary-copy,
+      .mapping-segment-copy,
+      .mapping-segment-tags {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .atlas-summary-meta,
+      .mapping-summary-meta {
+        padding-top: 7px;
+        font-size: 12px;
+        color: var(--faint);
+        white-space: nowrap;
+      }
+
+      .atlas-content {
+        padding: 0 0 22px 34px;
+      }
+
+      .document-row {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .document-index {
+        color: var(--faint);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+      }
+
+      .document-main p {
+        margin: 10px 0 0;
+        color: var(--ink-soft);
+        line-height: 1.75;
+      }
+
+      .document-note {
+        color: var(--muted) !important;
+      }
+
+      .template-notes,
+      .project-list {
+        margin: 16px 0 0;
+        padding-left: 18px;
+        color: var(--ink-soft);
+      }
+
+      .template-notes li,
+      .project-list li {
+        margin-top: 8px;
+        line-height: 1.7;
+      }
+
+      .guide-sheet {
+        margin-top: 18px;
+      }
+
+      .guide-sheet h4 {
+        margin-bottom: 10px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .guide-list,
+      .workflow-list {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .guide-row,
+      .workflow-row {
+        display: grid;
+        gap: 6px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .guide-row-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--ink);
+      }
+
+      .guide-divider,
+      .guide-full,
+      .guide-row-meaning,
+      .workflow-index {
+        color: var(--faint);
+      }
+
+      .guide-row-meaning {
+        font-size: 13px;
+      }
+
+      .guide-row-body,
+      .workflow-main p {
+        color: var(--ink-soft);
+        line-height: 1.8;
+      }
+
+      .guide-row-note {
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .text-label,
+      .text-divider {
+        color: var(--faint);
+      }
+
+      .text-label {
+        white-space: nowrap;
+      }
+
+      code,
+      .code-inline {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 5px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-muted);
+        font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+        font-size: 0.92em;
+        line-height: 1.62;
+        color: var(--ink);
+      }
+
+      .workflow-row {
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .workflow-index {
+        font-size: 12px;
+        letter-spacing: 0.08em;
+      }
+
+      .workflow-main h5 {
+        margin: 0;
+      }
+
+      .workflow-main p + p {
+        margin-top: 8px;
+      }
+
+      .checklist {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink-soft);
+      }
+
+      .checklist li {
+        margin-top: 8px;
+        line-height: 1.75;
+      }
+
+      .tree-block {
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      .tree-node-shell {
+        position: relative;
+        z-index: 0;
+      }
+
+      .tree-node-shell[data-state="hovered"],
+      .tree-node-shell[data-state="pinned"] {
+        z-index: 6;
+      }
+
+      .tree-line-button {
+        width: calc(100% + 16px);
+        margin: 0 -8px;
+        padding: 2px 8px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ink-soft);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .tree-line-button:hover,
+      .tree-line-button:focus-visible,
+      .tree-node-shell[data-state="hovered"] .tree-line-button,
+      .tree-node-shell[data-state="pinned"] .tree-line-button {
+        background: var(--surface-muted);
+        color: var(--ink);
+      }
+
+      .tree-line-button:focus-visible {
+        outline: 2px solid rgba(17, 17, 17, 0.12);
+        outline-offset: 2px;
+      }
+
+      .tree-line {
+        font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+        font-size: 13px;
+        line-height: 1.85;
+        white-space: pre-wrap;
+      }
+
+      .tree-popover {
+        position: absolute;
+        bottom: calc(100% + 12px);
+        left: 0;
+        width: min(360px, calc(100vw - 72px));
+        padding: 14px 16px;
+        border: 1px solid var(--line-strong);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 8;
+      }
+
+      .tree-popover[data-mode="pinned"] {
+        position: fixed;
+        top: 0;
+        bottom: auto;
+        left: 0;
+        z-index: 28;
+      }
+
+      .tree-popover[data-placement="below"] {
+        top: calc(100% + 10px);
+        bottom: auto;
+      }
+
+      .tree-popover-top {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 12px;
+        cursor: default;
+      }
+
+      .tree-popover[data-mode="pinned"] .tree-popover-top {
+        cursor: move;
+        touch-action: none;
+      }
+
+      .tree-popover[data-dragging="true"] .tree-popover-top {
+        cursor: grabbing;
+      }
+
+      .tree-popover-heading {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: baseline;
+        color: var(--ink);
+      }
+
+      .tree-popover-divider,
+      .tree-popover-full,
+      .tree-popover-meaning {
+        color: var(--faint);
+      }
+
+      .tree-popover-close {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .tree-popover-close:hover,
+      .tree-popover-close:focus-visible {
+        background: var(--surface-muted);
+        color: var(--ink);
+        outline: none;
+      }
+
+      .tree-popover-meaning,
+      .tree-popover-body,
+      .tree-popover-note {
+        margin-top: 10px;
+        line-height: 1.75;
+      }
+
+      .tree-popover-body {
+        color: var(--ink-soft);
+      }
+
+      .tree-popover-note {
+        color: var(--muted);
+      }
+
+      .mapping-list {
+        display: grid;
+      }
+
+      .mapping-item {
+        border-top: 1px solid var(--line);
+      }
+
+      .mapping-summary {
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        padding: 16px 0;
+      }
+
+      .mapping-title {
+        font-size: 19px;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+      }
+
+      .mapping-body {
+        padding: 0 0 18px 34px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .mapping-block {
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .mapping-block h4 {
+        margin-bottom: 10px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .mapping-judgement {
+        display: grid;
+        gap: 8px;
+      }
+
+      .mapping-judgement p {
+        color: var(--ink-soft);
+        line-height: 1.8;
+      }
+
+      .mapping-judgement-meta {
+        color: var(--muted) !important;
+      }
+
+      .flow-chain {
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.8;
+        background: var(--surface);
+      }
+
+      .mapping-segment-list {
+        border-top: 1px solid var(--line);
+      }
+
+      .mapping-segment {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mapping-segment-summary {
+        display: grid;
+        grid-template-columns: 16px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        padding: 13px 0;
+      }
+
+      .mapping-segment-title {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .mapping-segment-body {
+        padding: 0 0 14px 28px;
+      }
+
+      .mapping-segment-body p {
+        margin: 0;
+        color: var(--ink-soft);
+        line-height: 1.8;
+      }
+
+      .mapping-segment-tags {
+        margin-top: 8px !important;
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 860px) {
+        .toolbar-top,
+        .atlas-summary,
+        .mapping-summary,
+        .document-row,
+        .workflow-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .atlas-content,
+        .mapping-body,
+        .mapping-segment-body {
+          padding-left: 0;
+        }
+
+        .atlas-summary-meta,
+        .mapping-summary-meta {
+          padding-top: 0;
+          white-space: normal;
+        }
+
+        .tree-popover {
+          position: static;
+          width: 100%;
+          margin: 8px 0 4px;
+        }
+
+        .tree-popover[data-mode="pinned"] {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Structure Atlas</p>
+        <h1>Structure Atlas</h1>
+      </header>
+
+      <section class="toolbar" aria-label="文档导航">
+        <div class="toolbar-shell">
+          <div class="toolbar-top">
+            <div class="toolbar-actions">
+              <a class="toolbar-link toolbar-icon-button" href="Naming Glossary.html" aria-label="回到词汇页" title="回到词汇页">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M14.5 10H6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" />
+          <path d="M9.5 6 5.5 10l4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+        </svg>
+      </a>
+              <button class="toolbar-action toolbar-icon-button" type="button" data-action="expand-all" aria-label="展开全部" title="展开全部">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M5 5.5 10 10l5-4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+          <path d="M5 9.5 10 14l5-4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+          <path d="M5 16h10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" />
+        </svg>
+      </button>
+              <button class="toolbar-action toolbar-icon-button" type="button" data-action="collapse-all" aria-label="收起全部" title="收起全部">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M5 14.5 10 10l5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+          <path d="M5 10.5 10 6l5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+          <path d="M5 4h10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" />
+        </svg>
+      </button>
+            </div>
+          </div>
+          <nav class="nav-row"><a class="nav-pill" href="#section-principles">优雅结构标准</a><a class="nav-pill" href="#section-frontend-template">前端结构模板</a><a class="nav-pill" href="#section-backend-template">后端结构模板</a><a class="nav-pill" href="#section-request-flow">请求流</a><a class="nav-pill" href="#section-desktop-mappings">你的桌面映射</a><a class="nav-pill" href="#section-project-blueprint">你的项目蓝图</a></nav>
+        </div>
+      </section>
+
+      <div class="atlas-stack">
+        
+    <details class="atlas-section" id="section-principles" open>
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Structure Standard</span>
+          <h2 class="section-title"><span class="atlas-summary-title">优雅结构标准</span></h2>
+          <span class="atlas-summary-copy">先建立判断项目结构是否优雅的四个标准，读结构前先有判断尺子。</span>
+        </span>
+        <span class="atlas-summary-meta">4 条判断</span>
+      </summary>
+      <div class="atlas-content">
+        
+        <article class="document-row">
+          <p class="document-index">01</p>
+          <div class="document-main">
+            <h3 class="content-title">可预测性 <span class="content-title-english">Predictable</span></h3>
+            <p>你不用问别人，就知道 API、页面、业务逻辑各自应该放在哪一层。</p>
+            <p class="document-note">新人 3 分钟能读懂结构，通常就已经接近优雅。</p>
+          </div>
+        </article>
+      
+        <article class="document-row">
+          <p class="document-index">02</p>
+          <div class="document-main">
+            <h3 class="content-title">单一职责 <span class="content-title-english">Separation of Concerns</span></h3>
+            <p>每一层只负责一件事，UI、请求、业务逻辑和数据结构不要混在一个目录里。</p>
+            <p class="document-note"><span class="code-inline">services</span> 负责业务，<span class="code-inline">components</span> 负责展示，<span class="code-inline">api</span> 负责请求。</p>
+          </div>
+        </article>
+      
+        <article class="document-row">
+          <p class="document-index">03</p>
+          <div class="document-main">
+            <h3 class="content-title">低耦合 <span class="content-title-english">Low Coupling</span></h3>
+            <p>页面之间不要互相调用，跨页面能力应该经由 service 或 api 中转。</p>
+            <p class="document-note">页面只组织展示和交互，不直接依赖别的页面实现细节。</p>
+          </div>
+        </article>
+      
+        <article class="document-row">
+          <p class="document-index">04</p>
+          <div class="document-main">
+            <h3 class="content-title">易扩展 <span class="content-title-english">Scalable</span></h3>
+            <p>新模块应该可以在原结构上扩展，而不是每次加功能都推翻重来。</p>
+            <p class="document-note">加用户系统、加新接口、换 UI 框架，都应当是扩展，不是重建。</p>
+          </div>
+        </article>
+      
+      </div>
+    </details>
+  
+    <details class="atlas-section" id="section-frontend-template">
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Frontend</span>
+          <h2 class="section-title"><span class="atlas-summary-title">前端结构模板</span></h2>
+          <span class="atlas-summary-copy">前端更推荐按业务模块组织，而不是只按技术类型切目录。这样一个功能会成为一个闭环，而不是散在各处。</span>
+        </span>
+        <span class="atlas-summary-meta">18 行模板</span>
+      </summary>
+      <div class="atlas-content">
+        
+        
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="frontend-tree-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-0" aria-controls="tree-popover-frontend-tree-0" aria-expanded="false">
+                <span class="tree-line">frontend/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-0" data-tree-popover="frontend-tree-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="frontend/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-0">
+        <div class="tree-popover-heading"><code>frontend/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">前端工程容器</p>
+      <p class="tree-popover-body">这一层是整个前端工程的最上层容器，负责把源码、静态资源和前端配置收在一起。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>真实团队里通常会把前端代码收进 <span class="code-inline">frontend/</span>，和 <span class="code-inline">backend/</span> 分开治理。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-1" aria-controls="tree-popover-frontend-tree-1" aria-expanded="false">
+                <span class="tree-line">└── src/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-1" data-tree-popover="frontend-tree-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="src/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-1">
+        <div class="tree-popover-heading"><code>src/</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">source</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">主源码目录</p>
+      <p class="tree-popover-body">项目最核心的实现通常都从这里开始往下展开，看到它就能判断“主代码在这里”。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>常见写法是 <span class="code-inline">src/components</span>、<span class="code-inline">src/pages</span>、<span class="code-inline">src/hooks</span>，这些都属于真正会被打包和运行的代码。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-2" aria-controls="tree-popover-frontend-tree-2" aria-expanded="false">
+                <span class="tree-line">    ├── api/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-2" data-tree-popover="frontend-tree-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="api/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-2">
+        <div class="tree-popover-heading"><code>api/</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">Application Programming Interface</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">接口请求层</p>
+      <p class="tree-popover-body">适合集中封装请求函数，让页面和组件不要直接写 fetch 或 <span class="code-inline">axios</span> 细节。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 export async function <span class="code-inline">getUser()</span> { return <span class="code-inline">request.get(&quot;/user&quot;)</span> }，页面只调用 <span class="code-inline">getUser()</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-3" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-3" aria-controls="tree-popover-frontend-tree-3" aria-expanded="false">
+                <span class="tree-line">    ├── assets/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-3" data-tree-popover="frontend-tree-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="assets/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-3">
+        <div class="tree-popover-heading"><code>assets/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">静态资源层</p>
+      <p class="tree-popover-body">这一层适合收图片、图标、插图和其他不会直接执行的静态资源。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 logo、banner、插图和占位图，一般会放在 <span class="code-inline">assets/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-4" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-4" aria-controls="tree-popover-frontend-tree-4" aria-expanded="false">
+                <span class="tree-line">    ├── components/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-4" data-tree-popover="frontend-tree-4" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="components/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-4">
+        <div class="tree-popover-heading"><code>components/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-4" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">可复用组件层</p>
+      <p class="tree-popover-body">放按钮、卡片、弹窗这类可复用界面片段，重点是复用而不是承接整页业务。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一个文件里主要是 Button、Card、Modal、FormField，这一层通常就叫 <span class="code-inline">components</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-5" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-5" aria-controls="tree-popover-frontend-tree-5" aria-expanded="false">
+                <span class="tree-line">    ├── features/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-5" data-tree-popover="frontend-tree-5" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="features/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-5">
+        <div class="tree-popover-heading"><code>features/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-5" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">业务模块层</p>
+      <p class="tree-popover-body">按业务闭环组织代码，把一个功能相关的组件、<span class="code-inline">hooks</span>、<span class="code-inline">service</span> 放在一起。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 focus-session、task-system 这种模块名，比单纯把所有代码分散到 <span class="code-inline">pages/components</span> 更容易维护。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-6" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-6" aria-controls="tree-popover-frontend-tree-6" aria-expanded="false">
+                <span class="tree-line">    │   ├── focus-session/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-6" data-tree-popover="frontend-tree-6" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="focus-session/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-6">
+        <div class="tree-popover-heading"><code>focus-session/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-6" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">专注会话模块</p>
+      <p class="tree-popover-body">这是按业务命名的功能模块，围绕一次专注训练过程组织自己的组件、状态和服务。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>业务模块名越贴近真实产品能力，团队就越容易理解这个目录在负责什么。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-7" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-7" aria-controls="tree-popover-frontend-tree-7" aria-expanded="false">
+                <span class="tree-line">    │   ├── task-system/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-7" data-tree-popover="frontend-tree-7" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="task-system/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-7">
+        <div class="tree-popover-heading"><code>task-system/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-7" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">任务系统模块</p>
+      <p class="tree-popover-body">这是任务相关能力的业务模块，适合把任务规则、视图和交互闭环收在一起。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>比起 <span class="code-inline">module</span>-a 这类抽象名字，用 task-system 这种业务词更容易维护。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-8" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-8" aria-controls="tree-popover-frontend-tree-8" aria-expanded="false">
+                <span class="tree-line">    │   ├── reward-system/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-8" data-tree-popover="frontend-tree-8" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="reward-system/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-8">
+        <div class="tree-popover-heading"><code>reward-system/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-8" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">奖励系统模块</p>
+      <p class="tree-popover-body">这是奖励逻辑的业务模块，适合沉淀积分、激励和奖励反馈相关能力。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>奖励规则、奖励面板、奖励计算通常会在同一个业务模块里协作。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-9" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-9" aria-controls="tree-popover-frontend-tree-9" aria-expanded="false">
+                <span class="tree-line">    │   └── report-analytics/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-9" data-tree-popover="frontend-tree-9" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="report-analytics/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-9">
+        <div class="tree-popover-heading"><code>report-analytics/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-9" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">报告与分析模块</p>
+      <p class="tree-popover-body">这是分析和报告能力的业务模块，重点是把结果展示和分析逻辑聚在一起。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像训练报告、趋势分析、周报面板，适合收在 report-analytics 这类模块里。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-10" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-10" aria-controls="tree-popover-frontend-tree-10" aria-expanded="false">
+                <span class="tree-line">    ├── hooks/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-10" data-tree-popover="frontend-tree-10" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="hooks/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-10">
+        <div class="tree-popover-heading"><code>hooks/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-10" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">状态逻辑复用层</p>
+      <p class="tree-popover-body">常见于 React 语境，适合放 useXxx 这类带状态和副作用的复用逻辑。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 useUserProfile、useCountdown、useSessionTimer 这类函数，通常就会放在 <span class="code-inline">hooks/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-11" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-11" aria-controls="tree-popover-frontend-tree-11" aria-expanded="false">
+                <span class="tree-line">    ├── layouts/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-11" data-tree-popover="frontend-tree-11" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="layouts/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-11">
+        <div class="tree-popover-heading"><code>layouts/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-11" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">布局层</p>
+      <p class="tree-popover-body">这一层负责页面骨架和共用布局，不直接承接具体业务规则。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 DashboardLayout、AuthLayout 这种页面框架通常会放在这里。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-12" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-12" aria-controls="tree-popover-frontend-tree-12" aria-expanded="false">
+                <span class="tree-line">    ├── pages/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-12" data-tree-popover="frontend-tree-12" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="pages/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-12">
+        <div class="tree-popover-heading"><code>pages/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-12" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">页面层</p>
+      <p class="tree-popover-body">页面层负责路由对应的完整视图，它更像一个装配入口，而不是所有逻辑都堆在里面。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>页面文件里会组合组件、调用 <span class="code-inline">hooks</span>、触发 <span class="code-inline">api</span>，但不会把请求和状态实现都写在同一个大文件里。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-13" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-13" aria-controls="tree-popover-frontend-tree-13" aria-expanded="false">
+                <span class="tree-line">    ├── router/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-13" data-tree-popover="frontend-tree-13" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="router/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-13">
+        <div class="tree-popover-heading"><code>router/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-13" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">路由配置层</p>
+      <p class="tree-popover-body">这一层负责定义页面路径和页面之间的导航关系。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>路由表、导航守卫和跳转配置通常会放在 <span class="code-inline">router/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-14" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-14" aria-controls="tree-popover-frontend-tree-14" aria-expanded="false">
+                <span class="tree-line">    ├── store/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-14" data-tree-popover="frontend-tree-14" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="store/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-14">
+        <div class="tree-popover-heading"><code>store/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-14" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">全局状态层</p>
+      <p class="tree-popover-body">适合放跨页面共享的状态容器，例如登录信息、主题、全局筛选条件。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果多个页面都要读写同一份状态，通常会放到 <span class="code-inline">store/</span> 而不是互相 import 页面里的变量。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-15" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-15" aria-controls="tree-popover-frontend-tree-15" aria-expanded="false">
+                <span class="tree-line">    ├── styles/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-15" data-tree-popover="frontend-tree-15" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="styles/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-15">
+        <div class="tree-popover-heading"><code>styles/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-15" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">样式层</p>
+      <p class="tree-popover-body">这一层收全局样式、设计变量和基础视觉规则，帮助页面保持一致。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>reset、theme、token 或全局 css 往往会放在 <span class="code-inline">styles/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-16" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-16" aria-controls="tree-popover-frontend-tree-16" aria-expanded="false">
+                <span class="tree-line">    ├── utils/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-16" data-tree-popover="frontend-tree-16" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="utils/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-16">
+        <div class="tree-popover-heading"><code>utils/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-16" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">纯工具层</p>
+      <p class="tree-popover-body">只放没有业务语义的通用函数，例如时间格式化、字符串处理、数组转换。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一个函数叫 formatDate、groupByMonth、clampNumber，它更适合放 <span class="code-inline">utils</span>；如果叫 getUserInsight，就更像 <span class="code-inline">service</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="frontend-tree-17" data-tree-kind="file" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="frontend-tree-17" aria-controls="tree-popover-frontend-tree-17" aria-expanded="false">
+                <span class="tree-line">    └── main.ts</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-frontend-tree-17" data-tree-popover="frontend-tree-17" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="main.ts 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="frontend-tree-17">
+        <div class="tree-popover-heading"><code>main.ts</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">TypeScript</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="frontend-tree-17" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">前端入口文件</p>
+      <p class="tree-popover-body">这是应用真正启动的入口文件，通常从这里挂载应用、引入路由和全局状态。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>React / Vue 项目里常会在 <span class="code-inline">main.ts</span> 里创建应用实例并挂到页面根节点。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+        
+    <section class="guide-sheet">
+      <h4>目录词解释</h4>
+      <div class="guide-list">
+        
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>src</code><span class="guide-divider">=</span><span class="guide-full">source</span></div>
+                <p class="guide-row-meaning">主源码目录</p>
+                <p class="guide-row-body">项目最核心的实现通常都从这里开始往下展开，看到它就能判断“主代码在这里”。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>常见写法是 <span class="code-inline">src/components</span>、<span class="code-inline">src/pages</span>、<span class="code-inline">src/hooks</span>，这些都属于真正会被打包和运行的代码。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>api</code><span class="guide-divider">=</span><span class="guide-full">Application Programming Interface</span></div>
+                <p class="guide-row-meaning">接口请求层</p>
+                <p class="guide-row-body">适合集中封装请求函数，让页面和组件不要直接写 fetch 或 <span class="code-inline">axios</span> 细节。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 export async function <span class="code-inline">getUser()</span> { return <span class="code-inline">request.get(&quot;/user&quot;)</span> }，页面只调用 <span class="code-inline">getUser()</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>components</code></div>
+                <p class="guide-row-meaning">可复用组件层</p>
+                <p class="guide-row-body">放按钮、卡片、弹窗这类可复用界面片段，重点是复用而不是承接整页业务。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一个文件里主要是 Button、Card、Modal、FormField，这一层通常就叫 <span class="code-inline">components</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>features</code></div>
+                <p class="guide-row-meaning">业务模块层</p>
+                <p class="guide-row-body">按业务闭环组织代码，把一个功能相关的组件、<span class="code-inline">hooks</span>、<span class="code-inline">service</span> 放在一起。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 focus-session、task-system 这种模块名，比单纯把所有代码分散到 <span class="code-inline">pages/components</span> 更容易维护。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>hooks</code></div>
+                <p class="guide-row-meaning">状态逻辑复用层</p>
+                <p class="guide-row-body">常见于 React 语境，适合放 useXxx 这类带状态和副作用的复用逻辑。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 useUserProfile、useCountdown、useSessionTimer 这类函数，通常就会放在 <span class="code-inline">hooks/</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>pages</code></div>
+                <p class="guide-row-meaning">页面层</p>
+                <p class="guide-row-body">页面层负责路由对应的完整视图，它更像一个装配入口，而不是所有逻辑都堆在里面。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>页面文件里会组合组件、调用 <span class="code-inline">hooks</span>、触发 <span class="code-inline">api</span>，但不会把请求和状态实现都写在同一个大文件里。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>store</code></div>
+                <p class="guide-row-meaning">全局状态层</p>
+                <p class="guide-row-body">适合放跨页面共享的状态容器，例如登录信息、主题、全局筛选条件。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果多个页面都要读写同一份状态，通常会放到 <span class="code-inline">store/</span> 而不是互相 import 页面里的变量。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>utils</code></div>
+                <p class="guide-row-meaning">纯工具层</p>
+                <p class="guide-row-body">只放没有业务语义的通用函数，例如时间格式化、字符串处理、数组转换。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一个函数叫 formatDate、groupByMonth、clampNumber，它更适合放 <span class="code-inline">utils</span>；如果叫 getUserInsight，就更像 <span class="code-inline">service</span>。</p>
+              </article>
+            
+      </div>
+    </section>
+  
+        <ul class="template-notes"><li><span class="code-inline">features/</span> 比单纯的 <span class="code-inline">components</span> / <span class="code-inline">pages</span> / <span class="code-inline">api</span> 平铺更高级，因为一个功能的组件、<span class="code-inline">hooks</span>、<span class="code-inline">service</span> 会聚在一起。</li><li><span class="code-inline">api</span> 层应该独立，组件里不要直接写 <span class="code-inline">axios.get(...)</span>；组件调用动作，<span class="code-inline">api</span> 负责请求。</li><li><span class="code-inline">utils</span> 只放纯工具函数，有业务含义的能力应该留在 <span class="code-inline">service</span>。</li></ul>
+      
+      </div>
+    </details>
+  
+    <details class="atlas-section" id="section-backend-template">
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Backend</span>
+          <h2 class="section-title"><span class="atlas-summary-title">后端结构模板</span></h2>
+          <span class="atlas-summary-copy">后端的优雅感来自清楚的请求流和稳定的业务层，controller 不要吞掉 service 的职责。</span>
+        </span>
+        <span class="atlas-summary-meta">10 行模板</span>
+      </summary>
+      <div class="atlas-content">
+        
+        
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="backend-tree-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-0" aria-controls="tree-popover-backend-tree-0" aria-expanded="false">
+                <span class="tree-line">backend/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-0" data-tree-popover="backend-tree-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="backend/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-0">
+        <div class="tree-popover-heading"><code>backend/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">后端工程容器</p>
+      <p class="tree-popover-body">这一层是整个后端工程的最上层容器，负责把接口、服务和配置收成一套稳定结构。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>把前后端分开后，团队会更容易定位请求入口和数据处理边界。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-1" aria-controls="tree-popover-backend-tree-1" aria-expanded="false">
+                <span class="tree-line">└── src/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-1" data-tree-popover="backend-tree-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="src/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-1">
+        <div class="tree-popover-heading"><code>src/</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">source</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">主源码目录</p>
+      <p class="tree-popover-body">这一层是后端核心实现的真正入口，后续的 <span class="code-inline">routes</span>、<span class="code-inline">services</span>、<span class="code-inline">models</span> 都从这里继续展开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果你想快速看懂后端结构，通常先从 <span class="code-inline">backend/src/</span> 往下读。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-2" aria-controls="tree-popover-backend-tree-2" aria-expanded="false">
+                <span class="tree-line">    ├── controllers/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-2" data-tree-popover="backend-tree-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="controllers/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-2">
+        <div class="tree-popover-heading"><code>controllers/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">接口入口处理层</p>
+      <p class="tree-popover-body">负责接住请求、整理参数、返回响应，不应该把真正的业务规则全塞在这里。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span><span class="code-inline">controller</span> 最好只做“收参数、调 <span class="code-inline">service</span>、回结果”这三件事，避免直接查数据库。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-3" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-3" aria-controls="tree-popover-backend-tree-3" aria-expanded="false">
+                <span class="tree-line">    ├── services/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-3" data-tree-popover="backend-tree-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="services/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-3">
+        <div class="tree-popover-heading"><code>services/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">业务逻辑层</p>
+      <p class="tree-popover-body">承接真正的业务规则、数据组合和流程判断，是后端最像“大脑”的一层。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果你在写积分发放、训练报告生成、奖励计算，这类逻辑更应该进 <span class="code-inline">services/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-4" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-4" aria-controls="tree-popover-backend-tree-4" aria-expanded="false">
+                <span class="tree-line">    ├── models/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-4" data-tree-popover="backend-tree-4" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="models/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-4">
+        <div class="tree-popover-heading"><code>models/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-4" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">数据模型层</p>
+      <p class="tree-popover-body">负责描述数据结构、数据库映射或 <span class="code-inline">ORM</span> 模型，让数据层保持稳定和清楚。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 User、FocusSession、RewardRecord 这类结构，一般会落在 <span class="code-inline">models/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-5" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-5" aria-controls="tree-popover-backend-tree-5" aria-expanded="false">
+                <span class="tree-line">    ├── routes/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-5" data-tree-popover="backend-tree-5" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="routes/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-5">
+        <div class="tree-popover-heading"><code>routes/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-5" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">路由入口层</p>
+      <p class="tree-popover-body">定义 URL 或接口路径，把请求分发给对应 <span class="code-inline">controller</span>，是后端的入口索引。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 <span class="code-inline">router.get(&#39;/reports&#39;, reportController.listReports)</span>，这一步先决定谁来接请求。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-6" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-6" aria-controls="tree-popover-backend-tree-6" aria-expanded="false">
+                <span class="tree-line">    ├── middlewares/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-6" data-tree-popover="backend-tree-6" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="middlewares/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-6">
+        <div class="tree-popover-heading"><code>middlewares/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-6" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">中间件层</p>
+      <p class="tree-popover-body">处理鉴权、日志、限流、错误捕获这类所有请求都会经过的通用流程。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一段逻辑要在多个接口前统一执行，例如校验 token，就更适合放 <span class="code-inline">middleware</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-7" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-7" aria-controls="tree-popover-backend-tree-7" aria-expanded="false">
+                <span class="tree-line">    ├── utils/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-7" data-tree-popover="backend-tree-7" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="utils/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-7">
+        <div class="tree-popover-heading"><code>utils/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-7" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">纯工具层</p>
+      <p class="tree-popover-body">这一层只放通用工具函数或基础能力，不应该堆业务规则。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如日期处理、签名工具、格式转换，适合放在 <span class="code-inline">utils/</span>。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-8" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-8" aria-controls="tree-popover-backend-tree-8" aria-expanded="false">
+                <span class="tree-line">    ├── config/</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-8" data-tree-popover="backend-tree-8" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="config/ 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-8">
+        <div class="tree-popover-heading"><code>config/</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-8" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">配置层</p>
+      <p class="tree-popover-body">统一管理环境变量、端口、数据库地址、第三方密钥的读取和组织方式。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这样切换开发、测试、生产环境时，不需要去很多业务文件里手改值。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="backend-tree-9" data-tree-kind="file" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="backend-tree-9" aria-controls="tree-popover-backend-tree-9" aria-expanded="false">
+                <span class="tree-line">    └── app.js</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-backend-tree-9" data-tree-popover="backend-tree-9" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="app.js 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="backend-tree-9">
+        <div class="tree-popover-heading"><code>app.js</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">JavaScript</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="backend-tree-9" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">后端入口文件</p>
+      <p class="tree-popover-body">这是后端启动入口，通常会在这里组装路由、中间件和服务启动逻辑。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>常见写法会在 <span class="code-inline">app.js</span> 里初始化 express 或其他服务框架，再挂载 <span class="code-inline">routes</span>。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+        
+    <section class="guide-sheet">
+      <h4>目录词解释</h4>
+      <div class="guide-list">
+        
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>routes</code></div>
+                <p class="guide-row-meaning">路由入口层</p>
+                <p class="guide-row-body">定义 URL 或接口路径，把请求分发给对应 <span class="code-inline">controller</span>，是后端的入口索引。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 <span class="code-inline">router.get(&#39;/reports&#39;, reportController.listReports)</span>，这一步先决定谁来接请求。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>controllers</code></div>
+                <p class="guide-row-meaning">接口入口处理层</p>
+                <p class="guide-row-body">负责接住请求、整理参数、返回响应，不应该把真正的业务规则全塞在这里。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span><span class="code-inline">controller</span> 最好只做“收参数、调 <span class="code-inline">service</span>、回结果”这三件事，避免直接查数据库。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>services</code></div>
+                <p class="guide-row-meaning">业务逻辑层</p>
+                <p class="guide-row-body">承接真正的业务规则、数据组合和流程判断，是后端最像“大脑”的一层。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果你在写积分发放、训练报告生成、奖励计算，这类逻辑更应该进 <span class="code-inline">services/</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>models</code></div>
+                <p class="guide-row-meaning">数据模型层</p>
+                <p class="guide-row-body">负责描述数据结构、数据库映射或 <span class="code-inline">ORM</span> 模型，让数据层保持稳定和清楚。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>像 User、FocusSession、RewardRecord 这类结构，一般会落在 <span class="code-inline">models/</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>middlewares</code></div>
+                <p class="guide-row-meaning">中间件层</p>
+                <p class="guide-row-body">处理鉴权、日志、限流、错误捕获这类所有请求都会经过的通用流程。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>如果一段逻辑要在多个接口前统一执行，例如校验 token，就更适合放 <span class="code-inline">middleware</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>config</code></div>
+                <p class="guide-row-meaning">配置层</p>
+                <p class="guide-row-body">统一管理环境变量、端口、数据库地址、第三方密钥的读取和组织方式。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这样切换开发、测试、生产环境时，不需要去很多业务文件里手改值。</p>
+              </article>
+            
+      </div>
+    </section>
+  
+        <ul class="template-notes"><li><span class="code-inline">controller</span> 负责接收请求和整理输入，<span class="code-inline">service</span> 负责真正的业务逻辑。</li><li><span class="code-inline">routes</span> 是入口，<span class="code-inline">models</span> 是数据层，中间件负责鉴权、日志和通用流程。</li></ul>
+      
+      </div>
+    </details>
+  
+    <details class="atlas-section" id="section-request-flow">
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Request Flow</span>
+          <h2 class="section-title"><span class="atlas-summary-title">请求流</span></h2>
+          <span class="atlas-summary-copy">请求链越清楚，项目结构越容易维护。读懂 route -&gt; controller -&gt; service -&gt; model -&gt; database 这条线，基本就能快速定位问题。</span>
+        </span>
+        <span class="atlas-summary-meta">5 步</span>
+      </summary>
+      <div class="atlas-content">
+        
+        <div class="flow-chain"><span class="code-inline">route -&gt; controller -&gt; service -&gt; model -&gt; database</span></div>
+        
+    <section class="guide-sheet">
+      <h4>每一步在做什么</h4>
+      <div class="guide-list">
+        
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>route</code></div>
+                <p class="guide-row-meaning">路由入口</p>
+                <p class="guide-row-body">先定义“哪个 URL / 接口地址”由哪个处理函数接住。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如 <span class="code-inline">app.get(&#39;/users&#39;, userController.listUsers)</span>，<span class="code-inline">route</span> 先负责分发。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>controller</code></div>
+                <p class="guide-row-meaning">请求接待层</p>
+                <p class="guide-row-body">把请求参数整理干净，调用 <span class="code-inline">service</span>，再把结果回给前端。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span><span class="code-inline">controller</span> 里常见 <span class="code-inline">req.params</span>、<span class="code-inline">req.body</span>、<span class="code-inline">res.json</span> 这类代码，但不适合堆业务判断。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>service</code></div>
+                <p class="guide-row-meaning">业务判断层</p>
+                <p class="guide-row-body">真正处理规则、计算和流程，是“为什么这样做”的地方。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>例如根据专注时长发奖励、根据用户状态生成训练建议，都应该在 <span class="code-inline">service</span>。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>model</code></div>
+                <p class="guide-row-meaning">数据读写层</p>
+                <p class="guide-row-body">把业务逻辑转成数据库可理解的结构，负责查、写、更新数据。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span><span class="code-inline">service</span> 调 <span class="code-inline">model</span> 拿数据，而不是 <span class="code-inline">controller</span> 直接拼 SQL 或直接碰数据库。</p>
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>database</code></div>
+                <p class="guide-row-meaning">数据库</p>
+                <p class="guide-row-body">最终把数据落到持久化存储里，例如 MySQL、PostgreSQL、SQLite。</p>
+                <p class="guide-row-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这层关注的是存储，不负责业务语义，所以业务规则不要写在数据库表名里。</p>
+              </article>
+            
+      </div>
+    </section>
+  
+      
+      </div>
+    </details>
+  
+    <details class="atlas-section" id="section-desktop-mappings" open>
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Desktop Mapping</span>
+          <h2 class="section-title"><span class="atlas-summary-title">你的桌面映射</span></h2>
+          <span class="atlas-summary-copy">这些路径都来自你的桌面快照，重点是看懂空间、结构、资源、文档和技术目录如何组合。</span>
+        </span>
+        <span class="atlas-summary-meta">6 条路径</span>
+      </summary>
+      <div class="atlas-content">
+        <div class="mapping-list">
+        <details class="mapping-item" id="mapping-0" open>
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">工作区命名</span>
+              <span class="mapping-title">Learning Studio/Vaults/Vibe_Coding_Knowledge_Vault/15_end_to_end_case_from_prd_to_launch</span>
+              <span class="mapping-summary-copy">这条路径从「Learning Studio」一路收束到「15_end_to_end_case_from_prd_to_launch」，展示空间词和主题词如何一起形成长期工作区。</span>
+            </span>
+            <span class="mapping-summary-meta">4 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-0-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-0-node-0" aria-controls="tree-popover-mapping-0-node-0" aria-expanded="false">
+                <span class="tree-line">Learning Studio</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-0-node-0" data-tree-popover="mapping-0-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Learning Studio 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-0-node-0">
+        <div class="tree-popover-heading"><code>Learning Studio</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-0-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">学习 / 工作室</p>
+      <p class="tree-popover-body">这一层是长期学习或创作空间名，用来先界定这批内容属于哪种工作场景。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 / 强调持续整理、创作和学习，是很稳的空间型命名。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-0-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-0-node-1" aria-controls="tree-popover-mapping-0-node-1" aria-expanded="false">
+                <span class="tree-line">    └── Vaults</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-0-node-1" data-tree-popover="mapping-0-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Vaults 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-0-node-1">
+        <div class="tree-popover-heading"><code>Vaults</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-0-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">知识库</p>
+      <p class="tree-popover-body">这一层是知识容器，强调长期维护和持续沉淀，而不是临时堆放。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>更像长期维护的知识库，而不是临时文件夹。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-0-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-0-node-2" aria-controls="tree-popover-mapping-0-node-2" aria-expanded="false">
+                <span class="tree-line">        └── Vibe_Coding_Knowledge_Vault</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-0-node-2" data-tree-popover="mapping-0-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Vibe_Coding_Knowledge_Vault 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-0-node-2">
+        <div class="tree-popover-heading"><code>Vibe_Coding_Knowledge_Vault</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-0-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">项目名 / 品牌名 / 知识 / 知识库</p>
+      <p class="tree-popover-body">这一层是知识容器，强调长期维护和持续沉淀，而不是临时堆放。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 / 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-0-node-3" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-0-node-3" aria-controls="tree-popover-mapping-0-node-3" aria-expanded="false">
+                <span class="tree-line">            └── 15_end_to_end_case_from_prd_to_launch</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-0-node-3" data-tree-popover="mapping-0-node-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="15_end_to_end_case_from_prd_to_launch 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-0-node-3">
+        <div class="tree-popover-heading"><code>15_end_to_end_case_from_prd_to_launch</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">Product Requirements Document</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-0-node-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / 案例 / 产品需求文档</p>
+      <p class="tree-popover-body">这一层落到具体主题集合或资料容器，决定你真正会进入和维护的内容面。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / 通常指产品需求文档，是需求说明入口，不是设计稿或最终实现。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径从「Learning Studio」一路收束到「15_end_to_end_case_from_prd_to_launch」，展示空间词和主题词如何一起形成长期工作区。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性 / 易扩展</p>
+                <p class="mapping-judgement-meta">提醒 / 先定空间词，再补主题词，路径会更稳，也更适合长期维护。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-0-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Learning Studio</span>
+                  <span class="mapping-segment-copy">学习 / 工作室</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是长期学习或创作空间名，用来先界定这批内容属于哪种工作场景。</p>
+                <p class="mapping-segment-tags">learning / studio</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-0-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Vaults</span>
+                  <span class="mapping-segment-copy">知识库</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是知识容器，强调长期维护和持续沉淀，而不是临时堆放。</p>
+                <p class="mapping-segment-tags">vault</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-0-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Vibe_Coding_Knowledge_Vault</span>
+                  <span class="mapping-segment-copy">项目名 / 品牌名 / 知识 / 知识库</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是知识容器，强调长期维护和持续沉淀，而不是临时堆放。</p>
+                <p class="mapping-segment-tags">vibe / coding / knowledge / vault</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-0-3">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">15_end_to_end_case_from_prd_to_launch</span>
+                  <span class="mapping-segment-copy">命名主题词 / 案例 / 产品需求文档</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层落到具体主题集合或资料容器，决定你真正会进入和维护的内容面。</p>
+                <p class="mapping-segment-tags">end / to / case / from / prd / launch</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      
+        <details class="mapping-item" id="mapping-1">
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">项目结构</span>
+              <span class="mapping-title">Vibe Coding/bulletproof-react-master/apps/nextjs-pages/src/components</span>
+              <span class="mapping-summary-copy">这条路径从项目名一路走到固定结构位「components」，适合用来看懂项目内部的职责分层。</span>
+            </span>
+            <span class="mapping-summary-meta">6 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-0" aria-controls="tree-popover-mapping-1-node-0" aria-expanded="false">
+                <span class="tree-line">Vibe Coding</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-0" data-tree-popover="mapping-1-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Vibe Coding 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-0">
+        <div class="tree-popover-heading"><code>Vibe Coding</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">项目名 / 品牌名</p>
+      <p class="tree-popover-body">这一层通常是项目集合或工作区，用来把不同项目先分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-1" aria-controls="tree-popover-mapping-1-node-1" aria-expanded="false">
+                <span class="tree-line">    └── bulletproof-react-master</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-1" data-tree-popover="mapping-1-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="bulletproof-react-master 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-1">
+        <div class="tree-popover-heading"><code>bulletproof-react-master</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / React</p>
+      <p class="tree-popover-body">这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / React 是前端界面开发框架名，命名里通常直接保留原文。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-2" aria-controls="tree-popover-mapping-1-node-2" aria-expanded="false">
+                <span class="tree-line">        └── apps</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-2" data-tree-popover="mapping-1-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="apps 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-2">
+        <div class="tree-popover-heading"><code>apps</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">应用入口</p>
+      <p class="tree-popover-body">这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-3" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-3" aria-controls="tree-popover-mapping-1-node-3" aria-expanded="false">
+                <span class="tree-line">            └── nextjs-pages</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-3" data-tree-popover="mapping-1-node-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="nextjs-pages 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-3">
+        <div class="tree-popover-heading"><code>nextjs-pages</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / 页面</p>
+      <p class="tree-popover-body">这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-4" data-tree-kind="directory" style="--tree-depth:4;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-4" aria-controls="tree-popover-mapping-1-node-4" aria-expanded="false">
+                <span class="tree-line">                └── src</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-4" data-tree-popover="mapping-1-node-4" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="src 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-4">
+        <div class="tree-popover-heading"><code>src</code><span class="tree-popover-divider">=</span><span class="tree-popover-full">source</span></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-4" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">主源码目录</p>
+      <p class="tree-popover-body">这一层是主源码入口，核心实现一般从这里继续展开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>通常是项目最核心的实现区，看到它就知道主代码放这里。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-1-node-5" data-tree-kind="directory" style="--tree-depth:5;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-1-node-5" aria-controls="tree-popover-mapping-1-node-5" aria-expanded="false">
+                <span class="tree-line">                    └── components</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-1-node-5" data-tree-popover="mapping-1-node-5" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="components 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-1-node-5">
+        <div class="tree-popover-heading"><code>components</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-1-node-5" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">组件</p>
+      <p class="tree-popover-body">这一层是组件层，适合收可复用的界面片段和模块单元。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径从项目名一路走到固定结构位「components」，适合用来看懂项目内部的职责分层。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性 / 单一职责 / 低耦合</p>
+                <p class="mapping-judgement-meta">提醒 / 项目名负责说明主题，结构词负责说明职责，两层不要混成一个长名字。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-1-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Vibe Coding</span>
+                  <span class="mapping-segment-copy">项目名 / 品牌名</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层通常是项目集合或工作区，用来把不同项目先分开。</p>
+                <p class="mapping-segment-tags">vibe / coding</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-1-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">bulletproof-react-master</span>
+                  <span class="mapping-segment-copy">命名主题词 / React</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+                <p class="mapping-segment-tags">bulletproof / react / master</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-1-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">apps</span>
+                  <span class="mapping-segment-copy">应用入口</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+                <p class="mapping-segment-tags">app</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-1-3">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">nextjs-pages</span>
+                  <span class="mapping-segment-copy">命名主题词 / 页面</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层把项目主题继续收束到实现层级，便于你判断职责边界。</p>
+                <p class="mapping-segment-tags">nextj / page</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-1-4">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">src</span>
+                  <span class="mapping-segment-copy">主源码目录</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是主源码入口，核心实现一般从这里继续展开。</p>
+                <p class="mapping-segment-tags">src</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-1-5">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">components</span>
+                  <span class="mapping-segment-copy">组件</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是组件层，适合收可复用的界面片段和模块单元。</p>
+                <p class="mapping-segment-tags">component</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      
+        <details class="mapping-item" id="mapping-2">
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">资源目录</span>
+              <span class="mapping-title">女性健康 APP/Flo-Pregnancy-Tracker-Insights/assets/insight-images</span>
+              <span class="mapping-summary-copy">这条路径把主题和资源层拆开表达，最后落到「insight-images」这种素材集合。</span>
+            </span>
+            <span class="mapping-summary-meta">4 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-2-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-2-node-0" aria-controls="tree-popover-mapping-2-node-0" aria-expanded="false">
+                <span class="tree-line">女性健康 APP</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-2-node-0" data-tree-popover="mapping-2-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="女性健康 APP 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-2-node-0">
+        <div class="tree-popover-heading"><code>女性健康 APP</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-2-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">应用入口</p>
+      <p class="tree-popover-body">这一层负责把资源按主题或用途先分组，再往下落到素材类型。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-2-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-2-node-1" aria-controls="tree-popover-mapping-2-node-1" aria-expanded="false">
+                <span class="tree-line">    └── Flo-Pregnancy-Tracker-Insights</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-2-node-1" data-tree-popover="mapping-2-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Flo-Pregnancy-Tracker-Insights 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-2-node-1">
+        <div class="tree-popover-heading"><code>Flo-Pregnancy-Tracker-Insights</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-2-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">系统状态词 / 追踪器 / 洞察</p>
+      <p class="tree-popover-body">这一层负责把资源按主题或用途先分组，再往下落到素材类型。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 / 适合持续记录状态变化、进度变化或行为轨迹的模块。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-2-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-2-node-2" aria-controls="tree-popover-mapping-2-node-2" aria-expanded="false">
+                <span class="tree-line">        └── assets</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-2-node-2" data-tree-popover="mapping-2-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="assets 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-2-node-2">
+        <div class="tree-popover-heading"><code>assets</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-2-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">资源</p>
+      <p class="tree-popover-body">这一层是静态资源层，图片、图标和插图通常会在这里收口。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-2-node-3" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-2-node-3" aria-controls="tree-popover-mapping-2-node-3" aria-expanded="false">
+                <span class="tree-line">            └── insight-images</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-2-node-3" data-tree-popover="mapping-2-node-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="insight-images 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-2-node-3">
+        <div class="tree-popover-heading"><code>insight-images</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-2-node-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">洞察 / 图片</p>
+      <p class="tree-popover-body">这一层强调素材类型，通常是图片集合而不是业务逻辑目录。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>更接近分析结论和理解，不是原始数据本身。 / 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径把主题和资源层拆开表达，最后落到「insight-images」这种素材集合。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性 / 单一职责</p>
+                <p class="mapping-judgement-meta">提醒 / 资源层先用总类词收口，再用素材类型细分，会比把文件平铺在一起更清楚。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-2-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">女性健康 APP</span>
+                  <span class="mapping-segment-copy">应用入口</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层负责把资源按主题或用途先分组，再往下落到素材类型。</p>
+                <p class="mapping-segment-tags">app</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-2-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Flo-Pregnancy-Tracker-Insights</span>
+                  <span class="mapping-segment-copy">系统状态词 / 追踪器 / 洞察</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层负责把资源按主题或用途先分组，再往下落到素材类型。</p>
+                <p class="mapping-segment-tags">flo / pregnancy / tracker / insight</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-2-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">assets</span>
+                  <span class="mapping-segment-copy">资源</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是静态资源层，图片、图标和插图通常会在这里收口。</p>
+                <p class="mapping-segment-tags">asset</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-2-3">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">insight-images</span>
+                  <span class="mapping-segment-copy">洞察 / 图片</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层强调素材类型，通常是图片集合而不是业务逻辑目录。</p>
+                <p class="mapping-segment-tags">insight / image</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      
+        <details class="mapping-item" id="mapping-3">
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">文档目录</span>
+              <span class="mapping-title">Learning Studio/Libraries/Product_Manager_Interview_Kit/interview_notes</span>
+              <span class="mapping-summary-copy">这条路径说明文档层如何跟项目主题并行存在，让说明、笔记和参考资料有稳定入口。</span>
+            </span>
+            <span class="mapping-summary-meta">4 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-3-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-3-node-0" aria-controls="tree-popover-mapping-3-node-0" aria-expanded="false">
+                <span class="tree-line">Learning Studio</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-3-node-0" data-tree-popover="mapping-3-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Learning Studio 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-3-node-0">
+        <div class="tree-popover-heading"><code>Learning Studio</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-3-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">学习 / 工作室</p>
+      <p class="tree-popover-body">这一层是长期学习或创作空间名，用来先界定这批内容属于哪种工作场景。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 / 强调持续整理、创作和学习，是很稳的空间型命名。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-3-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-3-node-1" aria-controls="tree-popover-mapping-3-node-1" aria-expanded="false">
+                <span class="tree-line">    └── Libraries</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-3-node-1" data-tree-popover="mapping-3-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Libraries 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-3-node-1">
+        <div class="tree-popover-heading"><code>Libraries</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-3-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">资料库</p>
+      <p class="tree-popover-body">这一层是资料库角色，适合集中沉淀可复用参考材料。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>适合资料、素材、模板或参考内容的可复用集合。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-3-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-3-node-2" aria-controls="tree-popover-mapping-3-node-2" aria-expanded="false">
+                <span class="tree-line">        └── Product_Manager_Interview_Kit</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-3-node-2" data-tree-popover="mapping-3-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Product_Manager_Interview_Kit 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-3-node-2">
+        <div class="tree-popover-heading"><code>Product_Manager_Interview_Kit</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-3-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">产品 / 经理 / 管理 / 面试</p>
+      <p class="tree-popover-body">这一层把项目主题和文档职责分开，避免说明材料混进主实现目录。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 / 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-3-node-3" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-3-node-3" aria-controls="tree-popover-mapping-3-node-3" aria-expanded="false">
+                <span class="tree-line">            └── interview_notes</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-3-node-3" data-tree-popover="mapping-3-node-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="interview_notes 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-3-node-3">
+        <div class="tree-popover-heading"><code>interview_notes</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-3-node-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">面试 / 命名主题词</p>
+      <p class="tree-popover-body">这一层是笔记位，适合长期检索、复盘和补充上下文。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径说明文档层如何跟项目主题并行存在，让说明、笔记和参考资料有稳定入口。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性 / 易扩展</p>
+                <p class="mapping-judgement-meta">提醒 / 把 docs、notes、guide 这类入口词固定下来，后续检索和交接都会更顺。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-3-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Learning Studio</span>
+                  <span class="mapping-segment-copy">学习 / 工作室</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是长期学习或创作空间名，用来先界定这批内容属于哪种工作场景。</p>
+                <p class="mapping-segment-tags">learning / studio</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-3-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Libraries</span>
+                  <span class="mapping-segment-copy">资料库</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是资料库角色，适合集中沉淀可复用参考材料。</p>
+                <p class="mapping-segment-tags">library</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-3-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Product_Manager_Interview_Kit</span>
+                  <span class="mapping-segment-copy">产品 / 经理 / 管理 / 面试</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层把项目主题和文档职责分开，避免说明材料混进主实现目录。</p>
+                <p class="mapping-segment-tags">product / manager / interview / kit</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-3-3">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">interview_notes</span>
+                  <span class="mapping-segment-copy">面试 / 命名主题词</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层是笔记位，适合长期检索、复盘和补充上下文。</p>
+                <p class="mapping-segment-tags">interview / note</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      
+        <details class="mapping-item" id="mapping-4">
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">归档状态</span>
+              <span class="mapping-title">Risesome Work/AIGC Template Classification/internal_tools_and_refs/competitor_reference/aicatch_template_export/.workspace_source/legacy_output</span>
+              <span class="mapping-summary-copy">这条路径用「legacy_output」这类状态词把历史内容单独收口，避免和现行工作面混在一起。</span>
+            </span>
+            <span class="mapping-summary-meta">7 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-0" aria-controls="tree-popover-mapping-4-node-0" aria-expanded="false">
+                <span class="tree-line">Risesome Work</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-0" data-tree-popover="mapping-4-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Risesome Work 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-0">
+        <div class="tree-popover-heading"><code>Risesome Work</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / 项目名 / 品牌名</p>
+      <p class="tree-popover-body">这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-1" aria-controls="tree-popover-mapping-4-node-1" aria-expanded="false">
+                <span class="tree-line">    └── AIGC Template Classification</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-1" data-tree-popover="mapping-4-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="AIGC Template Classification 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-1">
+        <div class="tree-popover-heading"><code>AIGC Template Classification</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">技术 / 工具名 / 模板 / 命名主题词</p>
+      <p class="tree-popover-body">这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 / 适合一套可重复复用的底板、骨架或命名标准。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-2" aria-controls="tree-popover-mapping-4-node-2" aria-expanded="false">
+                <span class="tree-line">        └── internal_tools_and_refs</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-2" data-tree-popover="mapping-4-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="internal_tools_and_refs 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-2">
+        <div class="tree-popover-heading"><code>internal_tools_and_refs</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / 工具</p>
+      <p class="tree-popover-body">这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-3" data-tree-kind="directory" style="--tree-depth:3;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-3" aria-controls="tree-popover-mapping-4-node-3" aria-expanded="false">
+                <span class="tree-line">            └── competitor_reference</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-3" data-tree-popover="mapping-4-node-3" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="competitor_reference 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-3">
+        <div class="tree-popover-heading"><code>competitor_reference</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-3" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">系统状态词 / 命名主题词</p>
+      <p class="tree-popover-body">这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 / 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-4" data-tree-kind="directory" style="--tree-depth:4;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-4" aria-controls="tree-popover-mapping-4-node-4" aria-expanded="false">
+                <span class="tree-line">                └── aicatch_template_export</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-4" data-tree-popover="mapping-4-node-4" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="aicatch_template_export 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-4">
+        <div class="tree-popover-heading"><code>aicatch_template_export</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-4" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">命名主题词 / 模板</p>
+      <p class="tree-popover-body">这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 / 适合一套可重复复用的底板、骨架或命名标准。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-5" data-tree-kind="directory" style="--tree-depth:5;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-5" aria-controls="tree-popover-mapping-4-node-5" aria-expanded="false">
+                <span class="tree-line">                    └── .workspace_source</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-5" data-tree-popover="mapping-4-node-5" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label=".workspace_source 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-5">
+        <div class="tree-popover-heading"><code>.workspace_source</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-5" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">工作空间 / 来源 / 源文件</p>
+      <p class="tree-popover-body">这一层把内容先收进一个稳定工作空间，方便后续治理和迁移。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>适合命名整个工作区、跨项目整理区或治理空间。 / 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-4-node-6" data-tree-kind="directory" style="--tree-depth:6;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-4-node-6" aria-controls="tree-popover-mapping-4-node-6" aria-expanded="false">
+                <span class="tree-line">                        └── legacy_output</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-4-node-6" data-tree-popover="mapping-4-node-6" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="legacy_output 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-4-node-6">
+        <div class="tree-popover-heading"><code>legacy_output</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-4-node-6" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">旧版遗留 / 输出</p>
+      <p class="tree-popover-body">这一层显式标记历史状态，提醒你它是保留面，不是现行主入口。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>代表旧结构或兼容层，适合理解为“先留着，但不再主维护”。 / 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径用「legacy_output」这类状态词把历史内容单独收口，避免和现行工作面混在一起。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性 / 低耦合</p>
+                <p class="mapping-judgement-meta">提醒 / 这是历史保留面，适合显式保留，不适合继续当成现行主工作区。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-4-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Risesome Work</span>
+                  <span class="mapping-segment-copy">命名主题词 / 项目名 / 品牌名</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+                <p class="mapping-segment-tags">risesome / work</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">AIGC Template Classification</span>
+                  <span class="mapping-segment-copy">技术 / 工具名 / 模板 / 命名主题词</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+                <p class="mapping-segment-tags">aigc / template / classification</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">internal_tools_and_refs</span>
+                  <span class="mapping-segment-copy">命名主题词 / 工具</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+                <p class="mapping-segment-tags">internal / tool / and / ref</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-3">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">competitor_reference</span>
+                  <span class="mapping-segment-copy">系统状态词 / 命名主题词</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+                <p class="mapping-segment-tags">competitor / reference</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-4">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">aicatch_template_export</span>
+                  <span class="mapping-segment-copy">命名主题词 / 模板</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层先保留主题脉络，再用状态词把现行与历史内容分开。</p>
+                <p class="mapping-segment-tags">aicatch / template / export</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-5">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">.workspace_source</span>
+                  <span class="mapping-segment-copy">工作空间 / 来源 / 源文件</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层把内容先收进一个稳定工作空间，方便后续治理和迁移。</p>
+                <p class="mapping-segment-tags">workspace / source</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-4-6">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">legacy_output</span>
+                  <span class="mapping-segment-copy">旧版遗留 / 输出</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层显式标记历史状态，提醒你它是保留面，不是现行主入口。</p>
+                <p class="mapping-segment-tags">legacy / output</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      
+        <details class="mapping-item" id="mapping-5">
+          <summary class="mapping-summary">
+            <span class="atlas-toggle" aria-hidden="true"></span>
+            <span class="mapping-summary-main">
+              <span class="mapping-kind">技术噪音</span>
+              <span class="mapping-title">Vibe Coding/Focus_Training_Platform/node_modules</span>
+              <span class="mapping-summary-copy">这条路径属于真实项目里的技术目录，像「node_modules」这种词更适合理解其来源，而不是模仿它。</span>
+            </span>
+            <span class="mapping-summary-meta">3 层</span>
+          </summary>
+          <div class="mapping-body">
+            <section class="mapping-block">
+              <h4>路径展开</h4>
+              
+    <div class="tree-block" role="presentation">
+      
+            <div class="tree-node-shell" data-tree-node="mapping-5-node-0" data-tree-kind="directory" style="--tree-depth:0;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-5-node-0" aria-controls="tree-popover-mapping-5-node-0" aria-expanded="false">
+                <span class="tree-line">Vibe Coding</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-5-node-0" data-tree-popover="mapping-5-node-0" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Vibe Coding 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-5-node-0">
+        <div class="tree-popover-heading"><code>Vibe Coding</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-5-node-0" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">项目名 / 品牌名</p>
+      <p class="tree-popover-body">这一层属于真实项目脉络的一部分，用来说明技术目录为什么会出现在这里。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-5-node-1" data-tree-kind="directory" style="--tree-depth:1;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-5-node-1" aria-controls="tree-popover-mapping-5-node-1" aria-expanded="false">
+                <span class="tree-line">    └── Focus_Training_Platform</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-5-node-1" data-tree-popover="mapping-5-node-1" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="Focus_Training_Platform 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-5-node-1">
+        <div class="tree-popover-heading"><code>Focus_Training_Platform</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-5-node-1" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">专注 / 训练 / 平台</p>
+      <p class="tree-popover-body">这一层属于真实项目脉络的一部分，用来说明技术目录为什么会出现在这里。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span>这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+    </div>
+  
+            </div>
+          
+            <div class="tree-node-shell" data-tree-node="mapping-5-node-2" data-tree-kind="directory" style="--tree-depth:2;">
+              <button class="tree-line-button" type="button" data-tree-trigger="mapping-5-node-2" aria-controls="tree-popover-mapping-5-node-2" aria-expanded="false">
+                <span class="tree-line">        └── node_modules</span>
+              </button>
+              
+    <div class="tree-popover" id="tree-popover-mapping-5-node-2" data-tree-popover="mapping-5-node-2" data-placement="above-left" data-mode="anchored" data-dragging="false" role="dialog" aria-label="node_modules 说明" hidden>
+      <div class="tree-popover-top" data-tree-drag-handle="mapping-5-node-2">
+        <div class="tree-popover-heading"><code>node_modules</code></div>
+        <button class="tree-popover-close" type="button" data-tree-close="mapping-5-node-2" aria-label="关闭说明">×</button>
+      </div>
+      <p class="tree-popover-meaning">Node.js / 模块</p>
+      <p class="tree-popover-body">这一层多半是依赖或外部内容目录，真实项目里会出现，但不适合拿来做人工命名模板。</p>
+      <p class="tree-popover-note"><span class="text-label">代码里通常怎么用</span><span class="text-divider" aria-hidden="true">/</span><span class="code-inline">Node.js</span> 运行时常出现在依赖目录、脚本环境和工程目录里。 / 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+    </div>
+  
+            </div>
+          
+    </div>
+  
+            </section>
+            <section class="mapping-block">
+              <h4>命名判断</h4>
+              <div class="mapping-judgement">
+                <p>这条路径属于真实项目里的技术目录，像「node_modules」这种词更适合理解其来源，而不是模仿它。</p>
+                <p class="mapping-judgement-meta">映射原则 / 可预测性</p>
+                <p class="mapping-judgement-meta">提醒 / 这是依赖或第三方运行时目录，理解它为什么出现就够了，不建议把它当成人工命名模板。</p>
+              </div>
+            </section>
+            <section class="mapping-block">
+              <h4>逐段角色</h4>
+              <div class="mapping-segment-list">
+                
+            <details class="mapping-segment" id="segment-5-0">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Vibe Coding</span>
+                  <span class="mapping-segment-copy">项目名 / 品牌名</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层属于真实项目脉络的一部分，用来说明技术目录为什么会出现在这里。</p>
+                <p class="mapping-segment-tags">vibe / coding</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-5-1">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">Focus_Training_Platform</span>
+                  <span class="mapping-segment-copy">专注 / 训练 / 平台</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层属于真实项目脉络的一部分，用来说明技术目录为什么会出现在这里。</p>
+                <p class="mapping-segment-tags">focus / training / platform</p>
+              </div>
+            </details>
+          
+            <details class="mapping-segment" id="segment-5-2">
+              <summary class="mapping-segment-summary">
+                <span class="atlas-toggle atlas-toggle-small" aria-hidden="true"></span>
+                <span class="mapping-segment-main">
+                  <span class="mapping-segment-title">node_modules</span>
+                  <span class="mapping-segment-copy">Node.js / 模块</span>
+                </span>
+              </summary>
+              <div class="mapping-segment-body">
+                <p>这一层多半是依赖或外部内容目录，真实项目里会出现，但不适合拿来做人工命名模板。</p>
+                <p class="mapping-segment-tags">node / module</p>
+              </div>
+            </details>
+          
+              </div>
+            </section>
+          </div>
+        </details>
+      </div>
+      </div>
+    </details>
+  
+    <details class="atlas-section" id="section-project-blueprint">
+      <summary class="atlas-summary">
+        <span class="atlas-toggle" aria-hidden="true"></span>
+        <span class="atlas-summary-main">
+          <span class="atlas-summary-kicker">Project Blueprint</span>
+          <h2 class="section-title"><span class="atlas-summary-title">你的项目蓝图</span></h2>
+          <span class="atlas-summary-copy">把你的毕设方向翻成更接近真实团队协作的模块蓝图，方便你建立结构感。</span>
+        </span>
+        <span class="atlas-summary-meta">9 个结构点</span>
+      </summary>
+      <div class="atlas-content">
+        
+        <article class="document-row">
+          <p class="document-index">01</p>
+          <div class="document-main">
+            <h3 class="content-title">游戏化专注力训练平台</h3>
+            <p>前端先按业务模块闭环组织，再让后端用 route / controller / service / model 维持清楚边界，这会比堆很多零散文件夹更像真实互联网产品。</p>
+          </div>
+        </article>
+        <article class="document-row">
+          <p class="document-index">02</p>
+          <div class="document-main">
+            <h3 class="content-title">前端业务模块</h3>
+            <ul class="project-list"><li>focus-session</li><li>task-system</li><li>reward-system</li><li>report-analytics</li></ul>
+          </div>
+        </article>
+        <article class="document-row">
+          <p class="document-index">03</p>
+          <div class="document-main">
+            <h3 class="content-title">后端职责层</h3>
+            <ul class="project-list"><li><span class="code-inline">routes</span></li><li><span class="code-inline">controllers</span></li><li><span class="code-inline">services</span></li><li><span class="code-inline">models</span></li><li><span class="code-inline">middlewares</span></li></ul>
+          </div>
+        </article>
+        
+    <section class="guide-sheet">
+      <h4>知识库工作流</h4>
+      <div class="workflow-list">
+        
+              <article class="workflow-row">
+                <p class="workflow-index">01</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">需求确认与用户画像</h5>
+                  <p>先确认读者是谁、目标是什么、主要阅读场景是什么，再决定目录和命名。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>结构不是给自己炫技的，是为了让目标读者更快找到入口。</p>
+                </div>
+              </article>
+            
+              <article class="workflow-row">
+                <p class="workflow-index">02</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">模块结构设计</h5>
+                  <p>把资料拆成可预测、可逐步阅读的模块，再定义每个文件的职责边界。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>目录先有层级，再谈内容；不然文件再多也只是平铺堆积。</p>
+                </div>
+              </article>
+            
+              <article class="workflow-row">
+                <p class="workflow-index">03</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">排版规范统一</h5>
+                  <p>先定标题、摘要、提示、语言切换和命名规则，再批量生产内容。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>统一规范能让知识库像一个系统，而不是一堆风格混乱的单篇文档。</p>
+                </div>
+              </article>
+            
+              <article class="workflow-row">
+                <p class="workflow-index">04</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">分批生产与验证</h5>
+                  <p>按模块分批推进，每批都先检查缺失、格式和命名，再继续扩写。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>增量验证比一次性堆完再返工，更适合长期维护和协作。</p>
+                </div>
+              </article>
+            
+              <article class="workflow-row">
+                <p class="workflow-index">05</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">质量审查与适配</h5>
+                  <p>抽检是否有未解释术语、标题重复、格式失真，以及 Obsidian / Notion / 打印是否都能读。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>真正优雅的结构，不只是好看，还要在不同阅读场景下都稳定可用。</p>
+                </div>
+              </article>
+            
+              <article class="workflow-row">
+                <p class="workflow-index">06</p>
+                <div class="workflow-main">
+                  <h5 class="content-title">交付与记忆沉淀</h5>
+                  <p>交付时同时保留项目记忆、规则和统计信息，方便后续复用和迭代。</p>
+                  <p class="guide-row-note"><span class="text-label">结构启发</span><span class="text-divider" aria-hidden="true">/</span>结构做好以后，未来的增量更新才不会把整个系统越改越乱。</p>
+                </div>
+              </article>
+            
+      </div>
+    </section>
+  
+        
+    <section class="guide-sheet">
+      <h4>质量检查提醒</h4>
+      <ul class="checklist">
+        <li>高频缩写第一次出现时要能看懂，不要只写缩写不解释。</li><li>目录词和内容词分开，结构位不要和业务主题混成一个长名字。</li><li>文档入口词要稳定，例如 readme、guide、notes、workflow。</li><li>一层目录最好只承担一种职责，避免既放源码又放历史归档。</li><li>输出前检查是否有明显技术噪音目录被误当成命名模板。</li>
+      </ul>
+    </section>
+  
+        
+    <section class="guide-sheet">
+      <h4>高频缩写速查</h4>
+      <div class="guide-list">
+        
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>src</code><span class="guide-divider">=</span><span class="guide-full">source</span></div>
+                <p class="guide-row-meaning">源码</p>
+                <p class="guide-row-body">通常表示主源码目录，看到 <span class="code-inline">src</span> 基本可以理解成“真正运行的代码在这里”。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>api</code><span class="guide-divider">=</span><span class="guide-full">Application Programming Interface</span></div>
+                <p class="guide-row-meaning">接口</p>
+                <p class="guide-row-body">常表示请求层或接口层，前端会调它，后端会实现它。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>ui</code><span class="guide-divider">=</span><span class="guide-full">User Interface</span></div>
+                <p class="guide-row-meaning">用户界面</p>
+                <p class="guide-row-body">更偏界面呈现、组件样式和视觉层，不等于完整体验。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>ux</code><span class="guide-divider">=</span><span class="guide-full">User Experience</span></div>
+                <p class="guide-row-meaning">用户体验</p>
+                <p class="guide-row-body">更偏流程、理解成本和交互感受，通常比 UI 更上层。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>prd</code><span class="guide-divider">=</span><span class="guide-full">Product Requirements Document</span></div>
+                <p class="guide-row-meaning">产品需求文档</p>
+                <p class="guide-row-body">常表示需求说明稿，是产品定义问题和范围的入口文件。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>md</code><span class="guide-divider">=</span><span class="guide-full">Markdown</span></div>
+                <p class="guide-row-meaning">Markdown 文档</p>
+                <p class="guide-row-body">轻量文档格式，适合知识库、说明、笔记和 <span class="code-inline">README</span>。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>tsx</code><span class="guide-divider">=</span><span class="guide-full">TypeScript + JSX</span></div>
+                <p class="guide-row-meaning">React 组件文件</p>
+                <p class="guide-row-body">多用于 React 页面或组件文件，说明这个文件既有 TypeScript 又有界面结构。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>json</code><span class="guide-divider">=</span><span class="guide-full">JavaScript Object Notation</span></div>
+                <p class="guide-row-meaning">结构化数据文件</p>
+                <p class="guide-row-body">适合配置、映射表和结果输出，通常是“给程序读”的，不是“给人直接写长文”的。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>db</code><span class="guide-divider">=</span><span class="guide-full">Database</span></div>
+                <p class="guide-row-meaning">数据库</p>
+                <p class="guide-row-body">路径或字段里看到 <span class="code-inline">db</span>，通常就是在指数据存储层，而不是页面层或业务规则层。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>cli</code><span class="guide-divider">=</span><span class="guide-full">Command-Line Interface</span></div>
+                <p class="guide-row-meaning">命令行界面</p>
+                <p class="guide-row-body">通常表示终端工具、脚本入口或本地执行命令的交互层，偏开发工具，不是用户页面。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>orm</code><span class="guide-divider">=</span><span class="guide-full">Object-Relational Mapping</span></div>
+                <p class="guide-row-meaning">对象关系映射</p>
+                <p class="guide-row-body">常见于数据库工具语境，作用是把代码里的对象结构映射到数据库表，减少手写 SQL。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>sdk</code><span class="guide-divider">=</span><span class="guide-full">Software Development Kit</span></div>
+                <p class="guide-row-meaning">软件开发工具包</p>
+                <p class="guide-row-body">通常是一套被别人调用的能力包，比如支付 SDK、地图 SDK、AI SDK。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>npm</code><span class="guide-divider">=</span><span class="guide-full">Node Package Manager</span></div>
+                <p class="guide-row-meaning">Node 套件管理器</p>
+                <p class="guide-row-body">常出现在 JavaScript 项目的依赖安装、脚本执行和套件发布语境里。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>cms</code><span class="guide-divider">=</span><span class="guide-full">Content Management System</span></div>
+                <p class="guide-row-meaning">内容管理系统</p>
+                <p class="guide-row-body">如果项目里出现 cms，多半在说内容录入、编辑、发布后台，而不是前台展示页。</p>
+                
+              </article>
+            
+              <article class="guide-row">
+                <div class="guide-row-heading"><code>seo</code><span class="guide-divider">=</span><span class="guide-full">Search Engine Optimization</span></div>
+                <p class="guide-row-meaning">搜索引擎优化</p>
+                <p class="guide-row-body">多出现在流量、内容分发和页面元信息语境，和标题、描述、索引能力有关。</p>
+                
+              </article>
+            
+      </div>
+    </section>
+  
+      
+      </div>
+    </details>
+  
+        <p class="footer-note">生成时间：2026年4月23日 16:47。这页是静态学习页，适合你建立结构感，再回头治理自己的工作区与项目命名。</p>
+      </div>
+    </main>
+    
+    <script>
+      const STORAGE_PREFIX = 'workspace-atlas:structure:';
+      const POPOVER_MARGIN = 16;
+      const detailNodes = Array.from(document.querySelectorAll('details[id]'));
+      const treeNodeShells = Array.from(document.querySelectorAll('[data-tree-node]'));
+      let hoveredNodeId = null;
+      let pinnedNodeId = null;
+      let pinnedPopoverPosition = null;
+      let dragState = null;
+
+      function readStoredState(id) {
+        try {
+          return window.localStorage.getItem(STORAGE_PREFIX + id);
+        } catch {
+          return null;
+        }
+      }
+
+      function writeStoredState(id, isOpen) {
+        try {
+          window.localStorage.setItem(STORAGE_PREFIX + id, String(isOpen));
+        } catch {}
+      }
+
+      function applyStoredState(node) {
+        const savedState = readStoredState(node.id);
+        if (savedState === 'true') {
+          node.open = true;
+        }
+        if (savedState === 'false') {
+          node.open = false;
+        }
+      }
+
+      function openBranch(node) {
+        let current = node;
+        while (current) {
+          if (current.tagName === 'DETAILS') {
+            current.open = true;
+            writeStoredState(current.id, true);
+          }
+          current = current.parentElement ? current.parentElement.closest('details') : null;
+        }
+      }
+
+      function setAllDetails(nextState) {
+        detailNodes.forEach((node) => {
+          node.open = nextState;
+          writeStoredState(node.id, nextState);
+        });
+      }
+
+      function revealHashTarget() {
+        const hash = window.location.hash.slice(1);
+        if (!hash) {
+          return;
+        }
+
+        const target = document.getElementById(decodeURIComponent(hash));
+        if (!target) {
+          return;
+        }
+
+        openBranch(target);
+      }
+
+      function getTreeNodeShell(id) {
+        return treeNodeShells.find((node) => node.dataset.treeNode === id) ?? null;
+      }
+
+      function canUseFloatingPinnedPopover() {
+        return window.innerWidth > 860;
+      }
+
+      function resetPopoverPresentation(popover) {
+        popover.dataset.mode = 'anchored';
+        popover.dataset.dragging = 'false';
+        popover.style.left = '';
+        popover.style.top = '';
+      }
+
+      function clampPopoverPosition(left, top, popover) {
+        const popoverRect = popover.getBoundingClientRect();
+        const maxLeft = Math.max(POPOVER_MARGIN, window.innerWidth - popoverRect.width - POPOVER_MARGIN);
+        const maxTop = Math.max(POPOVER_MARGIN, window.innerHeight - popoverRect.height - POPOVER_MARGIN);
+
+        return {
+          left: Math.min(Math.max(POPOVER_MARGIN, left), maxLeft),
+          top: Math.min(Math.max(POPOVER_MARGIN, top), maxTop),
+        };
+      }
+
+      function setPinnedPopoverPosition(popover, nextPosition) {
+        const clampedPosition = clampPopoverPosition(nextPosition.left, nextPosition.top, popover);
+        pinnedPopoverPosition = clampedPosition;
+        popover.style.left = clampedPosition.left + 'px';
+        popover.style.top = clampedPosition.top + 'px';
+      }
+
+      function ensurePinnedPopoverPosition(node, popover) {
+        if (!canUseFloatingPinnedPopover()) {
+          resetPopoverPresentation(popover);
+          return;
+        }
+
+        popover.dataset.mode = 'pinned';
+        popover.hidden = false;
+
+        if (!pinnedPopoverPosition) {
+          const trigger = node.querySelector('[data-tree-trigger]');
+          const triggerRect = trigger?.getBoundingClientRect();
+          const popoverRect = popover.getBoundingClientRect();
+          const fallbackLeft = POPOVER_MARGIN;
+          const fallbackTop = POPOVER_MARGIN;
+          const preferredLeft = triggerRect ? triggerRect.left - 24 : fallbackLeft;
+          const preferredTop = triggerRect ? triggerRect.top - popoverRect.height - 12 : fallbackTop;
+          const needsBelowPlacement = preferredTop < POPOVER_MARGIN;
+
+          pinnedPopoverPosition = clampPopoverPosition(
+            preferredLeft,
+            needsBelowPlacement && triggerRect ? triggerRect.bottom + 10 : preferredTop,
+            popover,
+          );
+        }
+
+        setPinnedPopoverPosition(popover, pinnedPopoverPosition);
+      }
+
+      function stopPopoverDrag() {
+        if (!dragState) {
+          return;
+        }
+
+        const activeNode = getTreeNodeShell(pinnedNodeId);
+        const activePopover = activeNode?.querySelector('[data-tree-popover]');
+        if (activePopover) {
+          activePopover.dataset.dragging = 'false';
+        }
+
+        document.body.style.userSelect = '';
+        dragState = null;
+      }
+
+      function updateTreePopovers() {
+        treeNodeShells.forEach((node) => {
+          const id = node.dataset.treeNode;
+          const trigger = node.querySelector('[data-tree-trigger]');
+          const popover = node.querySelector('[data-tree-popover]');
+          const isPinned = pinnedNodeId === id;
+          const isHovered = !pinnedNodeId && hoveredNodeId === id;
+          const isVisible = isPinned || isHovered;
+
+          node.dataset.state = isPinned ? 'pinned' : isHovered ? 'hovered' : 'idle';
+          if (trigger) {
+            trigger.setAttribute('aria-expanded', String(isVisible));
+          }
+          if (popover) {
+            popover.hidden = !isVisible;
+            if (!isVisible) {
+              resetPopoverPresentation(popover);
+              return;
+            }
+
+            if (isPinned && canUseFloatingPinnedPopover()) {
+              ensurePinnedPopoverPosition(node, popover);
+              return;
+            }
+
+            resetPopoverPresentation(popover);
+            if (isVisible && window.innerWidth > 860) {
+              const popoverRect = popover.getBoundingClientRect();
+              const needsBelowPlacement = popoverRect.top < 16;
+              popover.dataset.placement = needsBelowPlacement ? 'below' : 'above-left';
+            }
+          }
+        });
+      }
+
+      function clearPinnedTreePopover() {
+        stopPopoverDrag();
+        pinnedNodeId = null;
+        pinnedPopoverPosition = null;
+        hoveredNodeId = null;
+        updateTreePopovers();
+      }
+
+      detailNodes.forEach((node) => {
+        applyStoredState(node);
+        node.addEventListener('toggle', () => {
+          writeStoredState(node.id, node.open);
+        });
+      });
+
+      document.querySelector('[data-action="expand-all"]')?.addEventListener('click', () => {
+        setAllDetails(true);
+      });
+
+      document.querySelector('[data-action="collapse-all"]')?.addEventListener('click', () => {
+        setAllDetails(false);
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', () => {
+          window.requestAnimationFrame(revealHashTarget);
+        });
+      });
+
+      treeNodeShells.forEach((node) => {
+        const id = node.dataset.treeNode;
+        const trigger = node.querySelector('[data-tree-trigger]');
+        const closeButton = node.querySelector('[data-tree-close]');
+        const dragHandle = node.querySelector('[data-tree-drag-handle]');
+
+        node.addEventListener('mouseenter', () => {
+          if (pinnedNodeId) {
+            return;
+          }
+          hoveredNodeId = id;
+          updateTreePopovers();
+        });
+
+        node.addEventListener('mouseleave', () => {
+          if (pinnedNodeId || hoveredNodeId !== id) {
+            return;
+          }
+          hoveredNodeId = null;
+          updateTreePopovers();
+        });
+
+        trigger?.addEventListener('focus', () => {
+          if (pinnedNodeId) {
+            return;
+          }
+          hoveredNodeId = id;
+          updateTreePopovers();
+        });
+
+        trigger?.addEventListener('blur', () => {
+          if (pinnedNodeId || hoveredNodeId !== id) {
+            return;
+          }
+          window.requestAnimationFrame(() => {
+            if (!node.contains(document.activeElement)) {
+              hoveredNodeId = null;
+              updateTreePopovers();
+            }
+          });
+        });
+
+        trigger?.addEventListener('click', (event) => {
+          event.stopPropagation();
+          stopPopoverDrag();
+          const nextPinnedNodeId = pinnedNodeId === id ? null : id;
+          if (nextPinnedNodeId !== pinnedNodeId) {
+            pinnedPopoverPosition = null;
+          }
+          pinnedNodeId = nextPinnedNodeId;
+          hoveredNodeId = null;
+          updateTreePopovers();
+        });
+
+        closeButton?.addEventListener('click', (event) => {
+          event.stopPropagation();
+          clearPinnedTreePopover();
+          trigger?.focus();
+        });
+
+        dragHandle?.addEventListener('pointerdown', (event) => {
+          if (
+            event.pointerType === 'touch' ||
+            !canUseFloatingPinnedPopover() ||
+            pinnedNodeId !== id ||
+            event.target.closest('[data-tree-close]')
+          ) {
+            return;
+          }
+
+          const popover = node.querySelector('[data-tree-popover]');
+          if (!popover) {
+            return;
+          }
+
+          const popoverRect = popover.getBoundingClientRect();
+          dragState = {
+            id,
+            pointerId: event.pointerId,
+            offsetLeft: event.clientX - popoverRect.left,
+            offsetTop: event.clientY - popoverRect.top,
+          };
+          popover.dataset.dragging = 'true';
+          document.body.style.userSelect = 'none';
+          dragHandle.setPointerCapture?.(event.pointerId);
+          event.preventDefault();
+        });
+
+        dragHandle?.addEventListener('pointermove', (event) => {
+          if (!dragState || dragState.pointerId !== event.pointerId || pinnedNodeId !== id) {
+            return;
+          }
+
+          const popover = node.querySelector('[data-tree-popover]');
+          if (!popover) {
+            return;
+          }
+
+          setPinnedPopoverPosition(popover, {
+            left: event.clientX - dragState.offsetLeft,
+            top: event.clientY - dragState.offsetTop,
+          });
+          event.preventDefault();
+        });
+
+        const endDrag = (event) => {
+          if (!dragState || dragState.pointerId !== event.pointerId) {
+            return;
+          }
+          dragHandle.releasePointerCapture?.(event.pointerId);
+          stopPopoverDrag();
+        };
+
+        dragHandle?.addEventListener('pointerup', endDrag);
+        dragHandle?.addEventListener('pointercancel', endDrag);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!pinnedNodeId) {
+          return;
+        }
+
+        const activeNode = getTreeNodeShell(pinnedNodeId);
+        if (activeNode && !activeNode.contains(event.target)) {
+          clearPinnedTreePopover();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && pinnedNodeId) {
+          clearPinnedTreePopover();
+        }
+      });
+
+      window.addEventListener('resize', updateTreePopovers);
+      window.addEventListener('resize', stopPopoverDrag);
+      window.addEventListener('hashchange', revealHashTarget);
+      updateTreePopovers();
+      revealHashTarget();
+    </script>
+  
+  </body>
+</html>

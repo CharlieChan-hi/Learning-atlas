@@ -1,0 +1,2901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Desktop Naming Glossary</title>
+    <style>
+      :root {
+        --paper: #fbfbfb;
+        --surface: #ffffff;
+        --surface-muted: #f6f6f6;
+        --ink: #111111;
+        --ink-soft: #2f2f2f;
+        --muted: #666666;
+        --faint: #969696;
+        --line: #e5e5e5;
+        --line-strong: #d4d4d4;
+        --line-dark: #bdbdbd;
+        --tag: #f3f3f3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+
+      main {
+        width: min(1100px, calc(100vw - 36px));
+        margin: 0 auto;
+        padding: 28px 0 80px;
+      }
+
+      .hero {
+        padding: 56px 0 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: inherit;
+        font-weight: 560;
+        letter-spacing: -0.02em;
+      }
+
+      .section-title {
+        font-size: clamp(24px, 3.2vw, 34px);
+        line-height: 1.18;
+        font-weight: 540;
+        letter-spacing: -0.03em;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(28px, 4.8vw, 44px);
+        line-height: 1.02;
+        font-weight: 620;
+        letter-spacing: 0.12em;
+      }
+
+      .sample-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .sample-chip {
+        position: relative;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .sample-chip:not(:last-child) {
+        margin-right: 14px;
+        padding-right: 14px;
+      }
+
+      .sample-chip:not(:last-child)::after {
+        content: "/";
+        position: absolute;
+        right: 0;
+        color: var(--line-dark);
+      }
+
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 14px 0 12px;
+        margin-top: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 251, 251, 0.96);
+      }
+
+      .toolbar-shell {
+        display: grid;
+        gap: 12px;
+      }
+
+      .toolbar-top {
+        display: grid;
+        gap: 8px;
+      }
+
+      .toolbar-title {
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .toolbar-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: end;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      input[type="search"] {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--ink);
+        font-size: 16px;
+        transition: border-color 120ms ease, background-color 120ms ease;
+      }
+
+      input[type="search"]:focus {
+        border-color: var(--line-dark);
+        background: #fcfcfc;
+        outline: 2px solid rgba(17, 17, 17, 0.08);
+        outline-offset: 2px;
+      }
+
+      .counter {
+        margin: 0;
+        font-size: 14px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .nav-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .nav-pill {
+        padding: 0 0 2px;
+        border-bottom: 1px solid transparent;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        background: transparent;
+      }
+
+      .nav-pill:hover {
+        border-color: var(--line-dark);
+        color: var(--ink);
+      }
+
+      .destination-row {
+        padding: 2px 0 0;
+      }
+
+      .destination-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 0 4px;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink-soft);
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 0.02em;
+        transition: border-color 140ms ease, color 140ms ease, transform 140ms ease;
+      }
+
+      .destination-link-icon {
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+      }
+
+      .destination-link-icon svg {
+        width: 15px;
+        height: 15px;
+        display: block;
+      }
+
+      .destination-link:hover,
+      .destination-link:focus-visible {
+        border-color: var(--ink);
+        color: var(--ink);
+        transform: translateY(-1px);
+      }
+
+      .group-section {
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .group-header {
+        margin-bottom: 14px;
+      }
+
+      .group-header h2 {
+        margin: 0;
+      }
+
+      .group-list {
+        display: grid;
+        gap: 0;
+      }
+
+      .term-row {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 24px;
+        padding: 16px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .term-row:first-child {
+        border-top: 1px solid var(--line);
+      }
+
+      .term-title {
+        margin: 0;
+        font-size: 19px;
+        line-height: 1.28;
+        font-weight: 560;
+      }
+
+      .term-kind {
+        margin: 6px 0 0;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .term-usage {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--ink-soft);
+      }
+
+      .entry-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .entry-meta-item {
+        color: var(--muted);
+      }
+
+      .entry-meta-separator {
+        color: var(--faint);
+      }
+
+      .sample-list {
+        margin-top: 12px;
+      }
+
+      .principles {
+        padding: 36px 0 0;
+      }
+
+      .principles h2 {
+        margin: 0;
+      }
+
+      .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 24px;
+        margin-top: 18px;
+      }
+
+      .principle-item {
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .principle-item h3 {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.45;
+        font-weight: 520;
+      }
+
+      .principle-item p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      code {
+        padding: 0 4px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-muted);
+        font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+        font-size: 0.92em;
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 860px) {
+        .principles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .group-header,
+        .toolbar-grid,
+        .term-row {
+          grid-template-columns: 1fr;
+        }
+
+        .counter {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <h1>DESKTOP NAMING GLOSSARY</h1>
+      </header>
+
+      <section class="toolbar" aria-label="搜索与导航">
+        <div class="toolbar-shell">
+          <div class="toolbar-top">
+            <p class="toolbar-title">词汇索引</p>
+          </div>
+          <div class="toolbar-grid">
+            <div>
+              <label for="searchInput">搜索词条</label>
+              <input id="searchInput" type="search" placeholder="例如：workspace / src / md / archive" />
+            </div>
+            <p class="counter" id="resultCounter">当前显示 200 / 200 个词条</p>
+          </div>
+          
+    <div class="destination-row">
+      <a class="destination-link" href="Structure Atlas.html" aria-label="进入 Structure Atlas">
+        <span>Structure Atlas</span>
+        <span class="destination-link-icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+      <path d="M6 14 14 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" />
+      <path d="M8 6h6v6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" />
+    </svg>
+  </span>
+      </a>
+    </div>
+  
+          <nav class="nav-row" aria-label="分类导航"><a class="nav-pill" href="#workspace_project">工作区与项目命名</a><a class="nav-pill" href="#project_structure">常见项目结构词</a><a class="nav-pill" href="#tech_tool">技术与工具词</a><a class="nav-pill" href="#extension_suffix">常见副档名与尾缀</a><a class="nav-pill" href="#system_misc">系统与杂项高频词</a></nav>
+        </div>
+      </section>
+
+      
+    <section class="group-section" data-group id="workspace_project">
+      <header class="group-header">
+        <h2 class="section-title">工作区与项目命名</h2>
+      </header>
+      <div class="group-list">
+        
+    <article class="term-row" data-entry data-category="workspace_project" data-search="manager 经理 / 管理  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 manager  head-manager-context.shared-runtime.d.ts head-manager-context.shared-runtime.js head-manager-context.shared-runtime.js.map">
+      <div class="term-side">
+        <h3 class="term-title">manager</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">经理 / 管理</span></div>
+        <ul class="sample-list"><li class="sample-chip">head-manager-context.shared-runtime.d.ts</li><li class="sample-chip">head-manager-context.shared-runtime.js</li><li class="sample-chip">head-manager-context.shared-runtime.js.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="template 模板  工作区与项目命名 适合一套可重复复用的底板、骨架或命名标准。 template  meson.build.template conv_template.py from_template.py">
+      <div class="term-side">
+        <h3 class="term-title">template</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合一套可重复复用的底板、骨架或命名标准。</p>
+        <div class="entry-meta"><span class="entry-meta-item">模板</span></div>
+        <ul class="sample-list"><li class="sample-chip">meson.build.template</li><li class="sample-chip">conv_template.py</li><li class="sample-chip">from_template.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="platform 平台  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 platform  focus_training_platform get-platform-env.d.ts get-platform-env.js">
+      <div class="term-side">
+        <h3 class="term-title">platform</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">平台</span></div>
+        <ul class="sample-list"><li class="sample-chip">Focus_Training_Platform</li><li class="sample-chip">get-platform-env.d.ts</li><li class="sample-chip">get-platform-env.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="reference 命名主题词  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 reference  reference-assets server-reference-info.d.ts server-reference-info.js">
+      <div class="term-side">
+        <h3 class="term-title">reference</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">命名主题词</span></div>
+        <ul class="sample-list"><li class="sample-chip">reference-assets</li><li class="sample-chip">server-reference-info.d.ts</li><li class="sample-chip">server-reference-info.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="prototype 原型  工作区与项目命名 适合验证想法的项目版本，强调它还不是最终正式产物。 proto + type  flo-insights-prototype.workspace 2.md flo-insights-prototype.workspace 3.md flo-insights-prototype.workspace 4.md">
+      <div class="term-side">
+        <h3 class="term-title">prototype</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合验证想法的项目版本，强调它还不是最终正式产物。</p>
+        <div class="entry-meta"><span class="entry-meta-item">原型</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">proto + type</span></div>
+        <ul class="sample-list"><li class="sample-chip">flo-insights-prototype.workspace 2.md</li><li class="sample-chip">flo-insights-prototype.workspace 3.md</li><li class="sample-chip">flo-insights-prototype.workspace 4.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="case 案例  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 case  case.py jsx-pascal-case.d.ts jsx-pascal-case.d.ts.map">
+      <div class="term-side">
+        <h3 class="term-title">case</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">案例</span></div>
+        <ul class="sample-list"><li class="sample-chip">case.py</li><li class="sample-chip">jsx-pascal-case.d.ts</li><li class="sample-chip">jsx-pascal-case.d.ts.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="workflow 工作流  工作区与项目命名 适合流程文档、执行链路和 ai 协作步骤说明。 work + flow  project_workflow.md workflow.md workflow.md">
+      <div class="term-side">
+        <h3 class="term-title">workflow</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合流程文档、执行链路和 AI 协作步骤说明。</p>
+        <div class="entry-meta"><span class="entry-meta-item">工作流</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">work + flow</span></div>
+        <ul class="sample-list"><li class="sample-chip">PROJECT_WORKFLOW.md</li><li class="sample-chip">WORKFLOW.md</li><li class="sample-chip">workflow.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="skill 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 skill  skill skill 2.md skill 3.md">
+      <div class="term-side">
+        <h3 class="term-title">skill</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">SKILL</li><li class="sample-chip">SKILL 2.md</li><li class="sample-chip">SKILL 3.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="navigation 导航  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 navigation  navigation-types navigation.d.ts navigation.js">
+      <div class="term-side">
+        <h3 class="term-title">navigation</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">导航</span></div>
+        <ul class="sample-list"><li class="sample-chip">navigation-types</li><li class="sample-chip">navigation.d.ts</li><li class="sample-chip">navigation.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="focus 专注  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 focus  focus_training_platform interactive-supports-focus.js interactive-supports-focus.md">
+      <div class="term-side">
+        <h3 class="term-title">focus</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">专注</span></div>
+        <ul class="sample-list"><li class="sample-chip">Focus_Training_Platform</li><li class="sample-chip">interactive-supports-focus.js</li><li class="sample-chip">interactive-supports-focus.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="memory 记忆 / 上下文  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 memory  memory.md memory.md memory-2.md">
+      <div class="term-side">
+        <h3 class="term-title">memory</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">记忆 / 上下文</span></div>
+        <ul class="sample-list"><li class="sample-chip">MEMORY.md</li><li class="sample-chip">memory.md</li><li class="sample-chip">memory-2.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="workspace 工作空间  工作区与项目命名 适合命名整个工作区、跨项目整理区或治理空间。 work + space  workspace atlas workspace_governance_playbook.md codex_flo_insights_workspace">
+      <div class="term-side">
+        <h3 class="term-title">workspace</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合命名整个工作区、跨项目整理区或治理空间。</p>
+        <div class="entry-meta"><span class="entry-meta-item">工作空间</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">work + space</span></div>
+        <ul class="sample-list"><li class="sample-chip">Workspace Atlas</li><li class="sample-chip">Workspace_Governance_Playbook.md</li><li class="sample-chip">codex_flo_insights_workspace</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="insight 洞察  工作区与项目命名 更接近分析结论和理解，不是原始数据本身。 insight  flo-pregnancy-insights flo-pregnancy-tracker-insights flo-pregnancy-tracker-insights.html">
+      <div class="term-side">
+        <h3 class="term-title">insight</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">更接近分析结论和理解，不是原始数据本身。</p>
+        <div class="entry-meta"><span class="entry-meta-item">洞察</span></div>
+        <ul class="sample-list"><li class="sample-chip">Flo-Pregnancy-Insights</li><li class="sample-chip">Flo-Pregnancy-Tracker-Insights</li><li class="sample-chip">Flo-Pregnancy-Tracker-Insights.html</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="project 项目  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 project  capstone project project_structure_bilingual_editorial_v4.html project_workflow.md">
+      <div class="term-side">
+        <h3 class="term-title">project</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目</span></div>
+        <ul class="sample-list"><li class="sample-chip">Capstone Project</li><li class="sample-chip">project_structure_bilingual_editorial_v4.html</li><li class="sample-chip">PROJECT_WORKFLOW.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="progress 进展  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 progress  progress_sync.md progress.js progress.js.map">
+      <div class="term-side">
+        <h3 class="term-title">progress</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">进展</span></div>
+        <ul class="sample-list"><li class="sample-chip">PROGRESS_SYNC.md</li><li class="sample-chip">progress.js</li><li class="sample-chip">progress.js.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="library 资料库  工作区与项目命名 适合资料、素材、模板或参考内容的可复用集合。 library  library-axios.4d38c57d.js library-lodash.936df096.js library-polyfill.29a884fe.js">
+      <div class="term-side">
+        <h3 class="term-title">library</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合资料、素材、模板或参考内容的可复用集合。</p>
+        <div class="entry-meta"><span class="entry-meta-item">资料库</span></div>
+        <ul class="sample-list"><li class="sample-chip">library-axios.4d38c57d.js</li><li class="sample-chip">library-lodash.936df096.js</li><li class="sample-chip">library-polyfill.29a884fe.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="resume 简历  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 resume  resume resume-data-cache resume-data-cache.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">resume</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">简历</span></div>
+        <ul class="sample-list"><li class="sample-chip">Resume</li><li class="sample-chip">resume-data-cache</li><li class="sample-chip">resume-data-cache.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="tracker 追踪器  工作区与项目命名 适合持续记录状态变化、进度变化或行为轨迹的模块。 tracker  flo-pregnancy-tracker-insights flo-pregnancy-tracker-insights.html symptom-tracker 2.html">
+      <div class="term-side">
+        <h3 class="term-title">tracker</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合持续记录状态变化、进度变化或行为轨迹的模块。</p>
+        <div class="entry-meta"><span class="entry-meta-item">追踪器</span></div>
+        <ul class="sample-list"><li class="sample-chip">Flo-Pregnancy-Tracker-Insights</li><li class="sample-chip">Flo-Pregnancy-Tracker-Insights.html</li><li class="sample-chip">symptom-tracker 2.html</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="archive 归档  工作区与项目命名 代表历史保留区，适合旧版材料，不适合现行主入口。 archive  _archive archive archive">
+      <div class="term-side">
+        <h3 class="term-title">archive</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">代表历史保留区，适合旧版材料，不适合现行主入口。</p>
+        <div class="entry-meta"><span class="entry-meta-item">归档</span></div>
+        <ul class="sample-list"><li class="sample-chip">_archive</li><li class="sample-chip">archive</li><li class="sample-chip">Archive</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="prd 产品需求文档 product requirements document 工作区与项目命名 通常指产品需求文档，是需求说明入口，不是设计稿或最终实现。 prd  prd.md 上海市总工会prd.docx 15_end_to_end_case_from_prd_to_launch">
+      <div class="term-side">
+        <h3 class="term-title">prd</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常指产品需求文档，是需求说明入口，不是设计稿或最终实现。</p>
+        <div class="entry-meta"><span class="entry-meta-item">产品需求文档</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Product Requirements Document</span></div>
+        <ul class="sample-list"><li class="sample-chip">prd.md</li><li class="sample-chip">上海市总工会PRD.docx</li><li class="sample-chip">15_end_to_end_case_from_prd_to_launch</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="design 设计  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 design  flo_ui_design_system.md 2026-03-29-taskflow-design.md 2026-03-26-visual-polish-design.md">
+      <div class="term-side">
+        <h3 class="term-title">design</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">设计</span></div>
+        <ul class="sample-list"><li class="sample-chip">FLO_UI_DESIGN_SYSTEM.md</li><li class="sample-chip">2026-03-29-taskflow-design.md</li><li class="sample-chip">2026-03-26-visual-polish-design.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="product 产品  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 product  consumer product playbook product-strategist product-strategist-full">
+      <div class="term-side">
+        <h3 class="term-title">product</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">产品</span></div>
+        <ul class="sample-list"><li class="sample-chip">Consumer Product Playbook</li><li class="sample-chip">product-strategist</li><li class="sample-chip">product-strategist-full</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="dashboard 仪表盘  工作区与项目命名 通常表示总览页、运营页或聚合入口，不是普通文档名。 dash + board  dashboard-layout.tsx dashboard.tsx dashboard-info.tsx">
+      <div class="term-side">
+        <h3 class="term-title">dashboard</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示总览页、运营页或聚合入口，不是普通文档名。</p>
+        <div class="entry-meta"><span class="entry-meta-item">仪表盘</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">dash + board</span></div>
+        <ul class="sample-list"><li class="sample-chip">dashboard-layout.tsx</li><li class="sample-chip">dashboard.tsx</li><li class="sample-chip">dashboard-info.tsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="consumer 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 consumer  consumer product playbook source-map-consumer.d.ts source-map-consumer.js">
+      <div class="term-side">
+        <h3 class="term-title">consumer</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Consumer Product Playbook</li><li class="sample-chip">source-map-consumer.d.ts</li><li class="sample-chip">source-map-consumer.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="kit 资料包  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 kit  libp11-kit.0.dylib appkit imagekit">
+      <div class="term-side">
+        <h3 class="term-title">kit</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">资料包</span></div>
+        <ul class="sample-list"><li class="sample-chip">libp11-kit.0.dylib</li><li class="sample-chip">AppKit</li><li class="sample-chip">ImageKit</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="studio 工作室  工作区与项目命名 强调持续整理、创作和学习，是很稳的空间型命名。 studio  learning studio epic studio blooming studio">
+      <div class="term-side">
+        <h3 class="term-title">studio</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">强调持续整理、创作和学习，是很稳的空间型命名。</p>
+        <div class="entry-meta"><span class="entry-meta-item">工作室</span></div>
+        <ul class="sample-list"><li class="sample-chip">Learning Studio</li><li class="sample-chip">Epic Studio</li><li class="sample-chip">Blooming Studio</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="lab 实验室  工作区与项目命名 强调实验、孵化和试错，适合作品探索区或原型试验区。 lab  portfolio lab css-lch-lab.js lab.js">
+      <div class="term-side">
+        <h3 class="term-title">lab</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">强调实验、孵化和试错，适合作品探索区或原型试验区。</p>
+        <div class="entry-meta"><span class="entry-meta-item">实验室</span></div>
+        <ul class="sample-list"><li class="sample-chip">Portfolio Lab</li><li class="sample-chip">css-lch-lab.js</li><li class="sample-chip">lab.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="vault 知识库  工作区与项目命名 更像长期维护的知识库，而不是临时文件夹。 vault  azure-key-vault.cjs azure-key-vault.d.cts azure-key-vault.d.mts">
+      <div class="term-side">
+        <h3 class="term-title">vault</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">更像长期维护的知识库，而不是临时文件夹。</p>
+        <div class="entry-meta"><span class="entry-meta-item">知识库</span></div>
+        <ul class="sample-list"><li class="sample-chip">azure-key-vault.cjs</li><li class="sample-chip">azure-key-vault.d.cts</li><li class="sample-chip">azure-key-vault.d.mts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="work 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 work  risesome work no-work-result.d.ts no-work-result.js">
+      <div class="term-side">
+        <h3 class="term-title">work</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Risesome Work</li><li class="sample-chip">no-work-result.d.ts</li><li class="sample-chip">no-work-result.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="portfolio 作品集  工作区与项目命名 适合作品集、案例集和对外展示类空间。 port + folio  portfolio lab generate_portfolio.py product portfolio">
+      <div class="term-side">
+        <h3 class="term-title">portfolio</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合作品集、案例集和对外展示类空间。</p>
+        <div class="entry-meta"><span class="entry-meta-item">作品集</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">port + folio</span></div>
+        <ul class="sample-list"><li class="sample-chip">Portfolio Lab</li><li class="sample-chip">generate_portfolio.py</li><li class="sample-chip">Product Portfolio</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="vibe 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 vibe  vibe coding vibe_coding vibe_coding_internal_layout.md">
+      <div class="term-side">
+        <h3 class="term-title">vibe</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Vibe Coding</li><li class="sample-chip">vibe_coding</li><li class="sample-chip">Vibe_Coding_Internal_Layout.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="playbook 执行手册  工作区与项目命名 适合治理手册、操作手册、可执行规则合集。 play + book  consumer product playbook workspace_governance_playbook.md muscle_gain_playbook">
+      <div class="term-side">
+        <h3 class="term-title">playbook</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合治理手册、操作手册、可执行规则合集。</p>
+        <div class="entry-meta"><span class="entry-meta-item">执行手册</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">play + book</span></div>
+        <ul class="sample-list"><li class="sample-chip">Consumer Product Playbook</li><li class="sample-chip">Workspace_Governance_Playbook.md</li><li class="sample-chip">Muscle_Gain_Playbook</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="desktop 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 desktop  desktop naming glossary.html wcm-desktop-connecting-view wcm-desktop-wallet-selection">
+      <div class="term-side">
+        <h3 class="term-title">desktop</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Desktop Naming Glossary.html</li><li class="sample-chip">wcm-desktop-connecting-view</li><li class="sample-chip">wcm-desktop-wallet-selection</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="ux 用户体验 user experience 工作区与项目命名 通常表示体验设计语境，更关注流程是否顺、理解成本是否低。 ux  ux_issue_log.md micro-interactions under the radar in the new ux design concept by siili_auto.mp4 micro-interactions under the radar in the new ux design concept by siili_auto_副本.mp4">
+      <div class="term-side">
+        <h3 class="term-title">ux</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示体验设计语境，更关注流程是否顺、理解成本是否低。</p>
+        <div class="entry-meta"><span class="entry-meta-item">用户体验</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">User Experience</span></div>
+        <ul class="sample-list"><li class="sample-chip">ux_issue_log.md</li><li class="sample-chip">Micro-interactions under the radar in the new UX Design Concept by siili_auto.mp4</li><li class="sample-chip">Micro-interactions under the radar in the new UX Design Concept by siili_auto_副本.mp4</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="naming 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 naming  desktop naming glossary.html naming glossary.html boolean-prop-naming.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">naming</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Desktop Naming Glossary.html</li><li class="sample-chip">Naming Glossary.html</li><li class="sample-chip">boolean-prop-naming.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="structure 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 structure  project_structure_bilingual_editorial_v4.html title-structure-map.md test_class_structure.py">
+      <div class="term-side">
+        <h3 class="term-title">structure</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">project_structure_bilingual_editorial_v4.html</li><li class="sample-chip">title-structure-map.md</li><li class="sample-chip">test_class_structure.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="learning 学习  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 learning  learning studio learning-output-style learning &amp; career">
+      <div class="term-side">
+        <h3 class="term-title">learning</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">学习</span></div>
+        <ul class="sample-list"><li class="sample-chip">Learning Studio</li><li class="sample-chip">learning-output-style</li><li class="sample-chip">Learning &amp; Career</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="onboarding 命名主题词  工作区与项目命名 这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。 on + boarding  onboarding startdesktoponboarding.d.ts startdesktoponboarding.d.ts.map">
+      <div class="term-side">
+        <h3 class="term-title">onboarding</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更适合做空间名、项目名或主题容器名，帮助你一眼看懂这个目录在管什么。</p>
+        <div class="entry-meta"><span class="entry-meta-item">命名主题词</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">on + boarding</span></div>
+        <ul class="sample-list"><li class="sample-chip">onboarding</li><li class="sample-chip">startDesktopOnboarding.d.ts</li><li class="sample-chip">startDesktopOnboarding.d.ts.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="harness 执行壳  工作区与项目命名 适合把复杂流程收口成统一入口的小工具或执行壳。 harness  04-behavior-guardrails-and-harness.md path_harness workspace_harness.py">
+      <div class="term-side">
+        <h3 class="term-title">harness</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合把复杂流程收口成统一入口的小工具或执行壳。</p>
+        <div class="entry-meta"><span class="entry-meta-item">执行壳</span></div>
+        <ul class="sample-list"><li class="sample-chip">04-behavior-guardrails-and-harness.md</li><li class="sample-chip">Path_Harness</li><li class="sample-chip">workspace_harness.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="coding 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 coding  vibe coding keyvaluecoding.py vibe_coding">
+      <div class="term-side">
+        <h3 class="term-title">coding</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Vibe Coding</li><li class="sample-chip">KeyValueCoding.py</li><li class="sample-chip">vibe_coding</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="governance 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 governance  workspace_governance_playbook.md governance.md homebrew-governance-archives.md">
+      <div class="term-side">
+        <h3 class="term-title">governance</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span></div>
+        <ul class="sample-list"><li class="sample-chip">Workspace_Governance_Playbook.md</li><li class="sample-chip">GOVERNANCE.md</li><li class="sample-chip">Homebrew-Governance-Archives.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="lexicon 词汇表  工作区与项目命名 适合词汇表、术语表和概念整理型文件夹。 lexicon  product lexicon">
+      <div class="term-side">
+        <h3 class="term-title">lexicon</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合词汇表、术语表和概念整理型文件夹。</p>
+        <div class="entry-meta"><span class="entry-meta-item">词汇表</span></div>
+        <ul class="sample-list"><li class="sample-chip">Product Lexicon</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="wellbeing 身心健康  工作区与项目命名 适合健康、状态、恢复或长期自我管理相关主题。 well + being  wellbeing">
+      <div class="term-side">
+        <h3 class="term-title">wellbeing</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合健康、状态、恢复或长期自我管理相关主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">身心健康</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">well + being</span></div>
+        <ul class="sample-list"><li class="sample-chip">Wellbeing</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="workspace_project" data-search="atlas 项目名 / 品牌名  工作区与项目命名 这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。 atla + s  workspace atlas structure atlas.html inner_atlas">
+      <div class="term-side">
+        <h3 class="term-title">atlas</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这类专有名词通常保留原文，用来稳定标记你的品牌、项目或工作区主题。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目名 / 品牌名</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">atla + s</span></div>
+        <ul class="sample-list"><li class="sample-chip">Workspace Atlas</li><li class="sample-chip">Structure Atlas.html</li><li class="sample-chip">Inner_Atlas</li></ul>
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+    <section class="group-section" data-group id="project_structure">
+      <header class="group-header">
+        <h2 class="section-title">常见项目结构词</h2>
+      </header>
+      <div class="group-list">
+        
+    <article class="term-row" data-entry data-category="project_structure" data-search="lib 函数库  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 lib  lib_interval.py lib.cpython-39-darwin.so lib">
+      <div class="term-side">
+        <h3 class="term-title">lib</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">函数库</span></div>
+        <ul class="sample-list"><li class="sample-chip">lib_interval.py</li><li class="sample-chip">lib.cpython-39-darwin.so</li><li class="sample-chip">lib</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="module 模块  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 module  check_module_delivery_isolation.js sync_module_delivery_assets.js test_module_imports.py">
+      <div class="term-side">
+        <h3 class="term-title">module</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">模块</span></div>
+        <ul class="sample-list"><li class="sample-chip">check_module_delivery_isolation.js</li><li class="sample-chip">sync_module_delivery_assets.js</li><li class="sample-chip">test_module_imports.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="source 来源 / 源文件  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 source  fem-premium-dream-source.png source.py test_source.py">
+      <div class="term-side">
+        <h3 class="term-title">source</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">来源 / 源文件</span></div>
+        <ul class="sample-list"><li class="sample-chip">fem-premium-dream-source.png</li><li class="sample-chip">source.py</li><li class="sample-chip">test_source.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="server 服务端  常见项目结构词 通常表示服务端代码区，适合接口、数据处理和业务逻辑。 server  mock-server.ts server.ts language-server.source.ts">
+      <div class="term-side">
+        <h3 class="term-title">server</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示服务端代码区，适合接口、数据处理和业务逻辑。</p>
+        <div class="entry-meta"><span class="entry-meta-item">服务端</span></div>
+        <ul class="sample-list"><li class="sample-chip">mock-server.ts</li><li class="sample-chip">server.ts</li><li class="sample-chip">language-server.source.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="plugin 项目结构词  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 plugin  mypy_plugin.py plugin_pb2.py avifimageplugin.py">
+      <div class="term-side">
+        <h3 class="term-title">plugin</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目结构词</span></div>
+        <ul class="sample-list"><li class="sample-chip">mypy_plugin.py</li><li class="sample-chip">plugin_pb2.py</li><li class="sample-chip">AvifImagePlugin.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="app 应用入口  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 app  女性健康 app app_icon_with_202604141105.jpeg app.js">
+      <div class="term-side">
+        <h3 class="term-title">app</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">应用入口</span></div>
+        <ul class="sample-list"><li class="sample-chip">女性健康 APP</li><li class="sample-chip">App_icon_with_202604141105.jpeg</li><li class="sample-chip">app.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="src 主源码目录 source 常见项目结构词 通常是项目最核心的实现区，看到它就知道主代码放这里。 src  _src_pyf.py src test_pyf_src.py">
+      <div class="term-side">
+        <h3 class="term-title">src</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常是项目最核心的实现区，看到它就知道主代码放这里。</p>
+        <div class="entry-meta"><span class="entry-meta-item">主源码目录</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">source</span></div>
+        <ul class="sample-list"><li class="sample-chip">_src_pyf.py</li><li class="sample-chip">src</li><li class="sample-chip">test_pyf_src.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="client 客户端  常见项目结构词 通常表示客户端代码区，和 server 对应出现。 client  api-client.ts client-only client.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">client</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示客户端代码区，和 server 对应出现。</p>
+        <div class="entry-meta"><span class="entry-meta-item">客户端</span></div>
+        <ul class="sample-list"><li class="sample-chip">api-client.ts</li><li class="sample-chip">client-only</li><li class="sample-chip">client.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="data 数据  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 data  data.js data bert_test_data.py">
+      <div class="term-side">
+        <h3 class="term-title">data</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">数据</span></div>
+        <ul class="sample-list"><li class="sample-chip">data.js</li><li class="sample-chip">data</li><li class="sample-chip">bert_test_data.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="component 组件  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 component  components-and-styling.md components _components">
+      <div class="term-side">
+        <h3 class="term-title">component</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">组件</span></div>
+        <ul class="sample-list"><li class="sample-chip">components-and-styling.md</li><li class="sample-chip">components</li><li class="sample-chip">_components</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="route 路由  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 route  routes interception-routes.d.ts interception-routes.js">
+      <div class="term-side">
+        <h3 class="term-title">route</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">路由</span></div>
+        <ul class="sample-list"><li class="sample-chip">routes</li><li class="sample-chip">interception-routes.d.ts</li><li class="sample-chip">interception-routes.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="page 页面  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 page  page-state-map-v1.md page-flow-v1.md page.tsx">
+      <div class="term-side">
+        <h3 class="term-title">page</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">页面</span></div>
+        <ul class="sample-list"><li class="sample-chip">page-state-map-v1.md</li><li class="sample-chip">page-flow-v1.md</li><li class="sample-chip">page.tsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="image 图片  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 image  sync_fem_webview_insight_images.js insight-images questionnaire-images">
+      <div class="term-side">
+        <h3 class="term-title">image</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">图片</span></div>
+        <ul class="sample-list"><li class="sample-chip">sync_fem_webview_insight_images.js</li><li class="sample-chip">insight-images</li><li class="sample-chip">questionnaire-images</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="context 上下文  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 context  test_context.py source_context_pb2.py _context.py">
+      <div class="term-side">
+        <h3 class="term-title">context</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">上下文</span></div>
+        <ul class="sample-list"><li class="sample-chip">test_context.py</li><li class="sample-chip">source_context_pb2.py</li><li class="sample-chip">_context.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="style 样式  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 style  style.css flo-style_expert_trust_202604141437.png tracker-shared-style.css">
+      <div class="term-side">
+        <h3 class="term-title">style</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">样式</span></div>
+        <ul class="sample-list"><li class="sample-chip">style.css</li><li class="sample-chip">Flo-style_expert_trust_202604141437.png</li><li class="sample-chip">tracker-shared-style.css</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="ui 用户界面 user interface 常见项目结构词 通常表示界面层、视觉稿或设计系统语境，看到它时多半和页面呈现有关。 ui  flo_ui_design_system.md fix_premium_ui.py update_ui.py">
+      <div class="term-side">
+        <h3 class="term-title">ui</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示界面层、视觉稿或设计系统语境，看到它时多半和页面呈现有关。</p>
+        <div class="entry-meta"><span class="entry-meta-item">用户界面</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">User Interface</span></div>
+        <ul class="sample-list"><li class="sample-chip">FLO_UI_DESIGN_SYSTEM.md</li><li class="sample-chip">fix_premium_ui.py</li><li class="sample-chip">update_ui.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="api 接口层 application programming interface 常见项目结构词 通常表示接口层、请求层或服务边界，重点是“不同模块怎么对外提供能力”。 api  _pygeos_api.pxd test_public_api.py api_changes.txt">
+      <div class="term-side">
+        <h3 class="term-title">api</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示接口层、请求层或服务边界，重点是“不同模块怎么对外提供能力”。</p>
+        <div class="entry-meta"><span class="entry-meta-item">接口层</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Application Programming Interface</span></div>
+        <ul class="sample-list"><li class="sample-chip">_pygeos_api.pxd</li><li class="sample-chip">test_public_api.py</li><li class="sample-chip">API_CHANGES.txt</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="shared 共享层  常见项目结构词 适合放跨端共享的类型、常量和工具函数。 shared  tracker-shared-app.js tracker-shared-style.css test_shared_paths.py">
+      <div class="term-side">
+        <h3 class="term-title">shared</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合放跨端共享的类型、常量和工具函数。</p>
+        <div class="entry-meta"><span class="entry-meta-item">共享层</span></div>
+        <ul class="sample-list"><li class="sample-chip">tracker-shared-app.js</li><li class="sample-chip">tracker-shared-style.css</li><li class="sample-chip">test_shared_paths.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="contract 合约 / 接口约束  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 contract  usedeploycontract.ts usereadcontract.ts usesimulatecontract.ts">
+      <div class="term-side">
+        <h3 class="term-title">contract</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">合约 / 接口约束</span></div>
+        <ul class="sample-list"><li class="sample-chip">useDeployContract.ts</li><li class="sample-chip">useReadContract.ts</li><li class="sample-chip">useSimulateContract.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="layout 项目结构词  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 layout  pregnancy_insights_homepage_layout_inventory.json auth-layout.tsx content-layout.tsx">
+      <div class="term-side">
+        <h3 class="term-title">layout</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">项目结构词</span></div>
+        <ul class="sample-list"><li class="sample-chip">pregnancy_insights_homepage_layout_inventory.json</li><li class="sample-chip">auth-layout.tsx</li><li class="sample-chip">content-layout.tsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="router 路由器  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 router  router.tsx router.d.ts router.js">
+      <div class="term-side">
+        <h3 class="term-title">router</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">路由器</span></div>
+        <ul class="sample-list"><li class="sample-chip">router.tsx</li><li class="sample-chip">router.d.ts</li><li class="sample-chip">router.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="script 脚本  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 script  scripts test_scripts.py build_scripts.py">
+      <div class="term-side">
+        <h3 class="term-title">script</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">脚本</span></div>
+        <ul class="sample-list"><li class="sample-chip">scripts</li><li class="sample-chip">test_scripts.py</li><li class="sample-chip">build_scripts.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="hook hook  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 hook  hook-numpy.py asyncparallelbailhook.js asyncparallelhook.js">
+      <div class="term-side">
+        <h3 class="term-title">hook</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Hook</span></div>
+        <ul class="sample-list"><li class="sample-chip">hook-numpy.py</li><li class="sample-chip">AsyncParallelBailHook.js</li><li class="sample-chip">AsyncParallelHook.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="store 状态存储  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 store  .ds_store notifications-store.ts unstable-no-store.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">store</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">状态存储</span></div>
+        <ul class="sample-list"><li class="sample-chip">.DS_Store</li><li class="sample-chip">notifications-store.ts</li><li class="sample-chip">unstable-no-store.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="asset 资源  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 asset  assets sync_module_delivery_assets.js 02-paths-and-assets.md">
+      <div class="term-side">
+        <h3 class="term-title">asset</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">资源</span></div>
+        <ul class="sample-list"><li class="sample-chip">assets</li><li class="sample-chip">sync_module_delivery_assets.js</li><li class="sample-chip">02-paths-and-assets.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="public 公共资源  常见项目结构词 适合放公开静态资源，如图标、图片和浏览器直接可访问文件。 public  test_public_api.py _public_dtype_api_table.h public">
+      <div class="term-side">
+        <h3 class="term-title">public</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合放公开静态资源，如图标、图片和浏览器直接可访问文件。</p>
+        <div class="entry-meta"><span class="entry-meta-item">公共资源</span></div>
+        <ul class="sample-list"><li class="sample-chip">test_public_api.py</li><li class="sample-chip">_public_dtype_api_table.h</li><li class="sample-chip">public</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="service 服务  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 service  service_reflection.py mockserviceworker.js dev-bundler-service.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">service</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">服务</span></div>
+        <ul class="sample-list"><li class="sample-chip">service_reflection.py</li><li class="sample-chip">mockServiceWorker.js</li><li class="sample-chip">dev-bundler-service.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="icon 图标  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 icon  app_icon_with_202604141105.jpeg flo_app_icon_202604141115.jpeg collapse-icon.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">icon</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">图标</span></div>
+        <ul class="sample-list"><li class="sample-chip">App_icon_with_202604141105.jpeg</li><li class="sample-chip">Flo_app_icon_202604141115.jpeg</li><li class="sample-chip">collapse-icon.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="tool 工具  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 tool  root_tools tools.py test_tools.py">
+      <div class="term-side">
+        <h3 class="term-title">tool</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">工具</span></div>
+        <ul class="sample-list"><li class="sample-chip">root_tools</li><li class="sample-chip">tools.py</li><li class="sample-chip">test_tools.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="db 数据库 database 常见项目结构词 通常表示数据库或数据存储层，适合放连接、查询和持久化相关代码。 db  db.ts db.py db.cpython-313.pyc">
+      <div class="term-side">
+        <h3 class="term-title">db</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示数据库或数据存储层，适合放连接、查询和持久化相关代码。</p>
+        <div class="entry-meta"><span class="entry-meta-item">数据库</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Database</span></div>
+        <ul class="sample-list"><li class="sample-chip">db.ts</li><li class="sample-chip">db.py</li><li class="sample-chip">db.cpython-313.pyc</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="theme 主题  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 theme  theme.css default-theme.d.mts default-theme.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">theme</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">主题</span></div>
+        <ul class="sample-list"><li class="sample-chip">theme.css</li><li class="sample-chip">default-theme.d.mts</li><li class="sample-chip">default-theme.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="backend 后端  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 backend  backends _backends base_backend.py">
+      <div class="term-side">
+        <h3 class="term-title">backend</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">后端</span></div>
+        <ul class="sample-list"><li class="sample-chip">backends</li><li class="sample-chip">_backends</li><li class="sample-chip">base_backend.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="frontend 前端  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 frontend  alive28_frontend debugger-frontend getdevtoolsfrontendurl.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">frontend</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">前端</span></div>
+        <ul class="sample-list"><li class="sample-chip">Alive28_Frontend</li><li class="sample-chip">debugger-frontend</li><li class="sample-chip">getDevToolsFrontendUrl.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="project_structure" data-search="admin 管理端  常见项目结构词 这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。 admin  admin-guard.tsx admin_h5_interface.html admin_h5_wireframes.md">
+      <div class="term-side">
+        <h3 class="term-title">admin</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词多半用来标记项目里的固定结构位，看到它就能判断内容应该放在哪一层。</p>
+        <div class="entry-meta"><span class="entry-meta-item">管理端</span></div>
+        <ul class="sample-list"><li class="sample-chip">admin-guard.tsx</li><li class="sample-chip">admin_h5_interface.html</li><li class="sample-chip">admin_h5_wireframes.md</li></ul>
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+    <section class="group-section" data-group id="tech_tool">
+      <header class="group-header">
+        <h2 class="section-title">技术与工具词</h2>
+      </header>
+      <div class="group-list">
+        
+    <article class="term-row" data-entry data-category="tech_tool" data-search="node node.js  技术与工具词 node.js 运行时常出现在依赖目录、脚本环境和工程目录里。 node  nodes.py abstract_nodes.py matrix_nodes.py">
+      <div class="term-side">
+        <h3 class="term-title">node</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">Node.js 运行时常出现在依赖目录、脚本环境和工程目录里。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Node.js</span></div>
+        <ul class="sample-list"><li class="sample-chip">nodes.py</li><li class="sample-chip">abstract_nodes.py</li><li class="sample-chip">matrix_nodes.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="react react  技术与工具词 react 是前端界面开发框架名，命名里通常直接保留原文。 react  bulletproof-react-master react-vite react-query.ts">
+      <div class="term-side">
+        <h3 class="term-title">react</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">React 是前端界面开发框架名，命名里通常直接保留原文。</p>
+        <div class="entry-meta"><span class="entry-meta-item">React</span></div>
+        <ul class="sample-list"><li class="sample-chip">bulletproof-react-master</li><li class="sample-chip">react-vite</li><li class="sample-chip">react-query.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="next next.js  技术与工具词 通常指 next.js，适合理解为 react 全栈框架语境。 next  next-env.d.ts next.config.mjs .next">
+      <div class="term-side">
+        <h3 class="term-title">next</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常指 Next.js，适合理解为 React 全栈框架语境。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Next.js</span></div>
+        <ul class="sample-list"><li class="sample-chip">next-env.d.ts</li><li class="sample-chip">next.config.mjs</li><li class="sample-chip">.next</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="query 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 query  test_query.py react-query.ts aria-query">
+      <div class="term-side">
+        <h3 class="term-title">query</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">test_query.py</li><li class="sample-chip">react-query.ts</li><li class="sample-chip">aria-query</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="native 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 native  nativeenum.test.ts index.native.js scheduler.native.development.js">
+      <div class="term-side">
+        <h3 class="term-title">native</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">nativeEnum.test.ts</li><li class="sample-chip">index.native.js</li><li class="sample-chip">scheduler.native.development.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="runtime 运行时  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 run + time  check_insight_runtime_smoke.js runtimeoptimizationrecord.py runtimeoptimizationrecordcontainerentry.py">
+      <div class="term-side">
+        <h3 class="term-title">runtime</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">运行时</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">run + time</span></div>
+        <ul class="sample-list"><li class="sample-chip">check_insight_runtime_smoke.js</li><li class="sample-chip">RuntimeOptimizationRecord.py</li><li class="sample-chip">RuntimeOptimizationRecordContainerEntry.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="browser 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 browser  browser.ts baseline-browser-mapping browser.js">
+      <div class="term-side">
+        <h3 class="term-title">browser</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">browser.ts</li><li class="sample-chip">baseline-browser-mapping</li><li class="sample-chip">browser.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="sdk 技术 / 工具名 software development kit 技术与工具词 通常表示一套可被集成调用的开发能力包，比如支付、地图或 ai sdk。 sdk  sdk cbw-sdk coinbasewalletsdk.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">sdk</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示一套可被集成调用的开发能力包，比如支付、地图或 AI SDK。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Software Development Kit</span></div>
+        <ul class="sample-list"><li class="sample-chip">sdk</li><li class="sample-chip">cbw-sdk</li><li class="sample-chip">CoinbaseWalletSDK.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="aws aws  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 aws  @aws-sdk @aws+lambda-invoke-store@0.2.3 @aws-crypto+crc32@5.2.0">
+      <div class="term-side">
+        <h3 class="term-title">aws</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">AWS</span></div>
+        <ul class="sample-list"><li class="sample-chip">@aws-sdk</li><li class="sample-chip">@aws+lambda-invoke-store@0.2.3</li><li class="sample-chip">@aws-crypto+crc32@5.2.0</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="postcss postcss  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 post + css  postcss.config.cjs postcss.config.mjs postcss">
+      <div class="term-side">
+        <h3 class="term-title">postcss</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">PostCSS</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">post + css</span></div>
+        <ul class="sample-list"><li class="sample-chip">postcss.config.cjs</li><li class="sample-chip">postcss.config.mjs</li><li class="sample-chip">postcss</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="cli 技术 / 工具名 command-line interface 技术与工具词 通常表示命令行工具入口，看到它时更偏开发工具而不是用户界面。 cli  cli.py cli cli 2.js">
+      <div class="term-side">
+        <h3 class="term-title">cli</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示命令行工具入口，看到它时更偏开发工具而不是用户界面。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Command-Line Interface</span></div>
+        <ul class="sample-list"><li class="sample-chip">cli.py</li><li class="sample-chip">cli</li><li class="sample-chip">cli 2.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="ocr ocr optical character recognition 技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 ocr  ocr_task_instructions.md ocr_prompt_status.md aggregate_ocr_index 2.py">
+      <div class="term-side">
+        <h3 class="term-title">ocr</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">OCR</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Optical Character Recognition</span></div>
+        <ul class="sample-list"><li class="sample-chip">OCR_TASK_INSTRUCTIONS.md</li><li class="sample-chip">OCR_PROMPT_STATUS.md</li><li class="sample-chip">aggregate_ocr_index 2.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="ruby ruby  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 ruby  ruby.js rubyrole.js ruby">
+      <div class="term-side">
+        <h3 class="term-title">ruby</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Ruby</span></div>
+        <ul class="sample-list"><li class="sample-chip">ruby.js</li><li class="sample-chip">RubyRole.js</li><li class="sample-chip">ruby</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="typescript typescript  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 type + script  @typescript-eslint eslint-import-resolver-typescript typescript">
+      <div class="term-side">
+        <h3 class="term-title">typescript</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">TypeScript</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">type + script</span></div>
+        <ul class="sample-list"><li class="sample-chip">@typescript-eslint</li><li class="sample-chip">eslint-import-resolver-typescript</li><li class="sample-chip">typescript</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="eslint eslint  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 eslint  eslint.config.mjs @eslint @eslint-community">
+      <div class="term-side">
+        <h3 class="term-title">eslint</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">ESLint</span></div>
+        <ul class="sample-list"><li class="sample-chip">eslint.config.mjs</li><li class="sample-chip">@eslint</li><li class="sample-chip">@eslint-community</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="homebrew homebrew  技术与工具词 homebrew 是 macos 常见的命令列安装工具名。 home + brew  old_homebrew homebrew adding-software-to-homebrew.md">
+      <div class="term-side">
+        <h3 class="term-title">homebrew</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">Homebrew 是 macOS 常见的命令列安装工具名。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Homebrew</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">home + brew</span></div>
+        <ul class="sample-list"><li class="sample-chip">Old_Homebrew</li><li class="sample-chip">homebrew</li><li class="sample-chip">Adding-Software-to-Homebrew.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="vite vite  技术与工具词 vite 常出现在前端构建配置和项目脚手架里。 vite  react-vite vite-env.d.ts vite.config.ts">
+      <div class="term-side">
+        <h3 class="term-title">vite</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">Vite 常出现在前端构建配置和项目脚手架里。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Vite</span></div>
+        <ul class="sample-list"><li class="sample-chip">react-vite</li><li class="sample-chip">vite-env.d.ts</li><li class="sample-chip">vite.config.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="metamask 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 metamask  @metamask metamask-sdk-communication-layer.js metamask-sdk-communication-layer.js.map">
+      <div class="term-side">
+        <h3 class="term-title">metamask</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">@metamask</li><li class="sample-chip">metamask-sdk-communication-layer.js</li><li class="sample-chip">metamask-sdk-communication-layer.js.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="vercel vercel  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 vercel  vercel.svg @vercel .vercel">
+      <div class="term-side">
+        <h3 class="term-title">vercel</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Vercel</span></div>
+        <ul class="sample-list"><li class="sample-chip">vercel.svg</li><li class="sample-chip">@vercel</li><li class="sample-chip">.vercel</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="python python  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 python  opencv_python-4.13.0.92.dist-info python.py test_python.py">
+      <div class="term-side">
+        <h3 class="term-title">python</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Python</span></div>
+        <ul class="sample-list"><li class="sample-chip">opencv_python-4.13.0.92.dist-info</li><li class="sample-chip">python.py</li><li class="sample-chip">test_python.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="tailwind tailwind css  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 tailwind  tailwind.config.cjs tailwind.config.js tailwind-merge">
+      <div class="term-side">
+        <h3 class="term-title">tailwind</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Tailwind CSS</span></div>
+        <ul class="sample-list"><li class="sample-chip">tailwind.config.cjs</li><li class="sample-chip">tailwind.config.js</li><li class="sample-chip">tailwind-merge</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="drizzle drizzle orm  技术与工具词 drizzle 是数据层工具名，适合理解为数据库 schema / migration 语境。 drizzle  cloud-drizzle.mjs cloud-drizzle.mjs.map drizzle">
+      <div class="term-side">
+        <h3 class="term-title">drizzle</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">Drizzle 是数据层工具名，适合理解为数据库 schema / migration 语境。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Drizzle ORM</span></div>
+        <ul class="sample-list"><li class="sample-chip">cloud-drizzle.mjs</li><li class="sample-chip">cloud-drizzle.mjs.map</li><li class="sample-chip">drizzle</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="lucide 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 lucide  lucide-react lucide-react.d.ts lucide-react.js">
+      <div class="term-side">
+        <h3 class="term-title">lucide</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">lucide-react</li><li class="sample-chip">lucide-react.d.ts</li><li class="sample-chip">lucide-react.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="pnpm pnpm performant npm 技术与工具词 pnpm 是套件管理工具名，通常代表 javascript 项目的依赖安装方式。 pnpm  pnpm-lock.yaml .pnpm .pnpm-workspace-state.json">
+      <div class="term-side">
+        <h3 class="term-title">pnpm</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">pnpm 是套件管理工具名，通常代表 JavaScript 项目的依赖安装方式。</p>
+        <div class="entry-meta"><span class="entry-meta-item">pnpm</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">performant npm</span></div>
+        <ul class="sample-list"><li class="sample-chip">pnpm-lock.yaml</li><li class="sample-chip">.pnpm</li><li class="sample-chip">.pnpm-workspace-state.json</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="npm npm node package manager 技术与工具词 npm 是 node.js 套件生态的常见命名词，通常和 package.json 一起出现。 npm  check-npm-version 2.js check-npm-version.js npm-run-path">
+      <div class="term-side">
+        <h3 class="term-title">npm</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">npm 是 Node.js 套件生态的常见命名词，通常和 package.json 一起出现。</p>
+        <div class="entry-meta"><span class="entry-meta-item">npm</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Node Package Manager</span></div>
+        <ul class="sample-list"><li class="sample-chip">check-npm-version 2.js</li><li class="sample-chip">check-npm-version.js</li><li class="sample-chip">npm-run-path</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="aigc 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 aigc  aigc安卓 aigc_keystore.txt aigc">
+      <div class="term-side">
+        <h3 class="term-title">aigc</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">aigc安卓</li><li class="sample-chip">aigc_keystore.txt</li><li class="sample-chip">AIGC</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="javascript javascript  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 javascript  javascripthotmodulereplacement.runtime.js javascript working_with_javascript_values.md">
+      <div class="term-side">
+        <h3 class="term-title">javascript</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JavaScript</span></div>
+        <ul class="sample-list"><li class="sample-chip">JavascriptHotModuleReplacement.runtime.js</li><li class="sample-chip">javascript</li><li class="sample-chip">working_with_javascript_values.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="cms 内容管理系统 content management system 技术与工具词 通常表示内容管理系统语境，多和后台发布、编辑和运营录入有关。 cms  libjxl_cms.0.11.1.dylib imagecms.py cms configuration templates">
+      <div class="term-side">
+        <h3 class="term-title">cms</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示内容管理系统语境，多和后台发布、编辑和运营录入有关。</p>
+        <div class="entry-meta"><span class="entry-meta-item">内容管理系统</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Content Management System</span></div>
+        <ul class="sample-list"><li class="sample-chip">libjxl_cms.0.11.1.dylib</li><li class="sample-chip">ImageCms.py</li><li class="sample-chip">CMS Configuration Templates</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="tanstack 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 tanstack  @tanstack @tanstack_react-query.js @tanstack_react-query.js.map">
+      <div class="term-side">
+        <h3 class="term-title">tanstack</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">@tanstack</li><li class="sample-chip">@tanstack_react-query.js</li><li class="sample-chip">@tanstack_react-query.js.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="orm 技术 / 工具名 object-relational mapping 技术与工具词 通常表示数据库映射工具语境，帮助代码结构和数据库结构保持对应。 orm  drizzle-orm drizzle-orm@0.44.7_mysql2@3.16.0">
+      <div class="term-side">
+        <h3 class="term-title">orm</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示数据库映射工具语境，帮助代码结构和数据库结构保持对应。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Object-Relational Mapping</span></div>
+        <ul class="sample-list"><li class="sample-chip">drizzle-orm</li><li class="sample-chip">drizzle-orm@0.44.7_mysql2@3.16.0</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="seo 搜索引擎优化 search engine optimization 技术与工具词 通常表示搜索引擎优化语境，多和标题、描述、索引与流量获取有关。 seo  seo">
+      <div class="term-side">
+        <h3 class="term-title">seo</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示搜索引擎优化语境，多和标题、描述、索引与流量获取有关。</p>
+        <div class="entry-meta"><span class="entry-meta-item">搜索引擎优化</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Search Engine Optimization</span></div>
+        <ul class="sample-list"><li class="sample-chip">seo</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="caniuse 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 caniuse  caniuse-lite caniuse-lite@1.0.30001748">
+      <div class="term-side">
+        <h3 class="term-title">caniuse</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">caniuse-lite</li><li class="sample-chip">caniuse-lite@1.0.30001748</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="rapidocr 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 rapidocr  rapidocr rapidocr_onnxruntime rapidocr_onnxruntime-1.4.4.dist-info">
+      <div class="term-side">
+        <h3 class="term-title">rapidocr</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">rapidocr</li><li class="sample-chip">rapidocr_onnxruntime</li><li class="sample-chip">rapidocr_onnxruntime-1.4.4.dist-info</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="h5 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 h5  h5.js chunk-r7lki5h5.mjs chunk-r7lki5h5.mjs.map">
+      <div class="term-side">
+        <h3 class="term-title">h5</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">h5.js</li><li class="sample-chip">chunk-R7LKI5H5.mjs</li><li class="sample-chip">chunk-R7LKI5H5.mjs.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="tech_tool" data-search="viem 技术 / 工具名  技术与工具词 这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。 viem  viem">
+      <div class="term-side">
+        <h3 class="term-title">viem</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词更像框架、工具链或技术栈名，通常直接保留英文会比硬翻译更清楚。</p>
+        <div class="entry-meta"><span class="entry-meta-item">技术 / 工具名</span></div>
+        <ul class="sample-list"><li class="sample-chip">viem</li></ul>
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+    <section class="group-section" data-group id="extension_suffix">
+      <header class="group-header">
+        <h2 class="section-title">常见副档名与尾缀</h2>
+      </header>
+      <div class="group-list">
+        
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="js javascript 文件 javascript 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 js .js 表示这种文件格式或技术后缀。 extracted_articles.js build_insight_single_file.js check_insight_runtime_smoke.js">
+      <div class="term-side">
+        <h3 class="term-title">js</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JavaScript 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">JavaScript</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .js 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">extracted_articles.js</li><li class="sample-chip">build_insight_single_file.js</li><li class="sample-chip">check_insight_runtime_smoke.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="ts typescript 文件 typescript 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 ts .ts 表示这种文件格式或技术后缀。 mock-server.ts playwright.config.ts vite-env.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">ts</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">TypeScript 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">TypeScript</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .ts 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">mock-server.ts</li><li class="sample-chip">playwright.config.ts</li><li class="sample-chip">vite-env.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="map source map 文件  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 map .map 表示这种文件格式或技术后缀。 flow-map map_summaries_to_ocr 2.py map_summaries_to_ocr 3.py">
+      <div class="term-side">
+        <h3 class="term-title">map</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Source Map 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .map 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">flow-map</li><li class="sample-chip">map_summaries_to_ocr 2.py</li><li class="sample-chip">map_summaries_to_ocr 3.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="json json 数据文件 javascript object notation 常见副档名与尾缀 适合结构化数据、配置、映射表和结果输出。 javascript object notation .json 表示结构化数据文件后缀。 duplicate-image-overrides.json final-image-registry.json truth-photo-registry.json">
+      <div class="term-side">
+        <h3 class="term-title">json</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合结构化数据、配置、映射表和结果输出。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JSON 数据文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">JavaScript Object Notation</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .json 表示结构化数据文件后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">duplicate-image-overrides.json</li><li class="sample-chip">final-image-registry.json</li><li class="sample-chip">truth-photo-registry.json</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="jpg jpg 图片 joint photographic experts group 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 jpg .jpg 表示这种文件格式或技术后缀。 e4b880e888ace680a7e581a5e5bab7e6a380e69fa5-categoryimage-3497737a7ec7.jpg e4ba86e8a7a3e88680e883b1e7828e-categoryimage-32e7972398c7.jpg e4baa7e5898de7ad9be69fa5e59fbae7a180e79fa5e8af86-categoryimage-a9d799a53c16.jpg">
+      <div class="term-side">
+        <h3 class="term-title">jpg</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JPG 图片</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Joint Photographic Experts Group</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .jpg 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">E4B880E888ACE680A7E581A5E5BAB7E6A380E69FA5-categoryImage-3497737a7ec7.jpg</li><li class="sample-chip">E4BA86E8A7A3E88680E883B1E7828E-categoryImage-32e7972398c7.jpg</li><li class="sample-chip">E4BAA7E5898DE7AD9BE69FA5E59FBAE7A180E79FA5E8AF86-categoryImage-a9d799a53c16.jpg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="rb ruby 脚本  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 rb .rb 表示这种文件格式或技术后缀。 vc_init.rb vc_init_dev.rb vc_utils.rb">
+      <div class="term-side">
+        <h3 class="term-title">rb</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Ruby 脚本</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .rb 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">vc_init.rb</li><li class="sample-chip">vc_init_dev.rb</li><li class="sample-chip">vc_utils.rb</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="png png 图片 portable network graphics 常见副档名与尾缀 适合截图、透明背景图和静态视觉素材。 portable network graphics .png 表示位图图片后缀。 截屏2026-04-23 14.51.26.png 截屏2026-04-23 16.10.39.png fem换图.png">
+      <div class="term-side">
+        <h3 class="term-title">png</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合截图、透明背景图和静态视觉素材。</p>
+        <div class="entry-meta"><span class="entry-meta-item">PNG 图片</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Portable Network Graphics</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .png 表示位图图片后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">截屏2026-04-23 14.51.26.png</li><li class="sample-chip">截屏2026-04-23 16.10.39.png</li><li class="sample-chip">Fem换图.png</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="md markdown 文档 markdown 常见副档名与尾缀 适合 readme、笔记、说明文档和知识整理。 markdown .md 表示 markdown 文档后缀。 workspace_governance_playbook.md flo_ui_design_system.md ocr_task_instructions.md">
+      <div class="term-side">
+        <h3 class="term-title">md</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合 README、笔记、说明文档和知识整理。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Markdown 文档</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Markdown</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .md 表示 Markdown 文档后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">Workspace_Governance_Playbook.md</li><li class="sample-chip">FLO_UI_DESIGN_SYSTEM.md</li><li class="sample-chip">OCR_TASK_INSTRUCTIONS.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="py python 脚本  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 py .py 表示这种文件格式或技术后缀。 check_html_health.py fix_premium_ui.py unify_archetypes.py">
+      <div class="term-side">
+        <h3 class="term-title">py</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Python 脚本</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .py 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">check_html_health.py</li><li class="sample-chip">fix_premium_ui.py</li><li class="sample-chip">unify_archetypes.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="mjs es module 脚本  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 mjs .mjs 表示这种文件格式或技术后缀。 lint-staged.config.mjs next.config.mjs eslint.config.mjs">
+      <div class="term-side">
+        <h3 class="term-title">mjs</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">ES Module 脚本</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .mjs 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">lint-staged.config.mjs</li><li class="sample-chip">next.config.mjs</li><li class="sample-chip">eslint.config.mjs</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="cjs commonjs 脚本  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 cjs .cjs 表示这种文件格式或技术后缀。 .eslintrc.cjs plopfile.cjs postcss.config.cjs">
+      <div class="term-side">
+        <h3 class="term-title">cjs</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">CommonJS 脚本</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .cjs 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">.eslintrc.cjs</li><li class="sample-chip">plopfile.cjs</li><li class="sample-chip">postcss.config.cjs</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="index 默认入口  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 index 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 index 2.html index 3.html index.html">
+      <div class="term-side">
+        <h3 class="term-title">index</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">默认入口</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">index 2.html</li><li class="sample-chip">index 3.html</li><li class="sample-chip">index.html</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="cts commonjs typescript 文件  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 cts .cts 表示这种文件格式或技术后缀。 index.d.cts checks.d.cts coerce.d.cts">
+      <div class="term-side">
+        <h3 class="term-title">cts</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">CommonJS TypeScript 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .cts 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">index.d.cts</li><li class="sample-chip">checks.d.cts</li><li class="sample-chip">coerce.d.cts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="mts module typescript 文件  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 mts .mts 表示这种文件格式或技术后缀。 index.d.mts colors.d.mts default-theme.d.mts">
+      <div class="term-side">
+        <h3 class="term-title">mts</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Module TypeScript 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .mts 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">index.d.mts</li><li class="sample-chip">colors.d.mts</li><li class="sample-chip">default-theme.d.mts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="svg svg 矢量图 scalable vector graphics 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 svg .svg 表示这种文件格式或技术后缀。 e4b8aae4babae68aa4e79086-categoryimage-0502e617780f.svg e4baa7e5898de7ad9be69fa5e9a1b9e79bae-categoryimage-38e85d73ad2f.svg e4babae99985e585b3e7b3bb-categoryimage-ac85e01220b2.svg">
+      <div class="term-side">
+        <h3 class="term-title">svg</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">SVG 矢量图</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Scalable Vector Graphics</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .svg 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">E4B8AAE4BABAE68AA4E79086-categoryImage-0502e617780f.svg</li><li class="sample-chip">E4BAA7E5898DE7AD9BE69FA5E9A1B9E79BAE-categoryImage-38e85d73ad2f.svg</li><li class="sample-chip">E4BABAE99985E585B3E7B3BB-categoryImage-ac85e01220b2.svg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="txt 纯文本文件  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 txt .txt 表示这种文件格式或技术后缀。 chain-part-1 2.txt chain-part-1 3.txt chain-part-1 4.txt">
+      <div class="term-side">
+        <h3 class="term-title">txt</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">纯文本文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .txt 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">chain-part-1 2.txt</li><li class="sample-chip">chain-part-1 3.txt</li><li class="sample-chip">chain-part-1 4.txt</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="test 测试  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 test 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 test_batch 2.txt test_batch 3.txt test_batch 4.txt">
+      <div class="term-side">
+        <h3 class="term-title">test</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">测试</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">test_batch 2.txt</li><li class="sample-chip">test_batch 3.txt</li><li class="sample-chip">test_batch 4.txt</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="pdf pdf 文档 portable document format 常见副档名与尾缀 适合成品文档、不可轻改的交付件和阅读材料。 portable document format .pdf 表示可分享、排版稳定的文档格式。 pdfimageplugin.py pdfparser.py pdfkit">
+      <div class="term-side">
+        <h3 class="term-title">pdf</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合成品文档、不可轻改的交付件和阅读材料。</p>
+        <div class="entry-meta"><span class="entry-meta-item">PDF 文档</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Portable Document Format</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .pdf 表示可分享、排版稳定的文档格式。</span></div>
+        <ul class="sample-list"><li class="sample-chip">PdfImagePlugin.py</li><li class="sample-chip">PdfParser.py</li><li class="sample-chip">PDFKit</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="doc word 旧版文档  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 doc .doc 表示这种文件格式或技术后缀。 2. 本科生毕业论文（设计）撰写规范及要求(1).doc hyperexpand_doc.py meijerint_doc.py">
+      <div class="term-side">
+        <h3 class="term-title">doc</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Word 旧版文档</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .doc 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">2. 本科生毕业论文（设计）撰写规范及要求(1).doc</li><li class="sample-chip">hyperexpand_doc.py</li><li class="sample-chip">meijerint_doc.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="readme 说明入口  常见副档名与尾缀 通常是一个目录的入口说明文件，适合告诉你先从哪里看起。 readme 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 readme.md readme_交接.md readme.txt">
+      <div class="term-side">
+        <h3 class="term-title">readme</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常是一个目录的入口说明文件，适合告诉你先从哪里看起。</p>
+        <div class="entry-meta"><span class="entry-meta-item">说明入口</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">README.md</li><li class="sample-chip">README_交接.md</li><li class="sample-chip">README.txt</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="tsx react tsx 文件 typescript + jsx 常见副档名与尾缀 通常表示 react 组件或页面文件，含 typescript 与 jsx。 typescript + jsx .tsx 表示 react 组件常见后缀。 main.tsx test-utils.tsx auth.tsx">
+      <div class="term-side">
+        <h3 class="term-title">tsx</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示 React 组件或页面文件，含 TypeScript 与 JSX。</p>
+        <div class="entry-meta"><span class="entry-meta-item">React TSX 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">TypeScript + JSX</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .tsx 表示 React 组件常见后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">main.tsx</li><li class="sample-chip">test-utils.tsx</li><li class="sample-chip">auth.tsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="html html 页面 hypertext markup language 常见副档名与尾缀 适合直接双击打开的网页入口、预览页和单文件工具页。 hypertext markup language .html 表示可直接在浏览器打开的页面文件。 desktop naming glossary.html project_structure_bilingual_editorial_v4.html flo-pregnancy-tracker-insights.html">
+      <div class="term-side">
+        <h3 class="term-title">html</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合直接双击打开的网页入口、预览页和单文件工具页。</p>
+        <div class="entry-meta"><span class="entry-meta-item">HTML 页面</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">HyperText Markup Language</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .html 表示可直接在浏览器打开的页面文件。</span></div>
+        <ul class="sample-list"><li class="sample-chip">Desktop Naming Glossary.html</li><li class="sample-chip">project_structure_bilingual_editorial_v4.html</li><li class="sample-chip">Flo-Pregnancy-Tracker-Insights.html</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="xml xml 文件  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 xml .xml 表示这种文件格式或技术后缀。 haarcascade_eye.xml haarcascade_eye_tree_eyeglasses.xml haarcascade_frontalcatface.xml">
+      <div class="term-side">
+        <h3 class="term-title">xml</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">XML 文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .xml 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">haarcascade_eye.xml</li><li class="sample-chip">haarcascade_eye_tree_eyeglasses.xml</li><li class="sample-chip">haarcascade_frontalcatface.xml</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="config 配置标记  常见副档名与尾缀 放在文件名尾部时，通常说明这是配置文件而不是业务内容。 config .config 表示这种文件格式或技术后缀。 config.yaml reduced_build_config_parser.py mobile_package.required_operators.config">
+      <div class="term-side">
+        <h3 class="term-title">config</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">放在文件名尾部时，通常说明这是配置文件而不是业务内容。</p>
+        <div class="entry-meta"><span class="entry-meta-item">配置标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .config 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">config.yaml</li><li class="sample-chip">reduced_build_config_parser.py</li><li class="sample-chip">mobile_package.required_operators.config</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="yml yaml 配置文件 yaml ain&#39;t markup language 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 yml .yml 表示这种文件格式或技术后缀。 nextjs-app-ci.yml nextjs-pages-ci.yml react-vite-ci.yml">
+      <div class="term-side">
+        <h3 class="term-title">yml</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">YAML 配置文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">YAML Ain&#39;t Markup Language</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .yml 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">nextjs-app-ci.yml</li><li class="sample-chip">nextjs-pages-ci.yml</li><li class="sample-chip">react-vite-ci.yml</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="sample 样例  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 sample .sample 表示这种文件格式或技术后缀。 sample_numpy.py sample_pymc.py sample_scipy.py">
+      <div class="term-side">
+        <h3 class="term-title">sample</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">样例</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .sample 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">sample_numpy.py</li><li class="sample-chip">sample_pymc.py</li><li class="sample-chip">sample_scipy.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="docx word 文档  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 docx .docx 表示这种文件格式或技术后缀。 本科论文_陈齐.docx 本科论文格式范例 20260323(1).docx 1.12以太坊中文周会.docx">
+      <div class="term-side">
+        <h3 class="term-title">docx</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Word 文档</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .docx 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">本科论文_陈齐.docx</li><li class="sample-chip">本科论文格式范例 20260323(1).docx</li><li class="sample-chip">1.12以太坊中文周会.docx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="css css 样式文件 cascading style sheets 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 css .css 表示这种文件格式或技术后缀。 style.css tracker-shared-style.css index.css">
+      <div class="term-side">
+        <h3 class="term-title">css</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">CSS 样式文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Cascading Style Sheets</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .css 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">style.css</li><li class="sample-chip">tracker-shared-style.css</li><li class="sample-chip">index.css</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="spec 规格 / 规范  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 spec 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 03-visual-spec-and-unification.md test_spec_polynomials.py profile.spec.ts">
+      <div class="term-side">
+        <h3 class="term-title">spec</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">规格 / 规范</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">03-visual-spec-and-unification.md</li><li class="sample-chip">test_spec_polynomials.py</li><li class="sample-chip">profile.spec.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="preview 预览  常见副档名与尾缀 适合预览页、效果页和上线前检查页。 pre + view 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 preview preview.py test_preview.py">
+      <div class="term-side">
+        <h3 class="term-title">preview</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合预览页、效果页和上线前检查页。</p>
+        <div class="entry-meta"><span class="entry-meta-item">预览</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">pre + view</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">preview</li><li class="sample-chip">preview.py</li><li class="sample-chip">test_preview.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="file file 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 file .file 表示这种文件格式或技术后缀。 build_insight_single_file.js file_utils.py recarray_from_file.fits">
+      <div class="term-side">
+        <h3 class="term-title">file</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">FILE 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .file 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">build_insight_single_file.js</li><li class="sample-chip">file_utils.py</li><li class="sample-chip">recarray_from_file.fits</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="rplib rplib 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 rplib .rplib 表示这种文件格式或技术后缀。 element ui元件库 2.rplib element ui元件库 3.rplib element ui元件库.rplib">
+      <div class="term-side">
+        <h3 class="term-title">rplib</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">RPLIB 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .rplib 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">Element UI元件库 2.rplib</li><li class="sample-chip">Element UI元件库 3.rplib</li><li class="sample-chip">Element UI元件库.rplib</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="jpeg jpeg 图片 joint photographic experts group 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 jpeg .jpeg 表示这种文件格式或技术后缀。 app_icon_with_202604141105.jpeg baby_lifted_by_202604141105.jpeg pregnant_woman_with_202604141105_2.jpeg">
+      <div class="term-side">
+        <h3 class="term-title">jpeg</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JPEG 图片</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Joint Photographic Experts Group</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .jpeg 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">App_icon_with_202604141105.jpeg</li><li class="sample-chip">Baby_lifted_by_202604141105.jpeg</li><li class="sample-chip">Pregnant_woman_with_202604141105_2.jpeg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="build build 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 build .build 表示这种文件格式或技术后缀。 build_insight_single_file.js build_final_markdown 2.js build_final_markdown 3.js">
+      <div class="term-side">
+        <h3 class="term-title">build</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">BUILD 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .build 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">build_insight_single_file.js</li><li class="sample-chip">build_final_markdown 2.js</li><li class="sample-chip">build_final_markdown 3.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="pptx pptx 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 pptx .pptx 表示这种文件格式或技术后缀。 黑客松经验分享.pptx alex fan-周五笔记分享会.pptx web3auth_mpc_钱包_demo_分享.pptx">
+      <div class="term-side">
+        <h3 class="term-title">pptx</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">PPTX 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .pptx 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">黑客松经验分享.pptx</li><li class="sample-chip">Alex FAN-周五笔记分享会.pptx</li><li class="sample-chip">Web3Auth_MPC_钱包_Demo_分享.pptx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="dng dng 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 dng .dng 表示这种文件格式或技术后缀。 r0001430.dng r0001434.dng r0001435.dng">
+      <div class="term-side">
+        <h3 class="term-title">dng</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">DNG 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .dng 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">R0001430.DNG</li><li class="sample-chip">R0001434.DNG</li><li class="sample-chip">R0001435.DNG</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="bundle 打包结果  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 bundle .bundle 表示这种文件格式或技术后缀。 export_prompt_bundle.py prompt_bundle_0_42_weeks.json prompt_bundle_0_42_weeks.md">
+      <div class="term-side">
+        <h3 class="term-title">bundle</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">打包结果</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .bundle 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">export_prompt_bundle.py</li><li class="sample-chip">prompt_bundle_0_42_weeks.json</li><li class="sample-chip">prompt_bundle_0_42_weeks.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="jsx jsx 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 jsx .jsx 表示这种文件格式或技术后缀。 acorn-jsx eslint-plugin-jsx-a11y jsx-ast-utils">
+      <div class="term-side">
+        <h3 class="term-title">jsx</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">JSX 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .jsx 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">acorn-jsx</li><li class="sample-chip">eslint-plugin-jsx-a11y</li><li class="sample-chip">jsx-ast-utils</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="xlsx xlsx 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 xlsx .xlsx 表示这种文件格式或技术后缀。 lod计算.xlsx au2-eis.xlsx au2-pb-mch-eis.xlsx">
+      <div class="term-side">
+        <h3 class="term-title">xlsx</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">XLSX 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .xlsx 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">LOD计算.xlsx</li><li class="sample-chip">Au2-EIS.xlsx</li><li class="sample-chip">Au2-pb-mch-EIS.xlsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="ppt ppt 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 ppt .ppt 表示这种文件格式或技术后缀。 build_ppt.py s18_最近文件_ppt标签_空状态.jpg 核酸传感器ppt.pdf">
+      <div class="term-side">
+        <h3 class="term-title">ppt</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">PPT 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .ppt 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">build_ppt.py</li><li class="sample-chip">S18_最近文件_PPT标签_空状态.jpg</li><li class="sample-chip">核酸传感器ppt.pdf</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="fig fig 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 fig .fig 表示这种文件格式或技术后缀。 动效1 - 页面跳转 2.fig 动效1 - 页面跳转 3.fig 动效1 - 页面跳转 4.fig">
+      <div class="term-side">
+        <h3 class="term-title">fig</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">FIG 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .fig 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">动效1 - 页面跳转 2.fig</li><li class="sample-chip">动效1 - 页面跳转 3.fig</li><li class="sample-chip">动效1 - 页面跳转 4.fig</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="zip 压缩包  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 zip .zip 表示这种文件格式或技术后缀。 zip-safe iterator.zip iterator.zipkeyed">
+      <div class="term-side">
+        <h3 class="term-title">zip</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">压缩包</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .zip 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">zip-safe</li><li class="sample-chip">Iterator.zip</li><li class="sample-chip">Iterator.zipKeyed</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="yaml yaml 配置文件 yaml ain&#39;t markup language 常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 yaml .yaml 表示这种文件格式或技术后缀。 _yaml yaml _yaml.cpython-39-darwin.so">
+      <div class="term-side">
+        <h3 class="term-title">yaml</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">YAML 配置文件</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">YAML Ain&#39;t Markup Language</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .yaml 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">_yaml</li><li class="sample-chip">yaml</li><li class="sample-chip">_yaml.cpython-39-darwin.so</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="local 本地  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 local .local 表示这种文件格式或技术后缀。 settings.local.json local match-local-pattern.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">local</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">本地</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .local 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">settings.local.json</li><li class="sample-chip">local</li><li class="sample-chip">match-local-pattern.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="markdown markdown  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 markdown .markdown 表示这种文件格式或技术后缀。 build_final_markdown 2.js build_final_markdown 3.js build_final_markdown 4.js">
+      <div class="term-side">
+        <h3 class="term-title">markdown</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">Markdown</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .markdown 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">build_final_markdown 2.js</li><li class="sample-chip">build_final_markdown 3.js</li><li class="sample-chip">build_final_markdown 4.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="review 复核  常见副档名与尾缀 适合审核页、复核页和第二轮检查文件。 review 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。 ocr-review-queue.md review.svg review_analyzer.py">
+      <div class="term-side">
+        <h3 class="term-title">review</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">适合审核页、复核页和第二轮检查文件。</p>
+        <div class="entry-meta"><span class="entry-meta-item">复核</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 这个词常作为文件名尾缀，用来说明文档的角色、阶段或用途。</span></div>
+        <ul class="sample-list"><li class="sample-chip">ocr-review-queue.md</li><li class="sample-chip">review.svg</li><li class="sample-chip">review_analyzer.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="bundler bundler 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 bundler .bundler 表示这种文件格式或技术后缀。 bundler-runtime.ff3b63ea.js get-webpack-bundler.d.ts get-webpack-bundler.js">
+      <div class="term-side">
+        <h3 class="term-title">bundler</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">bundler 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .bundler 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">bundler-runtime.ff3b63ea.js</li><li class="sample-chip">get-webpack-bundler.d.ts</li><li class="sample-chip">get-webpack-bundler.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="gem gem 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 gem .gem 表示这种文件格式或技术后缀。 gem.mjs gem.mjs.map gem.build_complete">
+      <div class="term-side">
+        <h3 class="term-title">gem</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">GEM 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .gem 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">gem.mjs</li><li class="sample-chip">gem.mjs.map</li><li class="sample-chip">gem.build_complete</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="extension_suffix" data-search="ai ai 类型标记  常见副档名与尾缀 这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。 ai .ai 表示这种文件格式或技术后缀。 ai ai.js ai_assistance">
+      <div class="term-side">
+        <h3 class="term-title">ai</h3>
+        <p class="term-kind">格式 / 尾缀</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词常放在文件名末尾，用来告诉你文件是什么格式、扮演什么角色。</p>
+        <div class="entry-meta"><span class="entry-meta-item">AI 类型标记</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">尾缀 .ai 表示这种文件格式或技术后缀。</span></div>
+        <ul class="sample-list"><li class="sample-chip">ai</li><li class="sample-chip">AI.js</li><li class="sample-chip">ai_assistance</li></ul>
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+    <section class="group-section" data-group id="system_misc">
+      <header class="group-header">
+        <h2 class="section-title">系统与杂项高频词</h2>
+      </header>
+      <div class="group-list">
+        
+    <article class="term-row" data-entry data-category="system_misc" data-search="package 套件 / 包配置  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 package  mobile_package.required_operators.config package.json package-lock.json">
+      <div class="term-side">
+        <h3 class="term-title">package</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">套件 / 包配置</span></div>
+        <ul class="sample-list"><li class="sample-chip">mobile_package.required_operators.config</li><li class="sample-chip">package.json</li><li class="sample-chip">package-lock.json</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="dist 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 dist  coloredlogs-15.0.1.dist-info flatbuffers-25.12.19.dist-info humanfriendly-10.0.dist-info">
+      <div class="term-side">
+        <h3 class="term-title">dist</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">coloredlogs-15.0.1.dist-info</li><li class="sample-chip">flatbuffers-25.12.19.dist-info</li><li class="sample-chip">humanfriendly-10.0.dist-info</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="generated 自动生成  系统与杂项高频词 表示文件是自动生成的，通常不建议手工改名或直接编辑。 generated  generated-editorial assumptions_generated.py ask_generated.py">
+      <div class="term-side">
+        <h3 class="term-title">generated</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">表示文件是自动生成的，通常不建议手工改名或直接编辑。</p>
+        <div class="entry-meta"><span class="entry-meta-item">自动生成</span></div>
+        <ul class="sample-list"><li class="sample-chip">generated-editorial</li><li class="sample-chip">assumptions_generated.py</li><li class="sample-chip">ask_generated.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="meta 元信息  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 meta  describe-meta-checks.test.ts anonymous-meta.d.ts anonymous-meta.js">
+      <div class="term-side">
+        <h3 class="term-title">meta</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">元信息</span></div>
+        <ul class="sample-list"><li class="sample-chip">describe-meta-checks.test.ts</li><li class="sample-chip">anonymous-meta.d.ts</li><li class="sample-chip">anonymous-meta.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="input 输入  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 input  llama_inputs.py are-inputs-equal.ts are-inputs-equal.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">input</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">输入</span></div>
+        <ul class="sample-list"><li class="sample-chip">llama_inputs.py</li><li class="sample-chip">are-inputs-equal.ts</li><li class="sample-chip">are-inputs-equal.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="cache 缓存  系统与杂项高频词 通常是临时缓存，不是你需要主动维护的长期内容。 cache  ocr_cache_flo_pregnancy_insights.jsonl cache.py test_cache.py">
+      <div class="term-side">
+        <h3 class="term-title">cache</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常是临时缓存，不是你需要主动维护的长期内容。</p>
+        <div class="entry-meta"><span class="entry-meta-item">缓存</span></div>
+        <ul class="sample-list"><li class="sample-chip">ocr_cache_flo_pregnancy_insights.jsonl</li><li class="sample-chip">cache.py</li><li class="sample-chip">test_cache.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="hero 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 hero  article-hero 12e69da1e5878fe5b091e5ad95e69c9fe8baabe4bd93e882bfe88380e79a84e7a798e8af80-articlehero-ddd5c00531a0.svg 7e4b8aae5bbbae8aeaeefbc8ce8aea9e4bda0e59ca8e68080e5ad95e69c9fe997b4e79da1e4b8aae-articlehero-930eea0295a5.svg">
+      <div class="term-side">
+        <h3 class="term-title">hero</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">article-hero</li><li class="sample-chip">12E69DA1E5878FE5B091E5AD95E69C9FE8BAABE4BD93E882BFE88380E79A84E7A798E8AF80-articleHero-ddd5c00531a0.svg</li><li class="sample-chip">7E4B8AAE5BBBAE8AEAEEFBC8CE8AEA9E4BDA0E59CA8E68080E5AD95E69C9FE997B4E79DA1E4B8AAE-articleHero-930eea0295a5.svg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="core 核心层  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 core  core core.py test_core.py">
+      <div class="term-side">
+        <h3 class="term-title">core</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">核心层</span></div>
+        <ul class="sample-list"><li class="sample-chip">core</li><li class="sample-chip">core.py</li><li class="sample-chip">test_core.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="legacy 旧版遗留  系统与杂项高频词 代表旧结构或兼容层，适合理解为“先留着，但不再主维护”。 legacy  legacy lib.decorators.legacy.d.ts react-dom-server-legacy.browser.development.js">
+      <div class="term-side">
+        <h3 class="term-title">legacy</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">代表旧结构或兼容层，适合理解为“先留着，但不再主维护”。</p>
+        <div class="entry-meta"><span class="entry-meta-item">旧版遗留</span></div>
+        <ul class="sample-list"><li class="sample-chip">legacy</li><li class="sample-chip">lib.decorators.legacy.d.ts</li><li class="sample-chip">react-dom-server-legacy.browser.development.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="global 全局  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 global  _globals.py globals.css globals">
+      <div class="term-side">
+        <h3 class="term-title">global</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">全局</span></div>
+        <ul class="sample-list"><li class="sample-chip">_globals.py</li><li class="sample-chip">globals.css</li><li class="sample-chip">globals</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="env 环境 / 环境变量 environment 系统与杂项高频词 通常表示环境配置语境，例如开发环境、测试环境和生产环境。 env  isofortranenvmap.f90 .env.example .env.example-e2e">
+      <div class="term-side">
+        <h3 class="term-title">env</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示环境配置语境，例如开发环境、测试环境和生产环境。</p>
+        <div class="entry-meta"><span class="entry-meta-item">环境 / 环境变量</span><span class="entry-meta-separator" aria-hidden="true">/</span><span class="entry-meta-item">Environment</span></div>
+        <ul class="sample-list"><li class="sample-chip">isoFortranEnvMap.f90</li><li class="sample-chip">.env.example</li><li class="sample-chip">.env.example-e2e</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="mapping 映射  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 mapping  pregnancy_insights_image_placeholder_mapping.json test_mapping.py _convenience_mapping.py">
+      <div class="term-side">
+        <h3 class="term-title">mapping</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">映射</span></div>
+        <ul class="sample-list"><li class="sample-chip">pregnancy_insights_image_placeholder_mapping.json</li><li class="sample-chip">test_mapping.py</li><li class="sample-chip">_convenience_mapping.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="vendor 第三方依赖  系统与杂项高频词 通常表示第三方依赖、外部库或打包进来的外部资源。 vendor  vendor vendor-dynamic.a26ed62e.js vendor.5bab5213.js">
+      <div class="term-side">
+        <h3 class="term-title">vendor</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">通常表示第三方依赖、外部库或打包进来的外部资源。</p>
+        <div class="entry-meta"><span class="entry-meta-item">第三方依赖</span></div>
+        <ul class="sample-list"><li class="sample-chip">vendor</li><li class="sample-chip">vendor-dynamic.a26ed62e.js</li><li class="sample-chip">vendor.5bab5213.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="queue 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 queue  ocr-review-queue.md queue-microtask yocto-queue">
+      <div class="term-side">
+        <h3 class="term-title">queue</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">ocr-review-queue.md</li><li class="sample-chip">queue-microtask</li><li class="sample-chip">yocto-queue</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="output 输出  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 output  test_output.py output.js output-export-prefetch-encoding.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">output</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">输出</span></div>
+        <ul class="sample-list"><li class="sample-chip">test_output.py</li><li class="sample-chip">output.js</li><li class="sample-chip">output-export-prefetch-encoding.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="snapshot 快照  系统与杂项高频词 表示某一时刻的保存快照，适合理解为回溯参考点。 snapshot  xiaohongshu_snapshot snapshot.ts snapshot.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">snapshot</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">表示某一时刻的保存快照，适合理解为回溯参考点。</p>
+        <div class="entry-meta"><span class="entry-meta-item">快照</span></div>
+        <ul class="sample-list"><li class="sample-chip">xiaohongshu_snapshot</li><li class="sample-chip">snapshot.ts</li><li class="sample-chip">snapshot.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="constructor 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 constructor  constructor.py test_constructor.py test_constructor_postprocessor.py">
+      <div class="term-side">
+        <h3 class="term-title">constructor</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">constructor.py</li><li class="sample-chip">test_constructor.py</li><li class="sample-chip">test_constructor_postprocessor.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="birthday 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 birthday  happy birthday birthday birthday face swap">
+      <div class="term-side">
+        <h3 class="term-title">birthday</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Happy Birthday</li><li class="sample-chip">Birthday</li><li class="sample-chip">Birthday Face Swap</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="flo 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 flo  flo_ui_design_system.md flo projects.code-workspace flo-fetal-development-0-42-weeks">
+      <div class="term-side">
+        <h3 class="term-title">flo</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">FLO_UI_DESIGN_SYSTEM.md</li><li class="sample-chip">Flo Projects.code-workspace</li><li class="sample-chip">Flo-Fetal-Development-0-42-Weeks</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="reviewer 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 reviewer  reviewer_profiles.js reviewer-avatar e4b880e888ace680a7e581a5e5bab7e6a380e69fa5-revieweravatar-02f4510860c8.jpg">
+      <div class="term-side">
+        <h3 class="term-title">reviewer</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">reviewer_profiles.js</li><li class="sample-chip">reviewer-avatar</li><li class="sample-chip">E4B880E888ACE680A7E581A5E5BAB7E6A380E69FA5-reviewerAvatar-02f4510860c8.jpg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="compiled 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 compiled  compiled.d.ts compiled module.compiled.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">compiled</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">compiled.d.ts</li><li class="sample-chip">compiled</li><li class="sample-chip">module.compiled.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="axure 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 axure  50_axure_interaction_prototypes.7z axure_component_library axure_visual_components">
+      <div class="term-side">
+        <h3 class="term-title">axure</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">50_axure_interaction_prototypes.7z</li><li class="sample-chip">axure_component_library</li><li class="sample-chip">axure_visual_components</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="competitor 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 competitor  01-competitor-search-竞品搜索.md 03-competitor-compare-竞品对比.md competitor_analyzer.py">
+      <div class="term-side">
+        <h3 class="term-title">competitor</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">01-competitor-search-竞品搜索.md</li><li class="sample-chip">03-competitor-compare-竞品对比.md</li><li class="sample-chip">competitor_analyzer.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="discussion 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 discussion  discussions.ts discussions discussions-list.tsx">
+      <div class="term-side">
+        <h3 class="term-title">discussion</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">discussions.ts</li><li class="sample-chip">discussions</li><li class="sample-chip">discussions-list.tsx</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="sitting 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 sitting  sitting peep-sitting-1.png peep-sitting-1.svg">
+      <div class="term-side">
+        <h3 class="term-title">sitting</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Sitting</li><li class="sample-chip">peep-sitting-1.png</li><li class="sample-chip">peep-sitting-1.svg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="kid 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 kid  008_effects_split_screen_fusion_breezy_ballad_screen_kid.json 014_portraits_duo_face_swap_calm_orbit_moment_kid.json 019_family_kids_fantasy_shots_cobalt_aurora_snow_kid.json">
+      <div class="term-side">
+        <h3 class="term-title">kid</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">008_effects_split_screen_fusion_breezy_ballad_screen_kid.json</li><li class="sample-chip">014_portraits_duo_face_swap_calm_orbit_moment_kid.json</li><li class="sample-chip">019_family_kids_fantasy_shots_cobalt_aurora_snow_kid.json</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="bust 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 bust  bust bust-mask-1.svg bust-mask-10.svg">
+      <div class="term-side">
+        <h3 class="term-title">bust</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Bust</li><li class="sample-chip">bust-mask-1.svg</li><li class="sample-chip">bust-mask-10.svg</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="hei 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 hei  hyqihei-105jf.otf hyqihei-25jf.otf hyqihei-35s.otf">
+      <div class="term-side">
+        <h3 class="term-title">hei</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">HYQiHei-105JF.otf</li><li class="sample-chip">HYQiHei-25JF.otf</li><li class="sample-chip">HYQiHei-35S.otf</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="current 当前版本  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 current  has-interception-route-in-current-tree.js has-interception-route-in-current-tree.js.map has-interception-route-in-current-tree.d.ts">
+      <div class="term-side">
+        <h3 class="term-title">current</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">当前版本</span></div>
+        <ul class="sample-list"><li class="sample-chip">has-interception-route-in-current-tree.js</li><li class="sample-chip">has-interception-route-in-current-tree.js.map</li><li class="sample-chip">has-interception-route-in-current-tree.d.ts</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="hidden 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 hidden  ishiddenfromscreenreader.js no-aria-hidden-on-focusable.js no-aria-hidden-on-focusable.md">
+      <div class="term-side">
+        <h3 class="term-title">hidden</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">isHiddenFromScreenReader.js</li><li class="sample-chip">no-aria-hidden-on-focusable.js</li><li class="sample-chip">no-aria-hidden-on-focusable.md</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="notion 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 notion  notion_scraper.py notion_scraper.cpython-313.pyc test_notion_scraper.py">
+      <div class="term-side">
+        <h3 class="term-title">notion</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">notion_scraper.py</li><li class="sample-chip">notion_scraper.cpython-313.pyc</li><li class="sample-chip">test_notion_scraper.py</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="gotham 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 gotham  gotham gotham rounded gothamrnd-bold.otf">
+      <div class="term-side">
+        <h3 class="term-title">gotham</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Gotham</li><li class="sample-chip">Gotham Rounded</li><li class="sample-chip">GothamRnd-Bold.otf</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="backup 备份  系统与杂项高频词 表示备份版本，适合保留但不该当作现行主入口。 backup  backups database-backup.mjs database-backup.mjs.map">
+      <div class="term-side">
+        <h3 class="term-title">backup</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">表示备份版本，适合保留但不该当作现行主入口。</p>
+        <div class="entry-meta"><span class="entry-meta-item">备份</span></div>
+        <ul class="sample-list"><li class="sample-chip">backups</li><li class="sample-chip">database-backup.mjs</li><li class="sample-chip">database-backup.mjs.map</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="kling 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 kling  kling_v2.5_turbo.mp4 t141_kling_v2.5_turbo.mp4 kling_ref2v_prompt_compare_round2">
+      <div class="term-side">
+        <h3 class="term-title">kling</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">kling_v2.5_turbo.mp4</li><li class="sample-chip">T141_kling_v2.5_turbo.mp4</li><li class="sample-chip">kling_ref2v_prompt_compare_round2</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="pregnancy 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 pregnancy  flo-pregnancy-insights flo-pregnancy-questionnaire flo-pregnancy-tracker-insights">
+      <div class="term-side">
+        <h3 class="term-title">pregnancy</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Flo-Pregnancy-Insights</li><li class="sample-chip">Flo-Pregnancy-Questionnaire</li><li class="sample-chip">Flo-Pregnancy-Tracker-Insights</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="draft 草稿  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 draft  ocr-hierarchy-draft.md draft-mode.d.ts draft-mode.js">
+      <div class="term-side">
+        <h3 class="term-title">draft</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">草稿</span></div>
+        <ul class="sample-list"><li class="sample-chip">ocr-hierarchy-draft.md</li><li class="sample-chip">draft-mode.d.ts</li><li class="sample-chip">draft-mode.js</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="au2 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 au2  au2 dpv mb.tif au2 dpv.tif au2 eis.tif">
+      <div class="term-side">
+        <h3 class="term-title">au2</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">Au2 DPV MB.tif</li><li class="sample-chip">Au2 DPV.tif</li><li class="sample-chip">Au2 EIS.tif</li></ul>
+      </div>
+    </article>
+  
+    <article class="term-row" data-entry data-category="system_misc" data-search="photoshoot 系统状态词  系统与杂项高频词 这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。 photoshoot  horseback-photoshoot.html photoshoot-beast-dominion-202512151527155699.html photoshoot-global-travel-202512301335224114.html">
+      <div class="term-side">
+        <h3 class="term-title">photoshoot</h3>
+        <p class="term-kind">命名词</p>
+      </div>
+      <div class="term-main">
+        <p class="term-usage">这个词通常带有状态、缓存、旧版或运行时意味，适合辅助你判断哪些内容该维护、哪些该忽略。</p>
+        <div class="entry-meta"><span class="entry-meta-item">系统状态词</span></div>
+        <ul class="sample-list"><li class="sample-chip">horseback-photoshoot.html</li><li class="sample-chip">photoshoot-beast-dominion-202512151527155699.html</li><li class="sample-chip">photoshoot-global-travel-202512301335224114.html</li></ul>
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+
+      <section class="principles">
+        <h2 class="section-title">怎么让桌面命名更优雅</h2>
+        <div class="principles-grid">
+          <article class="principle-item">
+            <h3>先定空间词，再定主题词</h3>
+            <p>像 <code>Learning Studio</code>、<code>Portfolio Lab</code> 这种命名，先告诉你这是一个什么空间，再说它装什么内容，会比单纯堆主题名更稳。</p>
+          </article>
+          <article class="principle-item">
+            <h3>入口词要稳定</h3>
+            <p><code>README</code>、<code>guide</code>、<code>workflow</code>、<code>dashboard</code> 这类词最好保持稳定，因为它们是你之后一眼找入口的锚点。</p>
+          </article>
+          <article class="principle-item">
+            <h3>结构词别乱混</h3>
+            <p><code>src</code>、<code>components</code>、<code>public</code>、<code>scripts</code> 这种结构词有固定职责，统一下来后，项目内部会明显更清楚。</p>
+          </article>
+          <article class="principle-item">
+            <h3>旧版本要显式标记</h3>
+            <p>像 <code>archive</code>、<code>legacy</code>、<code>backup</code>、<code>snapshot</code> 这种词能帮你把“现行维护面”和“历史保留面”彻底分开。</p>
+          </article>
+        </div>
+        <p class="footer-note">
+          生成时间：2026年4月23日 16:47。这是一份静态快照，适合你先学习命名和结构，再决定哪些目录值得进一步治理。
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const searchInput = document.getElementById('searchInput');
+      const resultCounter = document.getElementById('resultCounter');
+      const entryNodes = Array.from(document.querySelectorAll('[data-entry]'));
+      const groupNodes = Array.from(document.querySelectorAll('[data-group]'));
+
+      function applyFilter() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        entryNodes.forEach((node) => {
+          const match = !query || node.dataset.search.includes(query);
+          node.hidden = !match;
+          if (match) {
+            visibleCount += 1;
+          }
+        });
+
+        groupNodes.forEach((groupNode) => {
+          const visibleChild = groupNode.querySelector('[data-entry]:not([hidden])');
+          groupNode.hidden = !visibleChild;
+        });
+
+        resultCounter.textContent = '当前显示 ' + visibleCount + ' / ' + entryNodes.length + ' 个词条';
+      }
+
+      searchInput.addEventListener('input', applyFilter);
+    </script>
+  </body>
+</html>

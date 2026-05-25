@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>优雅的前后端项目结构｜Editorial 版</title>
+<style>
+:root{
+  --bg:#fbfbfa;
+  --text:#1f1f1f;
+  --muted:#6a6a6a;
+  --line:#e9e7e3;
+  --code-bg:#f4f2ee;
+  --code-line:#e6e2db;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  line-height:1.95;
+  letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.page{
+  width:min(860px, calc(100vw - 40px));
+  margin:0 auto;
+  padding:56px 0 100px;
+}
+.eyebrow{
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+h1{
+  font-size:52px;
+  line-height:1.08;
+  letter-spacing:-.045em;
+  font-weight:720;
+  margin:0 0 22px;
+}
+.lead{
+  font-size:19px;
+  line-height:1.95;
+  color:#363636;
+  max-width:780px;
+}
+hr{
+  border:none;
+  border-top:1px solid var(--line);
+  margin:46px 0 54px;
+}
+section{
+  margin:0 0 56px;
+}
+h2{
+  font-size:32px;
+  line-height:1.2;
+  letter-spacing:-.03em;
+  font-weight:690;
+  margin:0 0 18px;
+}
+h3{
+  font-size:22px;
+  line-height:1.35;
+  letter-spacing:-.02em;
+  font-weight:650;
+  margin:34px 0 10px;
+}
+p{
+  margin:0 0 16px;
+  font-size:17px;
+  color:#2d2d2d;
+}
+ul{
+  margin:0 0 16px 1.1em;
+  padding:0;
+}
+li{
+  margin:8px 0;
+  font-size:17px;
+}
+.muted{color:var(--muted)}
+.statement{
+  font-size:24px;
+  line-height:1.6;
+  letter-spacing:-.02em;
+  margin:22px 0 26px;
+}
+pre{
+  margin:22px 0 24px;
+  padding:24px 26px;
+  background:var(--code-bg);
+  border:1px solid var(--code-line);
+  border-radius:18px;
+  overflow:auto;
+  font-size:18px;
+  line-height:1.85;
+  color:#202020;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+}
+.inline{
+  font-size:.92em;
+  background:rgba(0,0,0,.03);
+  padding:.12em .42em;
+  border-radius:8px;
+}
+.glossary{
+  margin-top:26px;
+}
+.term{
+  padding:14px 0;
+  border-top:1px solid var(--line);
+}
+.term:first-child{
+  border-top:none;
+  padding-top:0;
+}
+.term-title{
+  font-size:18px;
+  font-weight:640;
+  letter-spacing:-.01em;
+  margin-bottom:6px;
+}
+.term-title span{
+  color:var(--muted);
+  font-weight:520;
+  margin-left:8px;
+}
+.term p{
+  margin:0;
+  color:#363636;
+}
+.footer{
+  margin-top:64px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:14px;
+}
+@media (max-width:720px){
+  .page{width:min(100vw - 24px,860px);padding-top:28px}
+  h1{font-size:38px}
+  .lead{font-size:17px}
+  h2{font-size:28px}
+  h3{font-size:20px}
+  p,li{font-size:16px}
+  pre{font-size:15px;padding:18px}
+}
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="eyebrow">Project Structure · Editorial Layout</div>
+    <h1>优雅的前后端项目结构</h1>
+    <p class="lead">
+      这一版完全按照你的要求重排：去掉一切卡片、盒子、模块块状展示，
+      整体走更克制的 editorial 排版。页面里只有在涉及代码、目录树、结构示意时，
+      才使用轻量的代码区块。这样视觉会更干净，阅读节奏也更高级。
+    </p>
+
+    <hr />
+
+    <section>
+      <h2>01｜什么叫“优雅的结构”</h2>
+      <p>优雅不是文件夹越多越好，也不是命名越炫越高级。真正优雅的结构，是别人接手你的项目时，不需要猜，不需要问，不需要满世界搜，就能大致知道代码应该在哪里。</p>
+      <p class="statement">优雅的本质，是 <strong>可预测</strong>、<strong>边界清楚</strong>、<strong>依赖克制</strong>、<strong>后续好扩展</strong>。</p>
+      <p>换句话说，页面归页面，逻辑归逻辑，请求归请求，数据归数据。每一层都知道自己该做什么，也知道自己不该做什么。</p>
+      <ul>
+        <li><strong>可预测性</strong>：看到目录名，就能猜到里面放什么。</li>
+        <li><strong>单一职责</strong>：一个目录或文件尽量只承载一种类型的工作。</li>
+        <li><strong>低耦合</strong>：模块之间不要互相绑死，改一处别牵连一大片。</li>
+        <li><strong>易扩展</strong>：未来新增功能时，应该是在原结构上平滑接入，而不是推翻重来。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>02｜一个经典的前端目录</h2>
+      <p>前端最容易乱的地方，在于页面、组件、接口、逻辑和工具函数经常混写。下面这个结构的价值，在于它把这些角色拆开了。</p>
+
+<pre><code>src/                                # 项目源码根目录：前端核心代码从这里开始
+├── pages/                         # 页面层：承载完整页面，通常与路由一一对应
+├── components/                    # 组件层：放可复用 UI 零件，如按钮、弹窗、表单
+├── features/                      # 业务模块层：按功能组织代码，是更优雅的写法
+│   ├── focus-session/             # 专注训练模块：围绕专注会话形成一个完整闭环
+│   │   ├── components/            # 模块专属组件：只服务于 focus-session
+│   │   ├── hooks/                 # 模块专属逻辑：如计时器、倒计时、状态管理
+│   │   ├── service.ts             # 模块业务逻辑：处理规则、流程、数据整合
+│   │   └── index.ts               # 模块出口文件：统一导出对外可用内容
+│   ├── reward-system/             # 奖励系统模块：积分、徽章、激励规则等
+│   └── report/                    # 数据报表模块：统计分析、趋势、记录展示等
+├── api/                           # 接口层：统一管理与后端通信的请求函数
+├── store/                         # 状态仓库：存放全局共享状态，如用户信息、登录态
+├── layouts/                       # 布局层：页面的通用骨架，如顶部导航、侧边栏
+└── utils/                         # 工具函数层：放无业务语义的纯工具函数</code></pre>
+
+      <p>这个结构最关键的一点，在于 <span class="inline">features</span>。它不是按技术类型切，而是按业务功能切。这样一来，一个功能相关的内容会尽量待在一起，而不是散落在整个项目里。</p>
+      <p>比如你以后想找“专注训练”相关代码，不需要去全局搜十几个目录，只要先去 <span class="inline">features/focus-session</span> 看，通常就能找到主干。</p>
+    </section>
+
+    <section>
+      <h2>03｜一个经典的后端目录</h2>
+      <p>后端更适合按“请求链路”来理解。你可以先记一句最核心的话：<span class="inline">route → controller → service → repository / model</span>。</p>
+
+<pre><code>backend/                           # 后端项目根目录：服务端代码整体放在这里
+└── src/                           # 源码目录：后端核心逻辑从这里组织
+    ├── routes/                    # 路由层：定义 URL 与接口入口之间的映射关系
+    ├── controllers/               # 控制器层：接收请求、提取参数、返回响应
+    ├── services/                  # 业务逻辑层：处理规则、流程和核心判断
+    ├── models/                    # 数据模型层：定义数据结构或 ORM 实体
+    ├── repositories/              # 数据访问层：封装数据库读写操作
+    ├── middlewares/               # 中间件层：处理鉴权、日志、异常、限流等
+    ├── config/                    # 配置层：管理端口、环境变量、数据库连接等
+    └── app.ts                     # 应用入口文件：初始化服务、挂载中间件和路由</code></pre>
+
+      <p>如果把后端想成一个完整处理系统，那么：</p>
+      <ul>
+        <li><strong>routes</strong> 决定“这个请求该去哪里”。</li>
+        <li><strong>controllers</strong> 负责“把请求接住，并交给后面处理”。</li>
+        <li><strong>services</strong> 是真正做业务决策的地方。</li>
+        <li><strong>repositories / models</strong> 负责和数据打交道。</li>
+      </ul>
+      <p>很多项目不优雅，就是因为把这些角色揉成一团：控制器里写满业务、业务里直接散写 SQL、工具函数里偷偷塞业务逻辑。时间一长，谁看都头大。</p>
+    </section>
+
+    <section>
+      <h2>04｜前后端是怎么串起来的</h2>
+      <p>目录树只是静态结构，真正理解项目，要看“流动关系”。一条最典型的链路，大概是这样：</p>
+
+<pre><code>用户点击页面
+→ pages / components 响应界面操作
+→ service / hooks 处理前端逻辑
+→ api 发起请求
+→ routes 把请求送入后端入口
+→ controllers 接收请求并整理参数
+→ services 执行业务规则
+→ repositories / models 读写数据库
+→ 返回结果给前端
+→ 页面更新 UI</code></pre>
+
+      <p>你以后无论看 GitHub 项目、看教程，还是让 AI 帮你搭项目，都可以先去找这条链。如果这条链清楚，这个项目大概率就不至于太乱。</p>
+    </section>
+
+    <section>
+      <h2>05｜常见英文目录名的中英文互译</h2>
+      <p>下面这部分不是做成表格，而是做成连续阅读式的词条。这样视觉更轻，也更接近你要的高级文档感。</p>
+
+      <div class="glossary">
+        <div class="term">
+          <div class="term-title">pages <span>页面</span></div>
+          <p>指完整页面，通常与一个路由地址对应。用户直接看到的整页内容，一般就放在这里。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">components <span>组件</span></div>
+          <p>指可复用的界面零件，比如按钮、输入框、弹窗、卡片。一个页面通常由多个组件拼起来。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">features <span>业务模块</span></div>
+          <p>指按照功能来组织代码。比如专注训练、奖励系统、数据报表，各自都是一个 feature。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">api <span>接口层</span></div>
+          <p>指统一发起网络请求的地方，专门负责和后端通信。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">service / services <span>业务逻辑</span></div>
+          <p>指处理规则、流程、判断、数据转换的地方。它通常是项目中最“像大脑”的一层。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">hooks <span>逻辑钩子</span></div>
+          <p>在 React 里，指复用状态和逻辑的函数，比如计时器逻辑、表单逻辑、监听逻辑。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">store <span>状态仓库</span></div>
+          <p>指全局共享状态的存放位置，比如当前用户、登录态、主题配置。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">layouts <span>布局层</span></div>
+          <p>指页面的外层骨架，比如顶部导航、侧边栏、底部结构等。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">utils <span>工具函数</span></div>
+          <p>指不带业务含义的通用函数，例如日期格式化、节流、防抖、深拷贝。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">routes <span>路由</span></div>
+          <p>在后端中，指 URL 到接口处理函数的映射关系。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">controllers <span>控制器</span></div>
+          <p>负责接收请求、读取参数、组织响应。它应该尽量轻，不应该背太多业务。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">models <span>数据模型</span></div>
+          <p>指数据结构定义，或 ORM 框架中的实体对象。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">repositories <span>数据访问层</span></div>
+          <p>指统一封装数据库操作的地方，让业务逻辑不要直接散落 SQL 或数据库调用。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">middlewares <span>中间件</span></div>
+          <p>指请求链路中的附加处理，比如鉴权、日志、异常捕获、限流。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">config <span>配置</span></div>
+          <p>指应用配置，例如数据库连接、端口号、环境变量、第三方服务地址。</p>
+        </div>
+        <div class="term">
+          <div class="term-title">app.ts <span>应用入口文件</span></div>
+          <p>通常是后端启动时最先加载的文件，用来初始化应用、挂载中间件和路由。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>06｜最后怎么记</h2>
+      <p>如果你不想一次记太多，可以先压缩成两句话：</p>
+
+<pre><code>前端：页面 → 组件 → 逻辑 → 接口
+后端：路由 → 控制 → 逻辑 → 数据</code></pre>
+
+      <p>这两句先记住，后面再慢慢把具体目录往里填。这样你的理解会更稳，也更接近真实项目的工程思维，而不是单纯在背英文单词。</p>
+    </section>
+
+    <div class="footer">
+      这是一版去掉所有卡片与盒子、只在代码与目录树处使用代码区块的 HTML 页面。适合转发，也适合继续二次修改。
+    </div>
+  </main>
+</body>
+</html>
